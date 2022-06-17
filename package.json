@@ -9,13 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
+    "@splidejs/react-splide": "^0.7.8",
+    "axios": "^0.27.2",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
+    "html-react-parser": "^1.4.14",
+    "modern-normalize": "^1.1.0",
+    "moment": "^2.29.3",
     "next": "12.1.6",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-icons": "^4.4.0",
+    "react-multi-carousel": "^2.8.0",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.7",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",

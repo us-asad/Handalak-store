@@ -1,0 +1,13 @@
+export { default as HeaderTop } from "./HeaderTop";
+export { default as HeaderBottom } from "./HeaderBottom";
+export { default as CategoriesBar } from "./CategoriesBar";
+export { default as CategoriesCarousel } from "./CategoriesCarousel";
+export { default as MainCarousel } from "./MainCarousel";
+export { default as SpliteSlider } from "./SpliteSlider";
+export { default as PromoDiscountsSection } from "./PromoDiscountsSection";
+export { default as ProductsContainer } from "./ProductsContainer";
+export { default as ProductCard } from "./ProductCard";
+export { default as ProductModal } from "./ProductModal";
+export { default as BrandsContainer } from "./BrandsContainer";
+export { default as NewsContainer } from "./NewsContainer";
+export { default as Description } from "./Description";

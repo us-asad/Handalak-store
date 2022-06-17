@@ -1,3 +1,204 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Raleway:wght@300;400;500&display=swap'); */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Raleway";
+  src: url("/fonts/RalewayRegular.woff2");
+}
+
+@keyframes fixHeader {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.fixed-header {
+  animation: fixHeader 0.3s ease-in-out;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "Raleway", sans-serif;
+}
+
+* {
+  font-family: "Raleway", sans-serif;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type = number]::-webkit-outer-spin-button,
+input[type = number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type = number] {
+  -moz-appearance: textfield;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+details > summary {
+  list-style: none;
+}
+
+.font-raleway {
+  font-family: "Raleway", Arial, sans-serif;
+}
+
+.custom-shadow {
+  box-shadow: 0 0 15px 5px rgb(0 0 0 / 20%);
+}
+
+.custom-shadow-rounded {
+  box-shadow: 0px 0px 6px 0px #878787;
+}
+
+.shadow-1 {
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.custom-transition {
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  -o-transition: all 300ms;
+}
+
+.line-clamp-1,
+.line-clamp-2,
+.line-clamp-8 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-8 {
+  -webkit-line-clamp: 8;
+}
+
+.splide__pagination__page {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #ccc;
+  border-radius: 50%;
+  margin: 3px;
+  padding: 0;
+  transition: transform 0.2s linear;
+  border: none;
+  opacity: 0.7;
+}
+
+.splide__pagination__page.is-active {
+  transform: scale(1.4);
+  background: red;
+}
+
+.descr h1 {
+  color: #111;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.descr p {
+  color: #818181;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.descr h2, .descr h3 {
+  color: #000;
+  font-size: 1.2rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.descr li {
+  list-style: disc;
+  color: #818181;
+  list-style-position: inside;
+}
+
+.descr li p {
+  display: inline;
+}
+
+@media (min-width: 768px) {
+  .bg-grad {
+    background: linear-gradient(90deg, #e96443, #904e95);
+  }
+
+  .descr h1 {
+    font-size: 2.25rem;
+    line-height: 2.25rem;
+  }
+  
+  .descr p {
+    font-weight: 400;
+    line-height: 22px;
+  }
+  
+  .descr h2,
+  .descr h3 {
+    font-size: 1.875rem;
+  }
+  
+  .descr li {
+    margin: 20px 0;
+    color: #000;
+  }
+}
+
+@media (min-width: 1140px) {
+  .custom-container {
+    min-width: 100%;
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .custom-container {
+    min-width: 1400px;
+    max-width: 1400px;
+  }
+}
