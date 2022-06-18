@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 export default function Category0() {
   const router = useRouter();
-  const { categories } = useSelector(state => state);
+  const { categories } = useSelector(state => state.main);
   const category0 =  categories.find(category => category?.slug === router.query?.category0Slug);
   
   if (!category0) router.push("/404");

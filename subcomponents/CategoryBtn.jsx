@@ -1,7 +1,7 @@
 import { toggleBodyOverflow } from 'data';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleShowCategoriesBar } from 'redux/dataSlice';
+import { useDispatch } from 'react-redux';
+import { toggleShowCategoriesBar } from 'redux/mainSlice';
 import { MenuIcon } from './Icons';
 
 export default function CategoryBtn({ changeStyles }) {

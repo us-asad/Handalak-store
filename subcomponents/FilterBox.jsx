@@ -1,11 +1,9 @@
-import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { FiChevronDown } from 'react-icons/fi'
-import { FilterInput } from 'subcomponents';
+import { FilterCheckbox, FilterInput } from 'subcomponents';
 
-export default function FilterBox({ type, name, items, indexName }) {
+export default function FilterBox({ type, name, items, indexKey }) {
   const [opened, setOpened] = useState(false);
-  const router = useRouter();
 
   return (
     <details
@@ -17,7 +15,7 @@ export default function FilterBox({ type, name, items, indexName }) {
         <p className='text-gray-800 font-bold text-xl'>{name}</p>
         <FiChevronDown className={`text-red text-[24px] transition duration-200 ${opened && "rotate-180"}`} />
       </summary>
-      {type === "input"
+      {type === "price"
         ? (
           <div className='grid grid-cols-1 gap-y-2'>
             <div className='grid grid-cols-2'>
@@ -25,8 +23,8 @@ export default function FilterBox({ type, name, items, indexName }) {
               <p className='ml-2.5 mr-1.5 text-gray-500 text-base font-medium'>Gacha</p>
             </div>
             <div className='grid grid-cols-2 w-full rounded border border-solid border-gray-200'>
-              <FilterInput name="minPrice" indexName="min_price" type="input" />
-              <FilterInput name="maxPrice" indexName="max_price" type="input" />
+              <FilterInput name="min_price" />
+              <FilterInput name="max_price" />
             </div>
           </div>
         ) : type === "checkbox"
@@ -34,7 +32,7 @@ export default function FilterBox({ type, name, items, indexName }) {
             <ul className='flex-col flex'>
               {items?.sort()?.map(item => (
                 <li key={item}>
-                  <FilterInput name={item} type="checkbox" indexName={indexName} />
+                  <FilterCheckbox name={item} indexKey={indexKey} />
                 </li>
               ))}
             </ul>

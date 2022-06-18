@@ -21,9 +21,9 @@ export default function FilterContainer({ products }) {
           <div className='lg:col-span-1'>
             <div className='bg-white p-5 lg:p-0 overflow-y-auto transform duration-300 translate-x-0'>
               <div className='grid grid-cols-1 gap-y-4'>
-                <FilterBox type="input" name="Narx" />
-                {manufacturers.length > 1 && <FilterBox type="checkbox" name="Brendlar" items={manufacturers} indexName="brands" />}
-                {Object.keys(arrangedVrts).map(key => <FilterBox key={key} type="checkbox" name={key} items={arrangedVrts[key]} indexName={key} />)}
+                <FilterBox type="price" name="Narx" />
+                {manufacturers.length > 1 && <FilterBox type="checkbox" name="Brendlar" indexKey="brands" items={manufacturers} />}
+                {Object.keys(arrangedVrts).map(key => <FilterBox indexKey={key} type="checkbox" name={key} items={arrangedVrts[key]} />)}
                 <Link href={router.asPath.split("?")[0]}>
                   <a className='text-left border-0 focus:outline-none text-red my-2 p-0 font-bold'>Filtrni o&lsquo;chirish</a>
                 </Link>

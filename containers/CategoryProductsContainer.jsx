@@ -1,40 +1,44 @@
 import { ProductCard } from 'components'
 import { FilterContainer } from 'containers'
-import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function CategoryProductsContainer({ categoryName, products }) {
-  const router = useRouter();
+  const filters = useSelector(state => state.filter);
 
-  const filterableProductKeys = products.map(prd => {
-    const varieties = {}
+  const filteredProducts = products.filter(prd => {
+    const result = true;
+    const discountedPrice = prd.price - ( prd.price * ( prd.discount / 100 ) );
+
+    const arrangedVrts = {};
     prd.varieties.forEach(vrt => {
       const vrtType = vrt.type.toLowerCase();
-      varieties[vrtType] = varieties[vrtType] ? [...varieties[vrtType], vrt.name] : [vrt.name];
+      arrangedVrts[vrtType] = arrangedVrts[vrtType] ? [...arrangedVrts[vrtType], vrt.name] : [vrt.name];
     });
 
-    return { price: prd.price, brand: prd.manufacturer.name, varieties };
-  });
+    for (let i = 0; i < Object.keys(filters.varieties).length; i++) {
+      const key = Object.keys(filters.varieties)[i];
+      if (arrangedVrts[key]) {
+        const filterVrts = filters.varieties[key]?.join("");
 
-  const queries = router.asPath.includes("?")
-    ? Object.fromEntries(router.asPath.slice(router.asPath.indexOf("?") + 1)?.split("&")?.map(item => {
-      const arr = item.split("=");
-      arr[1] = decodeURIComponent(arr[1]).replaceAll("+", " ");
-      return arr;
-    }))
-    : {};
+        for (let j = 0; i < arrangedVrts[key].length; i++) {
+          const item = arrangedVrts[key][i];
+          if (filterVrts.includes(item)) {
+            result = true;
+            break;
+          } else result = false;
+        }
 
-  const filteredProducts = products.filter((_, i) => {
-    let result = true;
-    const prd = filterableProductKeys[i];
+      } else result = false
+    }
 
-    if (!queries?.min_price && +queries?.min_price > prd.price) result = false
-    if (!queries?.max_price && +queries?.max_price < prd.price) result = false;
-    if (queries?.brands && !queries?.brands?.includes(prd?.brand)) result = false;
+    if (filters.min_price && filters.min_price > discountedPrice) result = false;
+    if (filters.max_price && filters.max_price < discountedPrice) result = false;
+
+    if (filters.brands.length && !filters.brands.includes(prd.manufacturer.name)) result = false;
 
     return result;
   });
-
 
   return (
     <div>

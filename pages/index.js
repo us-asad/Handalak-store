@@ -2,7 +2,7 @@ import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsCon
 import { Footer, Header } from "containers";
 import { getBrands, getNews, getProducts, getPromosDiscounts } from "data/graphql";
 import { useDispatch } from "react-redux";
-import { addPromosDiscounts } from "redux/dataSlice";
+import { addPromosDiscounts } from "redux/mainSlice";
 
 export default function Home({ promosDiscounts, products, brands, news }) {
   const dispatch = useDispatch();

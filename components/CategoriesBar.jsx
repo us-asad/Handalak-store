@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { BiX } from "react-icons/bi";
-import { changeMainCategory, toggleShowCategoriesBar } from 'redux/dataSlice';
+import { changeMainCategory, toggleShowCategoriesBar } from 'redux/mainSlice';
 import Link from 'next/link';
 import { DetailItem } from 'subcomponents';
 import { toggleBodyOverflow } from 'data';
 
 export default function CategoriesBar() {
-  const { showCategoriesBar, categories, mainCategory } = useSelector(state => state);
+  const { showCategoriesBar, categories, mainCategory } = useSelector(state => state.main);
   const dispatch = useDispatch();
 
   const toggleCategoriesBar = () => {

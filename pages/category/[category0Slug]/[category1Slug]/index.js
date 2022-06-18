@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function Category1({ products }) {
   const router = useRouter();
-  const { categories } = useSelector(state => state);
+  const { categories } = useSelector(state => state.main);
   const category = categories.find(category => category?.slug === router.query?.category0Slug)?.categories1?.find(category => category?.slug === router.query?.category1Slug);
 
   return (

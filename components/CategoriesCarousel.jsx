@@ -21,7 +21,7 @@ const splideOptions = {
 };
 
 export default function CategoriesCarousel({ autoContainer }) {
-  const { categories } = useSelector(state => state);
+  const { categories } = useSelector(state => state.main);
 
   return (
     <div className={autoContainer ? "custom-container mx-auto" : ""}>

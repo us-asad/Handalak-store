@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const dataSlice = createSlice({
-  name: "data",
+  name: "main",
   initialState,
   reducers: {
     addCategories: (state, { payload }) => {

@@ -1,4 +1,3 @@
-export { default as IconBtn } from "./IconBtn";
 export { default as Logo } from "./Logo";
 export { default as SearchForm } from "./SearchForm";
 export { default as LanguageSelect } from "./LanguageSelect";
@@ -14,3 +13,4 @@ export { default as ContainerBlockText } from "./ContainerBlockText";
 export { default as CategoryBox } from "./CategoryBox";
 export { default as FilterBox } from "./FilterBox";
 export { default as FilterInput } from "./FilterInput";
+export { default as FilterCheckbox } from "./FilterCheckbox";

@@ -1,6 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dataReducer from './dataSlice';
+import mainReducer from './mainSlice';
+import filterSlice from './filterSlice';
 
 export const store = configureStore({
-  reducer: dataReducer,
+  reducer: {
+    main: mainReducer,
+    filter: filterSlice 
+  },
 })
