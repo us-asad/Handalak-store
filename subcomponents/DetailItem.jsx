@@ -20,7 +20,7 @@ export default function DetailItem({ category }) {
           <span>{category?.name}</span>
           <FiChevronDown className={`text-red text-[27px] ${openDetails ? "rotate-180" : ""}`} />
         </summary>
-        <ul className='px-3 mt-7'>
+        <ol className='px-3 mt-7'>
           {category?.categories1?.map(subcategory => (
             <li key={subcategory?.slug} className="mb-1.5">
               <Link href={`/category/${category?.slug}/${subcategory?.slug || ""}`}>
@@ -37,7 +37,7 @@ export default function DetailItem({ category }) {
               </ul>
             </li>
           ))}
-        </ul>
+        </ol>
       </details>
     </li>
   )

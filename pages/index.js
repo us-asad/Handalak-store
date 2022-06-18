@@ -1,13 +1,7 @@
 import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsContainer, ProductsContainer, PromoDiscountsSection, CategoriesBar } from "components";
 import { Footer, Header } from "containers";
 import { getBrands, getNews, getProducts, getPromosDiscounts } from "data/graphql";
-import { useDispatch } from "react-redux";
-import { addPromosDiscounts } from "redux/mainSlice";
-
 export default function Home({ promosDiscounts, products, brands, news }) {
-  const dispatch = useDispatch();
-  dispatch(addPromosDiscounts(promosDiscounts));
-
   return (
     <div className="custom-container mx-auto mt-5">
       <div className="flex flex-col-reverse md:flex-col">
