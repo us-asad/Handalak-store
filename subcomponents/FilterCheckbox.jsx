@@ -1,31 +1,22 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { MdOutlineDone } from 'react-icons/md'
-import { useDispatch, useSelector } from 'react-redux';
-import { addBrand, addVariety, removeBrand, removeVariety } from 'redux/filterSlice';
 
-export default function FilterCheckbox({ name, indexKey }) {
+export default function FilterCheckbox({ name, indexKey, changeRoute }) {
   const router = useRouter();
   const [checked, setChecked] = useState(router.query[indexKey]?.includes(name) || null);
-  const { varieties } = useSelector(state => state.filter);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (typeof checked === "boolean") {
       if (indexKey === "brands") {
-        if (checked) {
-          dispatch(addBrand(name))
-          router.push({
-            pathname: router.pathname,
-            query: {
-              ...router.query,
-              brands: router.query?.brands ? `${router.query?.brands},${name}` : name
-            }
-          }, "", {
-            scroll: false,
-            shallow: true
-          });
-        } else {
+        if (checked && !router.query.brands?.includes(name)) {
+          const query = {
+            ...router.query,
+            brands: router.query?.brands ? `${router.query?.brands},${name}` : name
+          };
+
+          changeRoute(query)
+        } else if (!checked) {
           const brands = router.query.brands;
           const brandsQry = brands?.startsWith(name) && !brands?.includes(",")
             ? brands?.replace(name, "")
@@ -36,29 +27,17 @@ export default function FilterCheckbox({ name, indexKey }) {
           if (brandsQry) query.brands = brandsQry;
           else delete query.brands;
 
-          dispatch(removeBrand(name))
-          router.push({
-            pathname: router.pathname,
-            query
-          }, "", {
-            scroll: false,
-            shallow: true
-          })
+          changeRoute(query)
         }
       } else {
-        if (checked && !varieties[indexKey]?.includes(name)) {
-          dispatch(addVariety({ key: indexKey, value: name }));
-          router.push({
-            pathname: router.pathname,
-            query: {
-              ...router.query,
-              [indexKey]: router.query[indexKey] ? `${router.query[indexKey]},${name}` : name
-            }
-          }, "", {
-            scroll: false,
-            shallow: true
-          })
-        } else {
+        if (checked && !router.query[indexKey]?.includes(name)) {
+          const query = {
+            ...router.query,
+            [indexKey]: router.query[indexKey] ? `${router.query[indexKey]},${name}` : name
+          };
+
+          changeRoute(query);
+        } else if (!checked) {
           const vrts = router.query[indexKey];
           const vrtsQry = vrts?.startsWith(name) && !vrts?.includes(",")
             ? vrts?.replace(name, "")
@@ -69,14 +48,7 @@ export default function FilterCheckbox({ name, indexKey }) {
           if (vrtsQry) query[indexKey] = vrtsQry;
           else delete query[indexKey];
 
-          dispatch(removeVariety({ key: indexKey, value: name }))
-          router.push({
-            pathname: router.pathname,
-            query
-          }, "", {
-            scroll: false,
-            shallow: true
-          })
+          changeRoute(query)
         }
       }
     }

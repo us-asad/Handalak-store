@@ -3,16 +3,9 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { FilterBox } from 'subcomponents'
 
-export default function FilterContainer({ products }) {
+export default function FilterContainer({ products, allArrangedVrts }) {
   const router = useRouter();
   const manufacturers = [...new Set(products.map(({ manufacturer: { name } }) => name))];
-  const varieties = [];
-  const arrangedVrts = {};
-  products.map(product => product.varieties).forEach(prd => varieties.push(...prd));
-  varieties.forEach(vrt => {
-    const vrtType = vrt.type.toLowerCase();
-    arrangedVrts[vrtType] = arrangedVrts[vrtType] ? [...arrangedVrts[vrtType], vrt.name] : [vrt.name];
-  });
 
   return (
     <div className='relative col-span-1'>
@@ -23,7 +16,7 @@ export default function FilterContainer({ products }) {
               <div className='grid grid-cols-1 gap-y-4'>
                 <FilterBox type="price" name="Narx" />
                 {manufacturers.length > 1 && <FilterBox type="checkbox" name="Brendlar" indexKey="brands" items={manufacturers} />}
-                {Object.keys(arrangedVrts).map(key => <FilterBox indexKey={key} type="checkbox" name={key} items={arrangedVrts[key]} />)}
+                {Object.keys(allArrangedVrts).map(key => <FilterBox indexKey={key} type="checkbox" name={key} items={allArrangedVrts[key]} />)}
                 <Link href={router.asPath.split("?")[0]}>
                   <a className='text-left border-0 focus:outline-none text-red my-2 p-0 font-bold'>Filtrni o&lsquo;chirish</a>
                 </Link>
