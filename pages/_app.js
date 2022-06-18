@@ -10,7 +10,7 @@ import { getAllCategories } from 'data/graphql';
 import { AppWrapper } from 'subcomponents';
 import { CategoriesBar, CategoriesCarousel } from 'components';
 
-function MyApp({ Component, pageProps, categories }) {
+function MyApp({ Component, pageProps, categories = [] }) {
   return (
     <Provider store={store}>
       <AppWrapper categories={categories}>
@@ -36,12 +36,12 @@ function MyApp({ Component, pageProps, categories }) {
 
 
 
-MyApp.getInitialProps = async () => {
-  const categories = await getAllCategories();
+// MyApp.getInitialProps = async () => {
+//   const categories = await getAllCategories();
 
-  return {
-    categories
-  }
-}
+//   return {
+//     categories
+//   }
+// }
 
 export default MyApp;
