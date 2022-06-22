@@ -17,9 +17,9 @@ const smallIconClassName = "text-xs font-medium py-1 px-1.5 rounded-lg absolute 
 export default function HeaderBottom() {
   const [scrollY, setScrollY] = useState(0);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const { user, loading } = useSelector(state => state.user);
   const [showDropDown, setShowDropDown] = useState(false);
   const dispatch = useDispatch();
+  const { user: { user, loading }, product: { savedPrds, comparedPrds, basket } } = useSelector(state => state);
 
   const toggleLoginModal = state => {
     setShowLoginModal(state);
@@ -100,25 +100,25 @@ export default function HeaderBottom() {
               onClick={() => setShowDropDown(false)}
               className={`fixed top-0 left-0 w-full h-full z-[49] bg-transparent cursor-auto ${!loading && user && showDropDown ? "block" : "hidden"}`}
             />
-            <Link href="/">
+            <Link href="/compare">
               <a className='lg:flex flex-col items-center font-medium text-base relative ml-8 hidden'>
                 <ChartIcon color={scrollY > maxScrollSize ? "black" : ""} />
                 <span className='mt-2'>Taqqoslash</span>
-                <span className={smallIconClassName}>1</span>
+                {comparedPrds?.length ? <span className={smallIconClassName}>{comparedPrds?.length}</span> : null}
               </a>
             </Link>
             <Link href="/">
               <a className='lg:flex flex-col items-center font-medium text-base relative mx-8 hidden'>
                 <FaRegHeart className='text-[22px]' />
                 <span className='mt-2'>Sevimlilar</span>
-                <span className={smallIconClassName}>1</span>
+                {savedPrds?.length ? <span className={smallIconClassName}>{savedPrds?.length}</span> : null}
               </a>
             </Link>
             <Link href="/">
               <a className='flex flex-col items-center font-medium text-base relative'>
                 <FiShoppingBag className='text-[22px]' />
                 <span className='hidden lg:block mt-2'>Savatcha</span>
-                <span className={smallIconClassName}>1</span>
+                {basket?.length ? <span className={smallIconClassName}>{basket?.length}</span> : null}
               </a>
             </Link>
           </div>

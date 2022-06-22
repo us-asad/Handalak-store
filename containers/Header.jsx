@@ -1,7 +1,11 @@
-import { HeaderBottom, HeaderTop } from 'components';
+import { HeaderTop } from 'components';
 import React from 'react';
+import dynamic from 'next/dynamic'
 
 export default function Header() {
+  const HeaderBottom = dynamic(() => import("components/HeaderBottom"), {
+    ssr: false,
+  });
   return (
     <div className="bg-grad md:min-h-[150px] text-white">
       <HeaderTop />

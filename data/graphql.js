@@ -56,6 +56,7 @@ export const getProducts = async () => {
   const query = gql`
     query MyQuery {
       products {
+        id
         comments
         discount
         manufacturer {
@@ -143,6 +144,7 @@ export const getPorductsOfCatgory1 = async categorySlug => {
   const query = gql`
     query GetProductsOfCategory($categorySlug: String!) {
       category1(where: {slug: $categorySlug}) {
+        id
         slug
         categories2 {
           name
@@ -239,6 +241,7 @@ export const getPorductsOfCatgory2 = async ctgSlug => {
   const query = gql`
     query GetPorductsOfCatgory0($ctgSlug: String!) {
       category2(where: {slug: $ctgSlug}) {
+        id
         slug
         name
         products {
@@ -292,6 +295,7 @@ export const getProductDetails = async slug => {
   const query = gql`
     query GetProductDetails($slug: String!) {
       product(where: {slug: $slug}) {
+        id
         comments
         discount
         description {
@@ -347,4 +351,44 @@ export const getProductDetails = async slug => {
 
   const result = await request(graphqlApi, query, { slug });
   return result?.product;
+}
+
+export const getProductsById = async prds => {
+  const query = gql`
+    query GetProductById($id: ID!) {
+      product(where: { id: $id }) {
+        features {
+          feature
+          featureName
+        }
+        category {
+          ... on Category1 {
+            slug
+            name
+          }
+          ... on Category2 {
+            name
+            slug
+          }
+        }
+        comments
+        image {
+          url
+        }
+        slug
+        name
+        price
+        discount
+        id
+      }
+    }
+  `;
+  const result = [];
+
+  for (let i = 0; i < prds.length; i++) {
+    const rsp = await request(graphqlApi, query, { id: prds[i] });
+    result.push(rsp?.product);
+  }
+
+  return result;
 }

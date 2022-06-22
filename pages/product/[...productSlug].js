@@ -1,11 +1,10 @@
 import { DesktopProductPage, MobileProductPage } from 'containers';
 import { getProductDetails } from 'data/graphql';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip';
 
 export default function ProductPage({ product }) {
-  const { name, discount, image, monthlyPay, price: totlaPrice, description, comments, slug, category, delivery, subtitle, manufacturer, seller, supplier, features, varieties, warrantyPeriod } = product;
+  const { discount, image, price: totlaPrice } = product;
   const [mainImgs, setMainImgs] = useState(image)
   const [isVisible, setIsVisible] = useState(false);
 

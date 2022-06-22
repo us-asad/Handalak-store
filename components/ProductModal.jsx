@@ -7,16 +7,19 @@ import { BiX } from 'react-icons/bi';
 import { MdNavigateNext } from "react-icons/md";
 import { CompareFullBtn, ProductVarieties, ProductRates } from 'subcomponents';
 import { ProductEventBtns, SplideSlider } from 'components';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProductModal({ toggleModal, product, price }) {
-  const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod } = product;
+  const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod, id } = product;
   const [mainImgs, setMainImgs] = useState(image);
+  const { comparedPrds, basket } = useSelector(state => state.product);
+  const dispatch = useDispatch();
 
   return (
     <>
       <div
         onClick={toggleModal}
-        className='fixed top-0 left-0 w-screen h-screen z-50 bg-[#ff000057] custom-transition'
+        className='fixed top-0 left-0 w-screen h-screen z-50 !m-0 bg-[#ff000057] custom-transition'
       />
       <div className='fixed top-0 left-0 h-screen w-[88vw] z-[51] mx-auto bg-white overflow-y-auto py-16 px-8 translate-x-[6vw]'>
         <button
@@ -31,7 +34,7 @@ export default function ProductModal({ toggleModal, product, price }) {
             <div className='grid grid-flow-col auto-cols-max gap-4'>
               <ProductRates comments={comments} />
               <p className='text-gray-800 text-base font-medium'>{comments.length} {comments.length > 1 ? "sharhlar" : "sharh"}</p>
-              <CompareFullBtn />
+              <CompareFullBtn id={id} />
             </div>
           </div>
         </div>

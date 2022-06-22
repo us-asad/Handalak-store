@@ -7,11 +7,12 @@ import { DeliveryTruck } from 'subcomponents/Icons';
 import { getFormattedPrice, toggleBodyOverflow } from 'data';
 import ProductModal from './ProductModal';
 import { ShareBox } from 'subcomponents';
+import { useSelector } from 'react-redux';
 
 export default function ProductCard(props) {
+  const [showModal, setShowModal] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const {
-    getArrowProps,
     getTooltipProps,
     setTooltipRef,
     setTriggerRef,
@@ -21,10 +22,10 @@ export default function ProductCard(props) {
     placement: 'right',
     closeOnOutsideClick: false,
     visible: isVisible
-  })
+  });
+  const { savedPrds } = useSelector(state => state.product);
 
-  const [showModal, setShowModal] = useState(false);
-  const { name, discount, image, monthlyPay, price: totlaPrice, slug, category, delivery, className } = props;
+  const { name, discount, image, monthlyPay, price: totlaPrice, slug, category, delivery, className, id } = props;
   const price = totlaPrice - (totlaPrice * (discount / 100));
 
   const toggleModal = () => {
@@ -52,9 +53,8 @@ export default function ProductCard(props) {
             </div>
           )}
         </div>
-        {discount && discount > 0 && <p className='text-white px-2 py-0.5 bg-red rounded-full absolute left-3 top-3.5 z-10 text-base font-bold leading-5'>-{discount}%</p>}
         <div className='absolute top-4 right-2 z-20 shadow-2xl'>
-          <HeartBtn />
+          <HeartBtn id={id} />
         </div>
         <div className='absolute top-12 right-2 shadow-2xl'>
           <div
@@ -70,7 +70,7 @@ export default function ProductCard(props) {
               onMouseEnter={() => setIsVisible(true)}
               onMouseLeave={() => setIsVisible(false)}
               {...getTooltipProps({ className: 'tooltip-container' })}
-              className='absolute z-[11] -top-[9px] left-[28px] transition duration-200'
+              className='absolute z-[11] -top-[9px] left-[28px]'
             >
               <ShareBox slug={slug} />
             </div>
@@ -82,7 +82,7 @@ export default function ProductCard(props) {
           </Link>
           <div className='md:block hidden'>
             <div className='flex flex-col font-bold leading-5 mb-2'>
-              <span className='text-red text-sm line-through h-6'>{discount && discount > 0 && `${getFormattedPrice(totlaPrice)} so'm`}</span>
+              <span className='text-red text-sm line-through h-6'>{(discount && discount > 0 && `${getFormattedPrice(totlaPrice)} so'm`) || ""}</span>
               <p>
                 <span>{getFormattedPrice(price)}</span> so&lsquo;m
               </p>
@@ -98,7 +98,7 @@ export default function ProductCard(props) {
               >
                 Xarid qilish
               </button>
-              <CompareBtn color="#000" />
+              <CompareBtn color="#000" id={id} />
             </div>
           </div>
           <div className='block md:hidden'>

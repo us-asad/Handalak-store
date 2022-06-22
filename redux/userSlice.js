@@ -33,7 +33,7 @@ export const resetPassword = createAsyncThunk(
     const rsp = await sendPasswordResetEmail(auth, email);
     return rsp;
   }
-)
+);
 
 const initialState = {
   user: null,

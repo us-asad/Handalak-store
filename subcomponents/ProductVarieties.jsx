@@ -5,13 +5,18 @@ export default function ProductVarieties(props) {
   const { name, image, varieties, setMainImgs } = props;
   const formatted = {};
   const initialVariety = {};
+  console.log(varieties, "varieties");
   varieties.forEach(variety => {
     formatted[variety.type.toLowerCase()] = formatted[variety.type.toLowerCase()] ? [...formatted[variety?.type.toLowerCase()], variety] : [variety];
   });
+  console.log(formatted, "formatted");
+
   const formattedKeys = Object.keys(formatted);
   formattedKeys.forEach(key => {
     initialVariety[key] = formatted[key][0];
   });
+  console.log(initialVariety, "initialVariety");
+
   const [currVariety, setCurrVariety] = useState(initialVariety);
 
   const changeCurrVariety = (key, i) => setCurrVariety(prev => ({...prev, [key]: formatted[key][i]}));
