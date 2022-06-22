@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
+import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeartBtn, ShareBtn, CompareBtn } from 'subcomponents';
 import { DeliveryTruck } from 'subcomponents/Icons';
 import { getFormattedPrice, toggleBodyOverflow } from 'data';
@@ -8,9 +9,23 @@ import ProductModal from './ProductModal';
 import { ShareBox } from 'subcomponents';
 
 export default function ProductCard(props) {
+  const [isVisible, setIsVisible] = useState(false);
+  const {
+    getArrowProps,
+    getTooltipProps,
+    setTooltipRef,
+    setTriggerRef,
+    visible,
+  } = usePopperTooltip({
+    trigger: 'hover',
+    placement: 'right',
+    closeOnOutsideClick: false,
+    visible: isVisible
+  })
+
   const [showModal, setShowModal] = useState(false);
   const { name, discount, image, monthlyPay, price: totlaPrice, slug, category, delivery, className } = props;
-  const price = totlaPrice - ( totlaPrice * ( discount / 100 ) );
+  const price = totlaPrice - (totlaPrice * (discount / 100));
 
   const toggleModal = () => {
     setShowModal(prev => !prev);
@@ -42,10 +57,24 @@ export default function ProductCard(props) {
           <HeartBtn />
         </div>
         <div className='absolute top-12 right-2 shadow-2xl'>
-          <ShareBtn className="peer after:w-[30px] after:h-[30px] after:block after:absolute after:top-0 after:left-[6px]" />
-          <div className='peer absolute z-[11] -top-[9px] left-[28px] transition duration-200 opacity-0 pointer-events-none peer-hover:opacity-100 peer-hover:pointer-events-auto hover:pointer-events-auto hover:opacity-100'>
-            <ShareBox slug={slug} />
+          <div
+            ref={setTriggerRef}
+            onMouseEnter={() => setIsVisible(true)}
+            onMouseLeave={() => setIsVisible(false)}
+          >
+            <ShareBtn className="after:w-[30px] after:h-[30px] after:block after:absolute after:top-0 after:left-[6px]" />
           </div>
+          {visible && (
+            <div
+              ref={setTooltipRef}
+              onMouseEnter={() => setIsVisible(true)}
+              onMouseLeave={() => setIsVisible(false)}
+              {...getTooltipProps({ className: 'tooltip-container' })}
+              className='absolute z-[11] -top-[9px] left-[28px] transition duration-200'
+            >
+              <ShareBox slug={slug} />
+            </div>
+          )}
         </div>
         <div className='flex flex-col pt-4'>
           <Link href={`/category/${category?.slug || ""}`}>

@@ -1,13 +1,19 @@
 import Image from "next/image";
-import { BiCopy } from "react-icons/bi";
+import { BiCopy, BiX } from "react-icons/bi";
 
 const url = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 
-export default function ShareBox({ slug }) {
+export default function ShareBox({ slug, setIsVisible }) {
   const shareUrl = `${url}/product/${slug}`;
 
   return (
-    <ul className='p-6 bg-white rounded-[6px] text-[16px] custom-shadow-rounded'>
+    <ul className='p-6 bg-white rounded-[6px] text-[16px] relative custom-shadow-rounded'>
+      <button
+        onClick={() => setIsVisible(false)}
+        className="md:hidden absolute top-2 right-1 text-red bg-white rounded-full text-[24px]"
+      >
+        <BiX />
+      </button>
       <li className='flex justify-center items-center space-x-4 cursor-pointer my-2 group hover:text-blue-500 w-max'>
         <BiCopy className="text-green-700 group-hover:text-blue-500 w-[30px] h-[30px] text-[16px]" />
         <span>Nusxa olish</span>

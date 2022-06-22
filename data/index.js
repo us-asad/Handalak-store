@@ -160,8 +160,70 @@ export const payment_systems = [
   }
 ]
 
+export const sortList = [
+  {
+    name: "Avval arzonlari",
+    sort_by: "price"
+  },
+  {
+    name: "Avval qimmatlari",
+    sort_by: "-price"
+  },
+  {
+    name: "Yangilari",
+    sort_by: "new"
+  },
+  {
+    name: "Chegirmada",
+    sort_by: "discount"
+  }
+];
+
+export const prdDetailSections = [
+  {
+    name: "Tavsifi",
+    slug: undefined,
+    icon: "document"
+  },
+  {
+    name: "Ma'lumotlar",
+    slug: "info",
+    icon: "info"
+  },
+  {
+    name: "Izohlar",
+    slug: "comments",
+    icon: "star"
+  }
+];
+
+export const mobile_navitems = [
+  {
+    name: "Bosh sahifa",
+    slug: "/",
+    icon: "home"
+  },
+  {
+    name: "Katalog",
+    slug: "/category",
+    icon: "apps"
+  },
+  {
+    name: "Savatcha",
+    slug: "/cart",
+    icon: "basket"
+  },
+  {
+    name: "Profil",
+    slug: "/cabinet",
+    icon: "user"
+  }
+]
+
 export const toggleBodyOverflow = () => {
   document.body.style.overflow = document.body.style.overflow === "hidden" ? "auto" : "hidden";
 }
 
-export const getRating = comments => Math.floor(comments.reduce(({rating: prevValue}, {rating: currValue}) => prevValue + currValue)) / comments.length;
+export const getRating = comments => Math.floor(comments?.reduce(({rating: prevValue}, {rating: currValue}) => prevValue + currValue)) / comments.length;
+
+export const getDiscountedPrice = (price, discount) => (discount ? price - (price * (discount / 100)) : price).toFixed(0);

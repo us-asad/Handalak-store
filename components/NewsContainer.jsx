@@ -3,7 +3,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import React from 'react';
 import { BiChevronRight } from 'react-icons/bi';
-import SplideSlider from './SpliteSlider';
+import { SplideSlider } from 'components';
 
 const splideOptions = {
   rewind: true,

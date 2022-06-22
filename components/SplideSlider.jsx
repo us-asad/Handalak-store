@@ -9,7 +9,7 @@ export default function SplideSlider({ images, options, children, className }) {
         hasTrack={false}
         options={options}
       >
-        <div className="splide__arrows splide__arrows--ltr">
+        <div className={`splide__arrows splide__arrows--ltr`}>
           <button
             className="splide__arrow splide__arrow--prev !opacity-100 left-0"
             type="button"
@@ -30,7 +30,7 @@ export default function SplideSlider({ images, options, children, className }) {
         <SplideTrack>
           {children}
         </SplideTrack>
-        {images && (
+        {images?.length > 1 && (
           <ul className="splide__pagination main-slider-splide-pagination -bottom-[21px]">
             {images?.map((_,i) => (
               <li key={i}>
@@ -43,11 +43,3 @@ export default function SplideSlider({ images, options, children, className }) {
     </div>
   )
 }
-
-
-/*
-
-
-
-
-*/

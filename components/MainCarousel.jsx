@@ -1,5 +1,5 @@
 import { SplideSlide } from "@splidejs/react-splide";
-import { SpliteSlider } from "components";
+import { SplideSlider } from "components";
 import { mainSlideImages } from "data";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function MainCarousel() {
   return (
     <div className="mb-10">
-      <SpliteSlider images={mainSlideImages} options={{ rewind: true, loop: true, autoPlay: true, breakpoints: { 768: { arrows: false } } }}>
+      <SplideSlider images={mainSlideImages} options={{ rewind: true, loop: true, autoPlay: true, breakpoints: { 768: { arrows: false } } }}>
         {mainSlideImages.map((item, i) => (
           <SplideSlide key={`${item.destination}_${i}`}>
             <Link href={item.destination}>
@@ -23,7 +23,7 @@ export default function MainCarousel() {
             </Link>
           </SplideSlide>
         ))}
-      </SpliteSlider>
+      </SplideSlider>
     </div>
   );
 }

@@ -4,3 +4,7 @@ export { default as CategoriesContainer } from "./CategoriesContainer";
 export { default as ColumnCategoriesContainer } from "./ColumnCategoriesContainer";
 export { default as CategoryProductsContainer } from "./CategoryProductsContainer";
 export { default as FilterContainer } from "./FilterContainer";
+export { default as MobileFilterContainer } from "./MobileFilterContainer";
+export { default as ProductDetails } from "./ProductDetails";
+export { default as DesktopProductPage } from "./DesktopProductPage";
+export { default as MobileProductPage } from "./MobileProductPage";

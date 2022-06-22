@@ -29,7 +29,7 @@ export default function LanguageSelect() {
       {showLanguages && (
         <ul className="absolute drop-shadow-xl py-2 px-4 rounded-lg top-full -left-[17px] bg-white w-max z-40">
           {languages.map(language => (
-            <li className='flex text-black items-end'>
+            <li key={language.code} className='flex text-black items-end'>
               <div className='mr-1.5 font-normal flex items-center'>
                 <Image
                   src="/uz-flag.svg"

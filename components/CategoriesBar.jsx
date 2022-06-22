@@ -16,7 +16,7 @@ export default function CategoriesBar() {
 
   return (
     <>
-      <div className={`hidden md:block h-screen w-[92vw] fixed top-0 z-30 bg-white text-black ${showCategoriesBar ? "left-0 custom-transition" : "-left-full"}`}>
+      <div className={`hidden md:block h-screen w-[92vw] fixed top-0 z-[999] bg-white text-black ${showCategoriesBar ? "left-0 custom-transition" : "-left-full"}`}>
         <span
           onClick={toggleCategoriesBar}
           className='absolute top-2 -right-9 bg-red text-white cursor-pointer z-30 text-[30px] rounded-full'

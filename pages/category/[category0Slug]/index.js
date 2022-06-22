@@ -17,5 +17,5 @@ export default function Category0() {
         <ColumnCategoriesContainer title={category0?.name} categories={category0?.categories1} starterSlug={`category/${category0?.slug}`} />
       </div>
     </div>
-  )
+  );
 }

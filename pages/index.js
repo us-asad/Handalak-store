@@ -1,6 +1,7 @@
-import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsContainer, ProductsContainer, PromoDiscountsSection, CategoriesBar } from "components";
+import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsContainer, ProductsContainer, PromoDiscountsSection, CategoriesBar, MobileNavbar } from "components";
 import { Footer, Header } from "containers";
 import { getBrands, getNews, getProducts, getPromosDiscounts } from "data/graphql";
+
 export default function Home({ promosDiscounts, products, brands, news }) {
   return (
     <div className="custom-container mx-auto mt-5">
@@ -24,6 +25,7 @@ Home.getLayout = page => (
   <>
     <CategoriesBar />
     <Header />
+    <MobileNavbar />
     {page}
     <Footer />
   </>

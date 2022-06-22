@@ -96,7 +96,7 @@ export const getProducts = async () => {
     }
   `;
 
-  const result = await request(graphqlApi,query);
+  const result = await request(graphqlApi, query);
   return result?.products;
 }
 
@@ -141,11 +141,56 @@ export const getNews = async () => {
 
 export const getPorductsOfCatgory1 = async categorySlug => {
   const query = gql`
-    query GetProductsOfCategory1($categorySlug: String!) {
+    query GetProductsOfCategory($categorySlug: String!) {
       category1(where: {slug: $categorySlug}) {
+        slug
+        categories2 {
+          name
+          slug
+          products {
+            comments
+            discount
+            createdAt
+            manufacturer {
+              name
+            }
+            image {
+              url
+            }
+            monthlyPay {
+              monthlyPrice
+              months
+            }
+            name
+            price
+            slug
+            quantity
+            subtitle
+            varieties {
+              name
+              images {
+                url
+              }
+              type
+            }
+            warrantyPeriod
+            delivery
+            category {
+              ... on Category1 {
+                name
+                slug
+              }
+              ... on Category2 {
+                name
+                slug
+              }
+            }
+          }
+        }
         products {
           comments
           discount
+          createdAt
           manufacturer {
             name
           }
@@ -186,6 +231,120 @@ export const getPorductsOfCatgory1 = async categorySlug => {
   `;
 
   const result = await request(graphqlApi, query, { categorySlug });
-  
-  return result?.category1?.products;
+
+  return result?.category1;
+}
+
+export const getPorductsOfCatgory2 = async ctgSlug => {
+  const query = gql`
+    query GetPorductsOfCatgory0($ctgSlug: String!) {
+      category2(where: {slug: $ctgSlug}) {
+        slug
+        name
+        products {
+          comments
+          discount
+          createdAt
+          manufacturer {
+            name
+          }
+          image {
+            url
+          }
+          monthlyPay {
+            monthlyPrice
+            months
+          }
+          name
+          price
+          slug
+          quantity
+          subtitle
+          varieties {
+            name
+            images {
+              url
+            }
+            type
+          }
+          warrantyPeriod
+          delivery
+          category {
+            ... on Category1 {
+              name
+              slug
+            }
+            ... on Category2 {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const result = await request(graphqlApi, query, { ctgSlug });
+  return result?.category2;
+}
+
+export const getProductDetails = async slug => {
+  const query = gql`
+    query GetProductDetails($slug: String!) {
+      product(where: {slug: $slug}) {
+        comments
+        discount
+        description {
+          html
+        }
+        manufacturer {
+          name
+          logo {
+            url
+          }
+          slug
+        }
+        image {
+          url
+        }
+        monthlyPay {
+          monthlyPrice
+          months
+        }
+        name
+        price
+        slug
+        quantity
+        subtitle
+        varieties {
+          name
+          images {
+            url
+          }
+          type
+        }
+        warrantyPeriod
+        delivery
+        category {
+          ... on Category1 {
+            name
+            slug
+          }
+          ... on Category2 {
+            name
+            slug
+          }
+        }
+        features {
+          feature
+          featureName
+        }
+        supplier
+        seller
+      }
+    }  
+  `;
+
+  const result = await request(graphqlApi, query, { slug });
+  return result?.product;
 }

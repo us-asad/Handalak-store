@@ -1,10 +1,12 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import { MdOutlineDone } from 'react-icons/md'
+import { useEffect, useState } from 'react';
+import { MdOutlineDone } from 'react-icons/md';
+import { useRouteChanger } from 'hooks';
 
-export default function FilterCheckbox({ name, indexKey, changeRoute }) {
+export default function FilterCheckbox({ name, indexKey }) {
   const router = useRouter();
-  const [checked, setChecked] = useState(router.query[indexKey]?.includes(name) || null);
+  const [checked, setChecked] = useState(router.query[indexKey]?.includes(name) || "");
+  const changeRoute = useRouteChanger();
 
   useEffect(() => {
     if (typeof checked === "boolean") {
@@ -39,11 +41,8 @@ export default function FilterCheckbox({ name, indexKey, changeRoute }) {
           changeRoute(query);
         } else if (!checked) {
           const vrts = router.query[indexKey];
-          const vrtsQry = vrts?.startsWith(name) && !vrts?.includes(",")
-            ? vrts?.replace(name, "")
-            : vrts?.endsWith(name)
-              ? vrts?.replace(`,${name}`, "")
-              : vrts?.replace(`${name},`, "");
+          const vrtsQry = vrts.split(",").filter(vrt => vrt !== name).join(",");
+
           const query = { ...router.query }
           if (vrtsQry) query[indexKey] = vrtsQry;
           else delete query[indexKey];

@@ -1,11 +1,11 @@
+import { useRouteChanger } from 'hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
 
-export default function FilterCheckbox({ name, changeRoute }) {
+export default function FilterCheckbox({ name }) {
   const router = useRouter();
   const [value, setValue] = useState(router.query[name] || "");
-  const dispatch = useDispatch();
+  const changeRoute = useRouteChanger();
 
   useEffect(() => {
     if (typeof value === "string") {

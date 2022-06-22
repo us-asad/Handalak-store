@@ -18,7 +18,7 @@ export default function ProductVarieties(props) {
 
   useEffect(() => {
     const keys = Object.keys(currVariety);
-    console.log(currVariety);
+
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
       setMainImgs(currVariety[key]?.images.length ? currVariety[key]?.images : image);
@@ -29,7 +29,7 @@ export default function ProductVarieties(props) {
     <div>
       {formattedKeys.map(key => (
         <div key={key}>
-          <p className='text-gray-400 text-base font-medium mb-4'>{key}:</p>
+          <p className='text-gray-400 text-base font-medium mb-4 capitalize'>{key}: {currVariety[key].name}</p>
           {key.toLocaleLowerCase() === "rangi"
             ? <ul className='flex flex-wrap gap-2.5 mb-4'>
               {formatted[key]?.map((item, i) => (

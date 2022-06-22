@@ -4,7 +4,7 @@ const initialState = {
   categories: [],
   showCategoriesBar: false,
   mainCategory: [],
-  promosDiscounts: [],
+  promosDiscounts: []
 };
 
 const dataSlice = createSlice({

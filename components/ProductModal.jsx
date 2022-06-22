@@ -1,13 +1,12 @@
 import { SplideSlide } from '@splidejs/react-splide';
-import { getFormattedPrice, getRating } from 'data';
+import { getFormattedPrice } from 'data';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { BiX } from 'react-icons/bi';
-import { BsFillStarFill } from 'react-icons/bs';
 import { MdNavigateNext } from "react-icons/md";
-import { CompareFullBtn, ProductVarieties } from 'subcomponents';
-import SplideSlider from './SpliteSlider';
+import { CompareFullBtn, ProductVarieties, ProductRates } from 'subcomponents';
+import { ProductEventBtns, SplideSlider } from 'components';
 
 export default function ProductModal({ toggleModal, product, price }) {
   const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod } = product;
@@ -30,13 +29,7 @@ export default function ProductModal({ toggleModal, product, price }) {
           <div className='px-8 py-4 md:px-0 w-10/12'>
             <h3 className='text-black text-3xl mb-2 text-left'>{name}</h3>
             <div className='grid grid-flow-col auto-cols-max gap-4'>
-              <ul className='flex space-x-1'>
-                {[...Array(5)].map((_, i) => (
-                  <li key={i} className='text-[19px]'>
-                    <BsFillStarFill className={i + 1 > getRating(comments) ? "text-gray-300" : "text-red"} />
-                  </li>
-                ))}
-              </ul>
+              <ProductRates comments={comments} />
               <p className='text-gray-800 text-base font-medium'>{comments.length} {comments.length > 1 ? "sharhlar" : "sharh"}</p>
               <CompareFullBtn />
             </div>
@@ -75,17 +68,7 @@ export default function ProductModal({ toggleModal, product, price }) {
             </div>
           </div>
           <div className='md:col-span-2 xl:col-span-1 xl:col-start-2'>
-            <div className='grid grid-cols-3 gap-x-4'>
-              <button className='bg-red hover:bg-white text-white hover:text-red py-2 px-4 rounded-full border border-red border-solid text-sm font-bold'>
-                Savatchaga qo&lsquo;shish
-              </button>
-              <button className='bg-green-500 hover:bg-white text-white hover:text-green-500 py-2 px-4 rounded-full border border-green-500 border-solid text-sm font-bold'>
-                Bo&lsquo;lib to&lsquo;lash
-              </button>
-              <button className='bg-gray-800 hover:bg-white text-white hover:text-gray-800 py-2 px-4 rounded-full border border-gray-800 border-solid text-sm font-bold'>
-                Bir klikda sotib olish
-              </button>
-            </div>
+            <ProductEventBtns />
           </div>
           <Link href={`/product/${slug}`}>
             <a className='md:col-span-2 xl:col-span-1 xl:col-start-2 pl-3 py-5 xl:border-t pr-10 text-red flex items-center'>
