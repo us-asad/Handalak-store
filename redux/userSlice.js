@@ -1,20 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { auth } from 'firebaseconfig';
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import axios from 'axios';
 
 export const registerUser = createAsyncThunk(
   "user/register",
   async ({ name, email, password }) => {
     let rsp = await createUserWithEmailAndPassword(auth, email, password)
-    rsp = await fetch("/api/auth", {
-      method: 'POST',
+    rsp = await axios.post('/api/auth', JSON.stringify({ email, name }), {
       headers: {
-        "Content-Type": "application/json"
-      },
-      body: { email, name }
+        'Content-Type': 'application/json'
+      }
     });
 
-    return rsp;
+    return rsp.data.createUserData;
   }
 );
 
@@ -22,8 +21,9 @@ export const signInUser = createAsyncThunk(
   "user/signIn",
   async ({ email, password }) => {
     const rsp = await signInWithEmailAndPassword(auth, email, password);
+    rsp = await axios.get(`/api/auth?email=${email}`);
 
-    return rsp;
+    return rsp?.data?.userData;
   }
 );
 
@@ -68,11 +68,7 @@ const userSlice = createSlice({
       state.loading = false;
     },
     [signInUser.fulfilled]: (state, { payload }) => {
-      state.user = {
-        email: payload.user.email,
-        displayName: payload.user.displayName,
-        uid: payload.user.uid
-      };
+      state.user = payload
       state.error = "";
       state.loading = false;
     },

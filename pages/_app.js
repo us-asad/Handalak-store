@@ -8,15 +8,28 @@ import 'styles/globals.css';
 import { getAllCategories } from 'data/graphql';
 import { CategoriesBar, CategoriesCarousel, MobileNavbar } from 'components';
 import { addCategories } from 'redux/mainSlice';
-import { SessionProvider } from 'next-auth/react';
-
+import { useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from 'firebaseconfig';
+import { changeUserState } from 'redux/userSlice';
+import axios from 'axios';
 
 function MyApp({ Component, pageProps, categories }) {
   store.dispatch(addCategories(categories))
 
+  useEffect(() => {
+    onAuthStateChanged(auth, async user => {
+      if (user?.email) {
+        const userData = await axios.get(`/api/auth?email=${user.email}`)
+        store.dispatch(changeUserState(userData.data.userData));
+      }
+      else
+        store.dispatch(changeUserState(null))
+    })
+  }, []);
+
   return (
     <Provider store={store}>
-      <SessionProvider session={pageProps?.session} refetchOnWindowFocus={true}>
       <main className='overflow-x-hidden'>
         {Component.getLayout ? Component.getLayout(
           <>
@@ -35,7 +48,6 @@ function MyApp({ Component, pageProps, categories }) {
           </>
         )}
       </main>
-      </SessionProvider>
     </Provider>
   );
 }
