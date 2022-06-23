@@ -114,7 +114,7 @@ export default function HeaderBottom() {
                 {savedPrds?.length ? <span className={smallIconClassName}>{savedPrds?.length}</span> : null}
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/cart">
               <a className='flex flex-col items-center font-medium text-base relative'>
                 <FiShoppingBag className='text-[22px]' />
                 <span className='hidden lg:block mt-2'>Savatcha</span>

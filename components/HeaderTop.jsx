@@ -6,8 +6,11 @@ import { Logo, LanguageSelect } from 'subcomponents';
 import { ChartIcon } from 'subcomponents/Icons';
 import { FaRegHeart } from 'react-icons/fa';
 import CategoryBtn from 'subcomponents/CategoryBtn';
+import { CallModal } from "components";
 
 export default function HeaderTop() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <div className='border-b-[1px] border-[#68386b] md:block hidden'>
@@ -57,13 +60,17 @@ export default function HeaderTop() {
                   +998 (71) 202 20 21
                 </a>
               </li>
-              <li className='lg:p-2 lg:border-2 border-solid rounded-lg w-max'>
+              <li
+                onClick={() => setShowModal(true)}
+                className='lg:p-2 lg:border-2 border-solid rounded-lg w-max cursor-pointer'
+              >
                 <BsTelephone className='w-6 h-6 lg:hidden' />
                 <span className='text-base font-medium hidden lg:block'>Qo&lsquo;ng&lsquo;iroq qilishni so&lsquo;rash</span>
               </li>
             </ul>
           </div>
         </div>
+        {showModal && <CallModal setShowModal={setShowModal} />}
       </div>
       <div className='md:hidden flex justify-between items-center pt-5 pb-3 bg-white px-5'>
         <div className="flex items-center">

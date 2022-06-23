@@ -7,13 +7,10 @@ import { BiX } from 'react-icons/bi';
 import { MdNavigateNext } from "react-icons/md";
 import { CompareFullBtn, ProductVarieties, ProductRates } from 'subcomponents';
 import { ProductEventBtns, SplideSlider } from 'components';
-import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProductModal({ toggleModal, product, price }) {
-  const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod, id } = product;
+  const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod, id, quantity } = product;
   const [mainImgs, setMainImgs] = useState(image);
-  const { comparedPrds, basket } = useSelector(state => state.product);
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -59,7 +56,7 @@ export default function ProductModal({ toggleModal, product, price }) {
             <div className='grid grid-cols-1 gap-y-2 items-baseline w-96'>
               <div className='flex items-center'>
                 <p className='text-gray-900 text-[30px] font-bold mr-2.5'>{getFormattedPrice(price)} so&lsquo;m</p>
-                {discount && discount > 0 && <p className='text-red text-base font-medium line-through'>{getFormattedPrice(totlaPrice)} so&lsquo;m</p>}
+                {discount ? <p className='text-red text-base font-medium line-through'>{getFormattedPrice(totlaPrice)} so&lsquo;m</p> : null}
               </div>
               <p className='text-gray-400 text-base font-medium'>{monthlyPay && `${getFormattedPrice(monthlyPay?.monthlyPrice)} so'mdan/oyiga`}</p>
               <div>
@@ -71,7 +68,15 @@ export default function ProductModal({ toggleModal, product, price }) {
             </div>
           </div>
           <div className='md:col-span-2 xl:col-span-1 xl:col-start-2'>
-            <ProductEventBtns />
+            {quantity
+              ? <ProductEventBtns id={id} toggleModal={toggleModal} />
+              : (
+                <div className='flex items-center gap-x-4'>
+                  <p className='text-red text-base font-medium uppercase'>OMBORDA MAVJUD EMAS</p>
+                  <button className='bg-red text-white hover:bg-white hover:text-black font-bold py-2 px-4 rounded-full focus:outline-none border text-sm'>Oldindan buyurtma berish</button>
+                </div>
+              )
+            }
           </div>
           <Link href={`/product/${slug}`}>
             <a className='md:col-span-2 xl:col-span-1 xl:col-start-2 pl-3 py-5 xl:border-t pr-10 text-red flex items-center'>

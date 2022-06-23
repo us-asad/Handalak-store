@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@datobs/react-image-magnifiers": "^1.4.6",
+    "@emailjs/browser": "^3.6.2",
     "@popperjs/core": "^2.11.5",
     "@reduxjs/toolkit": "^1.8.2",
     "@splidejs/react-splide": "^0.7.8",

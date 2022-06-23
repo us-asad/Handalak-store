@@ -19,3 +19,4 @@ export { default as PrdComments } from "./PrdComments";
 export { default as MobileNavbar } from "./MobileNavbar";
 export { default as CommentCard } from "./CommentCard";
 export { default as LoginModal } from "./LoginModal";
+export { default as CallModal } from "./CallModal";

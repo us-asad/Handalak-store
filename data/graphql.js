@@ -59,6 +59,7 @@ export const getProducts = async () => {
         id
         comments
         discount
+        quantity
         manufacturer {
           name
         }
@@ -380,6 +381,7 @@ export const getProductsById = async prds => {
         price
         discount
         id
+        quantity
       }
     }
   `;
