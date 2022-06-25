@@ -1,5 +1,6 @@
 import { buffer } from "micro";
 import { gql, GraphQLClient } from "graphql-request";
+import { convertCurrency } from "data/api";
 
 const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_API, {
   headers: {
@@ -60,8 +61,8 @@ export default async function handler(req, res) {
       const sessionData = {
         email: session.metadata.email,
         id: session.id,
-        amount_subtotal: session.amount_subtotal,
-        amount_total: session.amount_total,
+        amount_subtotal: convertCurrency("USD", "USZ", session.amount_subtotal),
+        amount_total: convertCurrency("USD", "USZ", session.amount_total),
         address: session.customer_details.address,
         coupon: coupon || null,
         products: prds,

@@ -1,28 +1,12 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
-import { convertCurrency } from 'data/api';
 import { getFormattedPrice } from 'data';
 
 export default function OrderCard({ id, amount_subtotal, amount_total, coupon, customer_email, customer_name, date, products, address, email }) {
-  const [amount, setAmount] = useState({ total: 0, subtotal: 0 });
   const [openImgs, setOpenImgs] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
   const copyId = () => navigator.clipboard.writeText(id);
-
-  useEffect(() => {
-    const changeAmount = async () => {
-      const subtotal = await convertCurrency("USD", "UZS", amount_total);
-      let total = null;
-      if (amount_subtotal !== amount_total) {
-        total = await convertCurrency("USD", "UZS", amount_subtotal);
-      }
-
-      setAmount({ subtotal, total });
-    }
-
-    changeAmount();
-  }, []);
 
   return (
     <div className='rounded-xl bg-gray-100 p-5'>
@@ -76,11 +60,11 @@ export default function OrderCard({ id, amount_subtotal, amount_total, coupon, c
         </summary>
         <div className='overflow-x-auto'>
           <ul className='space-y-1 w-max p-4 !font-serif border-t border-gray-300'>
-            {amount.total
+            {amount_subtotal
               ? (
                 <li className='font-sans space-x-2'>
                   <span>Umumiy:</span>
-                  <b>{getFormattedPrice(amount.total)} so&apos;m</b>
+                  <b>{getFormattedPrice(amount_subtotal)} so&apos;m</b>
                 </li>
               )
               : null
@@ -93,7 +77,7 @@ export default function OrderCard({ id, amount_subtotal, amount_total, coupon, c
             )}
             <li className='font-sans space-x-2'>
               <span>Jami:</span>
-              <b>{getFormattedPrice(amount.subtotal)} so&apos;m</b>
+              <b>{getFormattedPrice(amount_subtotal)} so&apos;m</b>
             </li>
             <li className='font-sans space-x-2'>
               <span>Xarid qiluvchi emaili:</span>

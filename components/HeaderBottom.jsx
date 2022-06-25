@@ -9,7 +9,7 @@ import { LoginModal } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { HiLogout } from 'react-icons/hi';
 import { signOutAccount } from 'redux/userSlice';
-import { toggleBodyOverflow } from 'data';
+import { hideBodyOverflow, toggleBodyOverflow } from 'data';
 
 const maxScrollSize = 300;
 const smallIconClassName = "text-xs font-medium py-1 px-1.5 rounded-lg absolute -top-[11px] right-[12px] bg-black text-white";
@@ -23,7 +23,7 @@ export default function HeaderBottom() {
 
   const toggleLoginModal = state => {
     setShowLoginModal(state);
-    toggleBodyOverflow();
+    hideBodyOverflow(state);
   }
 
   const handleSignOut = () => {
