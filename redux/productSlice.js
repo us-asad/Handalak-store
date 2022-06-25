@@ -20,8 +20,8 @@ const handleLocalStorage = (payload, name, type) => {
     const i = items.indexOf(payload);
     items.splice(i, i > -1 ? 1 : 0 );
   }
-console.log("worked")
-  setCookies(name, items);
+
+  setCookies(name, items.filter(Boolean));
   return items;
 }
 

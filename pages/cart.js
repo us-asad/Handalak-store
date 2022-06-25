@@ -139,8 +139,3 @@ export async function getServerSideProps({ req, res }) {
     }
   }
 }
-
-/*
-<span class="flex items-center justify-center">
-  <img src="data:image/svg+xml;base64,++Cg==" alt="spin-circle" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"></span>
-*/

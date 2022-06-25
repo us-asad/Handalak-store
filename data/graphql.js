@@ -449,8 +449,8 @@ export const getOrdersWithPrdImages = async orders => {
     }
   `;
 
-  for (let i = 0; i < orders.length; i++) {
-    for (let j = 0; j < orders[i].products.length; j++) {
+  for (let i = 0; i < orders?.length; i++) {
+    for (let j = 0; j < orders[i].products?.length; j++) {
       const result = await request(graphqlApi, query, { id: orders[i].products[j].id });
       orders[i].products[j].images = result.product.image;
       delete orders[i].products[j].quantity;
