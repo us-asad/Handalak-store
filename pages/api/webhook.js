@@ -57,12 +57,13 @@ export default async function handler(req, res) {
       let { userData: { purchasedProducts, orders } } = await client.request(getPurchasedProductsQry, { email: session.metadata.email });
       const prds = JSON.parse(session.metadata.items);
       const coupon = JSON.parse(session.metadata.coupon);
-
+      const amount_subtotal = await convertCurrency("USD", "UZS", session.amount_subtotal);
+      const amount_total = await convertCurrency("USD", "UZS", session.amount_total);
       const sessionData = {
         email: session.metadata.email,
         id: session.id,
-        amount_subtotal: convertCurrency("USD", "USZ", session.amount_subtotal),
-        amount_total: convertCurrency("USD", "USZ", session.amount_total),
+        amount_subtotal,
+        amount_total,
         address: session.customer_details.address,
         coupon: coupon || null,
         products: prds,
@@ -79,7 +80,7 @@ export default async function handler(req, res) {
       await client.request(updateQuery, {
         email: session.metadata.email,
         orders: orders ? [sessionData, ...orders] : [sessionData],
-        purchasedProducts: purchasedProducts ? [...new Set([...purchasedProducts, ...prds.map(({id}) => id)])] : prds.map(({id}) => id),
+        purchasedProducts: purchasedProducts ? [...new Set([...purchasedProducts, ...prds.map(({ id }) => id)])] : prds.map(({ id }) => id),
         code: coupon.code || "0",
         codeQty: coupon.count - 1
       });

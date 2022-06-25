@@ -60,11 +60,11 @@ export default function OrderCard({ id, amount_subtotal, amount_total, coupon, c
         </summary>
         <div className='overflow-x-auto'>
           <ul className='space-y-1 w-max p-4 !font-serif border-t border-gray-300'>
-            {amount_subtotal
+            {amount_total
               ? (
                 <li className='font-sans space-x-2'>
                   <span>Umumiy:</span>
-                  <b>{getFormattedPrice(amount_subtotal)} so&apos;m</b>
+                  <b>{getFormattedPrice(amount_total)} so&apos;m</b>
                 </li>
               )
               : null
