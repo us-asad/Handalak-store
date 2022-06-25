@@ -20,3 +20,6 @@ export { default as MobileNavbar } from "./MobileNavbar";
 export { default as CommentCard } from "./CommentCard";
 export { default as LoginModal } from "./LoginModal";
 export { default as CallModal } from "./CallModal";
+export { default as EmptyCart } from "./EmptyCart";
+export { default as OrderCard } from "./OrderCard";
+export { default as Comment } from "./Comment";

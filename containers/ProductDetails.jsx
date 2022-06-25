@@ -9,12 +9,12 @@ import { HiOutlineDocumentText } from 'react-icons/hi';
 import { PrdComments, PrdDescription, PrdInfo } from 'components';
 
 export default function ProductDetails(props) {
-  const { name, description, image, price: totlaPrice, comments, features } = props;
+  const { name, description, image, price: totlaPrice, comments, slug, features, id } = props;
   const router = useRouter();
 
   return (
-    <div className='items-start lg:flex '>
-      <div className='mb-4 rounded-md shadow-2 overflow-x-auto lg:w-2/6 lg:mb-0 lg:mr-4 lg:overflow-hidden xl:w-1/4'>
+    <div className='items-start lg:flex mt-5 lg:mt-0'>
+      <div className='mb-4 rounded-md shadow-2 overflow-x-auto min-w-[300px] lg:w-2/6 lg:mb-0 lg:mr-4 lg:overflow-hidden xl:w-1/4'>
         <div className='overflow-hidden py-4 hidden lg:flex justify-center items-center'>
           <Image
             src={image[0].url}
@@ -56,7 +56,7 @@ export default function ProductDetails(props) {
           ))}
         </ul>
       </div>
-      <div className='w-full relative rounded-md shadow-2 p-4'>
+      <div className='lg:max-w-[75%] relative rounded-md shadow-2 p-4'>
         <h3 className='text-[18px] font-bold md:font-medium md:text-[30px] text-black mb-6'>
           {name} haqida&nbsp;
           {{
@@ -69,7 +69,7 @@ export default function ProductDetails(props) {
           {
             undefined: <PrdDescription description={description} />,
             "info": <PrdInfo features={features} />,
-            "comments": <PrdComments comments={comments} />
+            "comments": <PrdComments image={image} name={name} id={id} comments={comments} slug={slug} />
           }[router.query.productSlug[1]]
         }
       </div>

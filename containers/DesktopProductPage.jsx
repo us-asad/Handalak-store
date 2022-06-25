@@ -1,5 +1,5 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { ProductEventBtns } from 'components';
+import { Comment, ProductEventBtns } from 'components';
 import { ProductDetails } from 'containers';
 import { getDiscountedPrice, getFormattedPrice } from 'data';
 import Image from 'next/image';
@@ -66,7 +66,7 @@ export default function DesktopProductPage({
       <h1 className='mt-2.5 mb-5 text-black text-3xl'>{name}</h1>
       <div className='grid grid-flow-col auto-cols-max gap-4'>
         <ProductRates comments={comments} />
-        <p className='text-gray-800 text-base font-medium'>{comments.length} sharh{comments.length > 1 ? "lar" : ""}</p>
+        <p className='text-gray-800 text-base font-medium'>{comments?.length} sharh{comments?.length > 1 ? "lar" : ""}</p>
         <CompareFullBtn />
         <button
           ref={setTriggerRef}

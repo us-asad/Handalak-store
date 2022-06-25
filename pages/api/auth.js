@@ -12,8 +12,7 @@ const GetUserByEmail = gql`
       id
       name
       email
-      savedProducts
-      comparedProducts
+      purchasedProducts
     }
   }
 `;
@@ -24,8 +23,7 @@ const CreateNextUserByEmail = gql`
       id
       name
       email
-      savedProducts
-      comparedProducts
+      purchasedProducts
     }
     publishUserData(where: { email: $email }) {
       id

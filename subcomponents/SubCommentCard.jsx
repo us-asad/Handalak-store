@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { UpIcon } from './Icons';
 
-export default function SubCommentCard({ createdAt, text, replies }) {
+export default function SubCommentCard({ createdAt, text, replies, userName }) {
   const [showReplies, setShowReplies] = useState(false); 
 
   return (
@@ -18,7 +18,7 @@ export default function SubCommentCard({ createdAt, text, replies }) {
           />
         </div>
         <div className='w-full'>
-          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>John Brain</p>
+          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>{userName}</p>
           <p className='text-sm leading-4 text-gray-500 mt-2'>{createdAt}</p>
           <p className='text-black text-base leading-5 line-clamp-6 py-4'>{text}</p>
           <div className='flex items-center space-x-4'>

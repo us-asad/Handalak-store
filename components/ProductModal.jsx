@@ -8,19 +8,19 @@ import { MdNavigateNext } from "react-icons/md";
 import { CompareFullBtn, ProductVarieties, ProductRates } from 'subcomponents';
 import { ProductEventBtns, SplideSlider } from 'components';
 
-export default function ProductModal({ toggleModal, product, price }) {
+export default function ProductModal({ showModalFunc, product, price }) {
   const { name, subtitle, discount, image, monthlyPay, price: totlaPrice, slug, comments, warrantyPeriod, id, quantity } = product;
   const [mainImgs, setMainImgs] = useState(image);
 
   return (
     <>
       <div
-        onClick={toggleModal}
+        onClick={() => showModalFunc(false)}
         className='fixed top-0 left-0 w-screen h-screen z-50 !m-0 bg-[#ff000057] custom-transition'
       />
       <div className='fixed top-0 left-0 h-screen w-[88vw] z-[51] mx-auto bg-white overflow-y-auto py-16 px-8 translate-x-[6vw]'>
         <button
-          onClick={toggleModal}
+          onClick={() => showModalFunc(false)}
           className='w-[42px] h-[42px] absolute top-3 right-5 text-[30px] hover:text-white hover:bg-blue-400 rounded-full grid place-content-center'
         >
           <BiX />
@@ -30,7 +30,7 @@ export default function ProductModal({ toggleModal, product, price }) {
             <h3 className='text-black text-3xl mb-2 text-left'>{name}</h3>
             <div className='grid grid-flow-col auto-cols-max gap-4'>
               <ProductRates comments={comments} />
-              <p className='text-gray-800 text-base font-medium'>{comments.length} {comments.length > 1 ? "sharhlar" : "sharh"}</p>
+              <p className='text-gray-800 text-base font-medium'>{comments?.length} {comments?.length > 1 ? "sharhlar" : "sharh"}</p>
               <CompareFullBtn id={id} />
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function ProductModal({ toggleModal, product, price }) {
           </div>
           <div className='md:col-span-2 xl:col-span-1 xl:col-start-2'>
             {quantity
-              ? <ProductEventBtns id={id} toggleModal={toggleModal} />
+              ? <ProductEventBtns id={id} showModalFunc={showModalFunc} />
               : (
                 <div className='flex items-center gap-x-4'>
                   <p className='text-red text-base font-medium uppercase'>OMBORDA MAVJUD EMAS</p>

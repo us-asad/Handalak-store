@@ -21,7 +21,7 @@ export default function CommentCard({ comment }) {
       </div>
       <div className='w-full'>
         <div>
-          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>John Brain</p>
+          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>{comment?.userName}</p>
           <div className='mt-2 flex space-x-2 items-center'>
             <ProductRates rates={rating} small />
             <span className='text-sm leading-4 text-gray-500'>{createdAt}</span>

@@ -1,26 +1,23 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from 'redux/basketSlice';
+import { addBasketPrd } from 'redux/productSlice';
 
-export default function ProductEventBtns({ short, id, toggleModal }) {
+export default function ProductEventBtns({ short, id, showModalFunc }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { items } = useSelector(state => state.basket);
-  let isAdded = items.findIndex(item => item.id === id);
+  const { basket } = useSelector(state => state.product);
+  const isAdded = basket.findIndex(item => item === id);
 
   const addToCart = () => {
-    console.log(items, id, "first")
     if (isAdded === -1)
-      dispatch(addItem(id));
+      dispatch(addBasketPrd(id));
     else {
-      toggleModal();
+      showModalFunc(false);
       router.push("/cart");
     }
-    console.log(items, id, "second")
-
   }
-console.log(items, id)
+console.log(basket, id, isAdded)
   return (
     <div className={`grid gap-x-4 ${short ? "grid-flow-col auto-cols-max" : "grid-cols-3"}`}>
       <button

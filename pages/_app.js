@@ -13,6 +13,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'firebaseconfig';
 import { changeUserState } from 'redux/userSlice';
 import axios from 'axios';
+import { getCookies, removeCookies, setCookies } from 'cookies-next';
 
 function MyApp({ Component, pageProps, categories }) {
   store.dispatch(addCategories(categories))
@@ -20,13 +21,21 @@ function MyApp({ Component, pageProps, categories }) {
   useEffect(() => {
     onAuthStateChanged(auth, async user => {
       if (user?.email) {
+        setCookies("user_email", auth?.currentUser?.email);
         const userData = await axios.get(`/api/auth?email=${user.email}`)
         store.dispatch(changeUserState(userData.data.userData));
       }
-      else
-        store.dispatch(changeUserState(null))
-    })
+      else {
+        store.dispatch(changeUserState(null));
+        removeCookies("user_email");
+      }
+    });
   }, []);
+
+  if (auth?.currentUser?.email)
+    setCookies("user_email", auth?.currentUser?.email);
+  else
+    removeCookies("user_email");
 
   return (
     <Provider store={store}>

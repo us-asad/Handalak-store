@@ -4,10 +4,9 @@ import React, { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeartBtn, ShareBtn, CompareBtn } from 'subcomponents';
 import { DeliveryTruck } from 'subcomponents/Icons';
-import { getFormattedPrice, toggleBodyOverflow } from 'data';
+import { getFormattedPrice, hideBodyOverflow } from 'data';
 import ProductModal from './ProductModal';
 import { ShareBox } from 'subcomponents';
-import { useSelector } from 'react-redux';
 
 export default function ProductCard(props) {
   const [showModal, setShowModal] = useState(false);
@@ -23,19 +22,18 @@ export default function ProductCard(props) {
     closeOnOutsideClick: false,
     visible: isVisible
   });
-  const { savedPrds } = useSelector(state => state.product);
 
   const { name, discount, image, monthlyPay, price: totlaPrice, slug, category, delivery, className, id } = props;
   const price = totlaPrice - (totlaPrice * (discount / 100));
 
-  const toggleModal = () => {
-    setShowModal(prev => !prev);
-    toggleBodyOverflow();
+  const showModalFunc = state => {
+    setShowModal(state);
+    hideBodyOverflow(state);
   }
 
   return (
     <>
-      {showModal && <ProductModal price={price} product={props} toggleModal={toggleModal} />}
+      {showModal && <ProductModal price={price} product={props} showModalFunc={showModalFunc} />}
       <div className={`w-52 md:w-full h-full rounded-lg transition duration-300 hover:shadow-1 flex flex-col justify-between py-8 p-4 relative ${className}`}>
         <Link href={`/product/${slug || ""}`}>
           <a className='absolute inset-0'></a>
@@ -93,7 +91,7 @@ export default function ProductCard(props) {
             <p className='h-12 text-[13px] md:text-[17px] text-gray-800 font-sans font-light leading-5 my-2.5 line-clamp-2'>{name}</p>
             <div className='flex items-center justify-between mt-2 leading-5'>
               <button
-                onClick={toggleModal}
+                onClick={() => showModalFunc(true)}
                 className='w-40 relative shadow-xl text-tiny font-medium border rounded-full py-2 px-5 mr-4 border-gray-800 text-gray-800'
               >
                 Xarid qilish

@@ -46,8 +46,7 @@ const productSlice = createSlice({
     },
     removeBasketPrd: (state, { payload }) => {
       state.basket = handleLocalStorage(payload, "basket");
-    },
-    
+    }
   },
 });
 

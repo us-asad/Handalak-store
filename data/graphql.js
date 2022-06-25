@@ -350,7 +350,22 @@ export const getProductDetails = async slug => {
     }  
   `;
 
+  const userQry = gql`
+    query GetUserName($id: ID!) {
+      userData(where: { id: $id }) {
+        name
+      }
+    }
+  `;
+
   const result = await request(graphqlApi, query, { slug });
+  const prd = result?.product;
+
+  for (let i = 0; i < prd?.comments?.length; i++) {
+    const user = await request(graphqlApi, userQry, { id: prd.comments[i].userId });
+    prd.comments[i].userName = user.userData.name;
+  }
+
   return result?.product;
 }
 
@@ -393,4 +408,54 @@ export const getProductsById = async prds => {
   }
 
   return result;
+}
+
+export const checkCupon = async code => {
+  const query = gql`
+    query MyQuery($code: String!) {
+      cupon(where: {code: $code}) {
+        code
+        count
+        percentOff
+      }
+    }  
+  `;
+
+  const result = await request(graphqlApi, query, { code });
+  return result;
+}
+
+export const getUserOrders = async email => {
+  const query = gql`
+    query GetUserOrders($email: String!) {
+      userData(where: { email: $email }) {
+        orders
+      }
+    }
+  `;
+
+  const result = await request(graphqlApi, query, { email });
+  return result?.userData?.orders;
+}
+
+export const getOrdersWithPrdImages = async orders => {
+  const query = gql`
+    query GetPrdImages($id: ID!) {
+      product(where: { id: $id }) {
+        image {
+          url
+        }
+      }
+    }
+  `;
+
+  for (let i = 0; i < orders.length; i++) {
+    for (let j = 0; j < orders[i].products.length; j++) {
+      const result = await request(graphqlApi, query, { id: orders[i].products[j].id });
+      orders[i].products[j].images = result.product.image;
+      delete orders[i].products[j].quantity;
+    }
+  }
+
+  return orders;
 }

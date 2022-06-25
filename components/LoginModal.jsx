@@ -8,7 +8,7 @@ export default function LoginModal({ toggleLoginModal }) {
   const [login, setLogin] = useState(true);
   const formRef = useRef(null);
   const dispatch = useDispatch();
-  const { error, message, user } = useSelector(state => state.user);
+  const { error, message, user, loading } = useSelector(state => state.user);
 
   const handleAuth = async e => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function LoginModal({ toggleLoginModal }) {
 
   return (
     <>
-      <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[21] py-16 px-12 space-y-4'>
+      <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[51] py-16 px-12 space-y-4'>
         <h4 className='text-3xl leading-9 text-black'>
           {login
             ? "Kirish"
@@ -99,7 +99,7 @@ export default function LoginModal({ toggleLoginModal }) {
       </div>
       <div
         onClick={() => toggleLoginModal(false)}
-        className='fixed top-0 left-0 w-full h-full z-20 bg-grad opacity-50'
+        className='fixed top-0 left-0 w-full h-full z-[50] bg-grad opacity-50'
       />
     </>
   );

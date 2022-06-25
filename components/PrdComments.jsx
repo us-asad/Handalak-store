@@ -1,9 +1,19 @@
 import { ProductRates } from 'subcomponents'
-import { CommentCard } from "components"
+import { Comment, CommentCard } from "components"
 import Link from 'next/link';
 import { BsChevronRight } from 'react-icons/bs';
+import { useState } from 'react';
+import { hideBodyOverflow } from 'data';
 
-export default function PrdComments({ comments, prdSlug }) {
+export default function PrdComments({ comments: c, slug, id, name, image }) {
+  const [openCmtModal, setOpenCmtModal] = useState(false);
+  const [comments, setComments] = useState(c || []);
+
+  const toggleModal = state => {
+    setOpenCmtModal(state);
+    hideBodyOverflow(state);
+  }
+
   return (
     <>
       <div className='hidden md:block space-y-4'>
@@ -17,7 +27,10 @@ export default function PrdComments({ comments, prdSlug }) {
             <div className='w-max mx-auto'>
               <ProductRates comments={comments} />
             </div>
-            <button className='px-4 py-2 focus:outline-none w-full text-white font-bold rounded-xl bg-red mt-4'>
+            <button
+              onClick={() => toggleModal(true)}
+              className='px-4 py-2 focus:outline-none w-full text-white font-bold rounded-xl bg-red mt-4'
+            >
               Izox qoldiring
             </button>
           </div>
@@ -50,16 +63,16 @@ export default function PrdComments({ comments, prdSlug }) {
               {comments.length} sharhlar
             </p>
             <ProductRates comments={comments} />
-            <ul className='overflow-scroll grid grid-flow-col mt-4 max-w-full gap-x-4'>
-              {comments.slice(0, 8).map(({rating, text}, i) => (
+            <ul className='overflow-auto grid grid-flow-col mt-4 max-w-full gap-x-4'>
+              {comments.slice(0, 8).map(({rating, text, userName}, i) => (
                 <li key={`comment_${i}`} className='rounded-2xl bg-gray-100 p-4 min-w-[208px] space-y-2'>
-                  <p className='font-medium mr-2 text-black text-lg leading-6 line-clamp-1'>John Brain</p>
+                  <p className='font-medium mr-2 text-black text-lg leading-6 line-clamp-1'>{userName}</p>
                   <ProductRates rates={rating} small />
                   <p className='text-black text-base leading-5 line-clamp-6'>{text}</p>
                 </li>
               ))}
             </ul>
-            <Link href={`/review/${prdSlug}`}>
+            <Link href={`/review/${slug}`}>
               <a className='mt-4 flex items-center justify-center py-2 px-4 w-full rounded-lg bg-gray-100 border-0 focus:outline-none'>
                 <span className='text-base font-medium leading-5 text-black mr-2'>Barcha sharhlarni ko&apos;rish</span>
                 <BsChevronRight className='text-[10px]' />
@@ -67,10 +80,22 @@ export default function PrdComments({ comments, prdSlug }) {
             </Link>
           </div>
         </div>
-        <button className='w-full font-bold rounded-lg bg-green-600 text-white focus:outline-none border-0 px-4 py-2 mt-4'>
+        <button
+          onClick={() => toggleModal(true)}
+          className='w-full font-bold rounded-lg bg-green-600 text-white focus:outline-none border-0 px-4 py-2 mt-4'
+        >
           Fikr qoldiring
         </button>
       </div>
+      <Comment
+        setComments={setComments}
+        comments={comments}
+        openCmtModal={openCmtModal}
+        toggleModal={toggleModal}
+        id={id}
+        name={name}
+        image={image[0]}
+      />
     </>
   );
 }
