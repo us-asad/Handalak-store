@@ -2,19 +2,13 @@ import { ProductRates } from 'subcomponents'
 import { Comment, CommentCard } from "components"
 import Link from 'next/link';
 import { BsChevronRight } from 'react-icons/bs';
-import { useState } from 'react';
-import { getPercentAgeOfRate, getRating, hideBodyOverflow } from 'data/functions';
-import { useSelector } from 'react-redux';
+import { getPercentAgeOfRate, getRating } from 'data/functions';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleModal } from 'redux/slices/toggleModal';
 
-export default function PrdComments({ comments: c, slug, id, name, image }) {
-  const [openCmtModal, setOpenCmtModal] = useState(false);
-  const [comments, setComments] = useState(c || []);
-  const { user } = useSelector(state => state.user);
-
-  const toggleModal = state => {
-    setOpenCmtModal(state);
-    hideBodyOverflow(state);
-  }
+export default function PrdComments() {
+  const { user: { user }, product: { comments, slug } } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -24,14 +18,14 @@ export default function PrdComments({ comments: c, slug, id, name, image }) {
             <p className='text-dc-gray-8 font-bold text-5xl'>{getRating(comments)}</p>
             <p className='pt-2 pb-3.5 text-gray-400 font-medium text-base'>
               asosida <br />
-              {comments.length} sharhlar
+              {comments?.length} sharhlar
             </p>
             <div className='w-max mx-auto'>
               <ProductRates comments={comments} />
             </div>
-            {user?.email && (
+            {user?.id && (
               <button
-                onClick={() => toggleModal(true)}
+                onClick={() => dispatch(toggleModal(["commentModal", true]))}
                 className='px-4 py-2 focus:outline-none w-full text-white font-bold rounded-xl bg-red mt-4'
               >
                 Izox qoldiring
@@ -56,7 +50,7 @@ export default function PrdComments({ comments: c, slug, id, name, image }) {
           </ul>
         </div>
         <div className='grid grid-cols-1 gap-y-6 divide-y'>
-          {comments?.map((cmt, i) => <CommentCard key={i} prdId={id} comment={cmt} comments={comments} setComments={setComments} />)}
+          {comments?.map((cmt, i) => <CommentCard key={i} {...cmt} />)}
         </div>
       </div>
       <div className='md:hidden'>
@@ -64,11 +58,11 @@ export default function PrdComments({ comments: c, slug, id, name, image }) {
           <div className='py-4 flex flex-col items-center overflow-hidden'>
             <p className='font-bold text-lg leading-6 text-black text-center'>
               {getRating(comments)} / 5 <br />
-              {comments.length} sharhlar
+              {comments?.length} sharhlar
             </p>
             <ProductRates comments={comments} />
             <ul className='overflow-auto grid grid-flow-col mt-4 max-w-full gap-x-4'>
-              {comments.slice(0, 8).map(({ rating, text, userName }, i) => (
+              {comments?.slice(0, 8).map(({ rating, text, userName }, i) => (
                 <li key={`comment_${i}`} className='rounded-2xl bg-gray-100 p-4 min-w-[208px] space-y-2'>
                   <p className='font-medium mr-2 text-black text-lg leading-6 line-clamp-1'>{userName}</p>
                   <ProductRates rates={rating} small />
@@ -85,21 +79,13 @@ export default function PrdComments({ comments: c, slug, id, name, image }) {
           </div>
         </div>
         <button
-          onClick={() => toggleModal(true)}
+          onClick={() => dispatch(toggleModal(["commentModal", true]))}
           className='w-full font-bold rounded-lg bg-green-600 text-white focus:outline-none border-0 px-4 py-2 mt-4'
         >
           Fikr qoldiring
         </button>
       </div>
-      <Comment
-        setComments={setComments}
-        comments={comments}
-        openCmtModal={openCmtModal}
-        toggleModal={toggleModal}
-        id={id}
-        name={name}
-        image={image[0]}
-      />
+      <Comment />
     </>
   );
 }

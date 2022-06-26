@@ -7,20 +7,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
+import { useSelector } from 'react-redux';
 import { CompareFullBtn, ProductRates, ProductVarieties, ShareBox } from 'subcomponents';
 import { DeliveryTruck, ShareIcon } from 'subcomponents/Icons';
 
 export default function DesktopProductPage({
   mainImgs,
   setMainImgs,
-  product,
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const {
     getTooltipProps,
     setTooltipRef,
     setTriggerRef,
-    visible,
   } = usePopperTooltip({
     trigger: 'hover',
     placement: 'right',
@@ -29,8 +28,8 @@ export default function DesktopProductPage({
   });
   const splideRef = useRef(null);
   const router = useRouter();
-  const { name, discount, image, monthlyPay, price, comments, slug, category, id, delivery, subtitle, manufacturer, seller, supplier, varieties, warrantyPeriod } = product;
-  console.log(price, "Price")
+  const { name, discount, monthlyPay, price, comments, category, id, delivery, subtitle, manufacturer, seller, supplier, warrantyPeriod } = useSelector(state => state.product);
+
   const handleClick = i => {
     splideRef.current.go(i)
   }
@@ -65,7 +64,7 @@ export default function DesktopProductPage({
       <h1 className='mt-2.5 mb-5 text-black text-3xl'>{name}</h1>
       <div className='grid grid-flow-col auto-cols-max gap-4'>
         <ProductRates comments={comments} />
-        <p className='text-gray-800 text-base font-medium'>{comments?.length} sharh{comments?.length > 1 ? "lar" : ""}</p>
+        <p className='text-gray-800 text-base font-medium'>{comments?.length || 0} sharh{comments?.length > 1 ? "lar" : ""}</p>
         <CompareFullBtn id={id} />
         <button
           ref={setTriggerRef}
@@ -84,7 +83,7 @@ export default function DesktopProductPage({
             {...getTooltipProps({ className: 'tooltip-container' })}
             className='absolute z-[11] -top-[9px] left-[28px]'
           >
-            <ShareBox slug={slug} />
+            <ShareBox />
           </div>
         )}
       </div>
@@ -99,7 +98,7 @@ export default function DesktopProductPage({
                   onClick={() => handleClick(i)}
                 >
                   <Image
-                    src={url}
+                    src={url || "/loading.gif"}
                     alt={name}
                     width={72}
                     height={72}
@@ -112,7 +111,7 @@ export default function DesktopProductPage({
                 {mainImgs?.map(({ url }) => (
                   <SplideSlide key={url}>
                     <Image
-                      src={url}
+                      src={url || "/loading.gif"}
                       alt={name}
                       width={397}
                       height={397}
@@ -135,7 +134,7 @@ export default function DesktopProductPage({
             <p className='break-words text-base leading-5 text-gray-500 py-2'>
               {subtitle}
             </p>
-            <ProductVarieties name={name} image={image} varieties={varieties} setMainImgs={setMainImgs} />
+            <ProductVarieties setMainImgs={setMainImgs} />
           </div>
         </div>
         <div className='lg:col-span-3 lg:row-start-auto md:col-span-4 md:col-start-8 md:row-start-1'>
@@ -144,7 +143,7 @@ export default function DesktopProductPage({
               <Link href={`/manufacturer/${manufacturer?.slug}`}>
                 <a>
                   <Image
-                    src={manufacturer?.logo?.url}
+                    src={manufacturer?.logo?.url || "/loading.gif"}
                     alt={manufacturer?.name}
                     width={80}
                     height={80}
@@ -178,10 +177,10 @@ export default function DesktopProductPage({
           </div>
         </div>
         <div className='md:col-span-12 lg:col-start-6 lg:col-end-13'>
-          <ProductEventBtns short id={id} />
+          <ProductEventBtns short />
         </div>
       </div>
-      <ProductDetails {...product} />
+      <ProductDetails />
     </div>
   )
 }

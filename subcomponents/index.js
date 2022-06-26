@@ -1,7 +1,6 @@
 export { default as Logo } from "./Logo";
 export { default as SearchForm } from "./SearchForm";
 export { default as LanguageSelect } from "./LanguageSelect";
-export { default as AppWrapper } from "./AppWrapper";
 export { default as DetailItem } from "./DetailItem";
 export { default as CompareBtn } from "./CompareBtn";
 export { default as ShareBtn } from "./ShareBtn";

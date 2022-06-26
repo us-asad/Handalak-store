@@ -2,7 +2,7 @@ import { getRating } from 'data/functions'
 import React from 'react'
 import { BsFillStarFill } from 'react-icons/bs'
 
-export default function ProductRates({ comments, small, rates = null }) {
+export default function ProductRates({ small, rates = null, comments }) {
   return (
     <ul className='flex space-x-1'>
       {[...Array(5)].map((_, i) => (

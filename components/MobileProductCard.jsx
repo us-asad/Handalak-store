@@ -8,7 +8,6 @@ import { CompareBtn, HeartBtn, ShareBox, ShareBtn } from 'subcomponents';
 export default function MobileProductCard(props) {
   const [isVisible, setIsVisible] = useState(false)
   const {
-    getArrowProps,
     getTooltipProps,
     setTooltipRef,
     setTriggerRef,
@@ -20,7 +19,7 @@ export default function MobileProductCard(props) {
     visible: isVisible,
   })
 
-  const { name, discount, image, monthlyPay, price: totlaPrice, slug, category, delivery, className } = props;
+  const { name, discount, image, price: totlaPrice, slug, category } = props;
   const price = totlaPrice - (totlaPrice * (discount / 100));
 
   return (

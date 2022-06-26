@@ -149,7 +149,7 @@ export default function Footer() {
         </div>
         <div className='border-t border-solid py-8 text-base font-medium border-black text-gray-400'>
           <div className='mx-auto flex justify-between items-center flex-col md:flex-row custom-container'>
-            <p className='md:mb-2 lg:mb-0'> © 2017-2022. OOO "Olcha store"</p>
+            <p className='md:mb-2 lg:mb-0'> © 2017-2022. OOO &ldquo;Olcha store&ldquo;</p>
             <ul className='flex items-center capitalize-first'>
               <li className='flex justify-around items-center'>
                 <Link href="/">

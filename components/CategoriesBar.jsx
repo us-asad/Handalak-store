@@ -1,24 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { BiX } from "react-icons/bi";
-import { changeMainCategory, toggleShowCategoriesBar } from 'redux/slices/main';
+import { changeMainCategory } from 'redux/slices/main';
 import Link from 'next/link';
 import { DetailItem } from 'subcomponents';
-import { hideBodyOverflow } from 'data/functions';
+import { toggleModal } from 'redux/slices/toggleModal';
 
 export default function CategoriesBar() {
-  const { showCategoriesBar, categories, mainCategory } = useSelector(state => state.main);
+  const { main: { categories, mainCategory }, toggleModal: { categoriesBar } } = useSelector(state => state);
   const dispatch = useDispatch();
-
-  const hideCategoriesBar = () => {
-    dispatch(toggleShowCategoriesBar(false));
-    hideBodyOverflow(false);
-  }
 
   return (
     <>
-      <div className={`hidden md:block h-screen w-[92vw] fixed top-0 z-[999] bg-white text-black ${showCategoriesBar ? "left-0 custom-transition" : "-left-full"}`}>
+      <div className={`hidden md:block h-screen w-[92vw] fixed top-0 z-[999] bg-white text-black ${categoriesBar ? "left-0 custom-transition" : "-left-full"}`}>
         <span
-          onClick={hideCategoriesBar}
+          onClick={() => dispatch(toggleModal(["categoriesBar", false]))}
           className='absolute top-2 -right-9 bg-red text-white cursor-pointer z-30 text-[30px] rounded-full'
         >
           <BiX />
@@ -26,7 +21,7 @@ export default function CategoriesBar() {
         <div className='h-screen px-4 overflow-y-hidden grid grid-cols-7 gap-x-2'>
           <div className='py-4 xl:pr-4 col-span-2 border-r-2 border-gray-200 overflow-y-auto'>
             <ul>
-              {categories.map(category => (
+              {categories?.map(category => (
                 <li key={category.slug}>
                   <button
                     onClick={() => dispatch(changeMainCategory(category))}
@@ -66,15 +61,15 @@ export default function CategoriesBar() {
         </div>
       </div>
       <div
-        onClick={hideCategoriesBar}
-        className={`fixed top-0 left-0 w-full hidden h-full z-20 bg-[#000000a7] ${showCategoriesBar ? "md:block" : "hidden"}`}
+        onClick={() => dispatch(toggleModal(["categoriesBar", false]))}
+        className={`fixed top-0 left-0 w-full hidden h-full z-20 bg-[#000000a7] ${categoriesBar ? "md:block" : "hidden"}`}
       />
-      <div className={`block md:hidden fixed top-0 left-0 w-full h-screen overflow-y-auto p-4 z-30 bg-white ${showCategoriesBar ? "left-0" : "-left-full"}`}>
+      <div className={`block md:hidden fixed top-0 left-0 w-full h-screen overflow-y-auto p-4 z-30 bg-white ${categoriesBar ? "left-0" : "-left-full"}`}>
         <div>
           <div className='flex items-center justify-between mb-4'>
             <h3 className='text-2xl font-bold'>Kategoriyalar</h3>
             <button
-              onClick={hideCategoriesBar}
+              onClick={() => dispatch(toggleModal(["categoriesBar", false]))}
               className='text-red text-[35px]'
             >
               <BiX />

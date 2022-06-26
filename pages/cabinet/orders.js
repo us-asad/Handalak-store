@@ -24,7 +24,7 @@ export async function getServerSideProps({ req, res, query }) {
     removeCookies("basket", { req, res });
   }
 
-  const email = getCookie("user_email", { req, res });
+  const email = getCookie("user_id", { req, res });
 
   if (email) {
     const ordersMetaData = await getUserOrders(email || null);

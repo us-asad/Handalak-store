@@ -4,10 +4,10 @@ import { FiCopy } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux';
 import { addComparedPrd } from 'redux/slices/storeProduct';
 
-export default function CampareFullBtn({ id }) {
+export default function CampareFullBtn() {
   const [textRed, setTextRed] = useState(false);
   const dispatch = useDispatch();
-  const { comparedPrds } = useSelector(state => state.storeProduct);
+  const { storeProduct: { comparedPrds }, product: { id } } = useSelector(state => state);
   const router = useRouter();
 
   const handleClick = () => {

@@ -3,14 +3,17 @@ import axios from 'axios';
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 import { BiX } from 'react-icons/bi'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SelectRates } from 'subcomponents';
+import { toggleModal } from 'redux/slices/toggleModal';
+import { setComments } from 'redux/slices/product';
 
-export default function Comment({ openCmtModal, toggleModal, id, image, name, setComments, comments }) {
+export default function Comment() {
   const [result, setResult] = useState({ ok: null, message: "ads" });
-  const { user } = useSelector(state => state.user);
+  const { user: { user }, toggleModal: { commentModal }, product: { image, name, id } } = useSelector(state => state);
   const [rates, setRates] = useState(5);
   const commentRef = useRef(null);
+  const dispatch = useDispatch();
 
   const submitComment = async () => {
     const comment = commentRef.current?.value;
@@ -32,10 +35,10 @@ export default function Comment({ openCmtModal, toggleModal, id, image, name, se
       const updatedComments = await axios.put("/api/comment", { comment: newComment, id });
       
       if (updatedComments.data) {
-        setComments(updatedComments.data)
+        dispatch(setComments(updatedComments.data));
         setResult({ ok: true, message: "Izoh muvaffaqiyatli qoldirildi" });
         setTimeout(() => {
-          toggleModal(false);
+          dispatch(toggleModal(["commentModal", false]));
           setResult({ ok: null, message: "" });
         }, 2000);
       }
@@ -45,10 +48,10 @@ export default function Comment({ openCmtModal, toggleModal, id, image, name, se
   }
 
   return (
-    <div className={openCmtModal ? "block" : "hidden"}>
+    <div className={commentModal ? "block" : "hidden"}>
       <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[51] py-16 px-12 '>
         <button
-          onClick={() => toggleModal(false)}
+          onClick={() => dispatch(toggleModal(["commentModal", false]))}
           className='absolute top-5 right-4 text-[30px]'
         >
           <BiX />
@@ -56,7 +59,7 @@ export default function Comment({ openCmtModal, toggleModal, id, image, name, se
         <p className={`text-sm ${result.ok === null ? "hidden" : result.ok ? "text-green-500" : "text-red"}`}>{result.message}</p>
         <div className='flex items-center space-x-4 py-6 border-b-2 border-gray-200'>
           <Image
-            src={image?.url}
+            src={image[0].url}
             alt={name}
             width={60}
             height={60}
@@ -82,7 +85,7 @@ export default function Comment({ openCmtModal, toggleModal, id, image, name, se
         </button>
       </div>
       <div
-        onClick={() => toggleModal(false)}
+        onClick={() => dispatch(toggleModal(["commentModal", false]))}
         className='fixed top-0 left-0 w-full h-full z-[50] bg-grad opacity-50'
       />
     </div>

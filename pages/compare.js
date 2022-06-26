@@ -15,8 +15,8 @@ export default function Compare({ products: p }) {
   const allprdCtgs = products?.map(prd => [prd.category.name, prd]);
   const formatted = {};
   allprdCtgs?.forEach(item => {
-      formatted[item[0]] = formatted[item[0]] ? [...formatted[item[0]], item[1]] : [item[1]];
-    });
+    formatted[item[0]] = formatted[item[0]] ? [...formatted[item[0]], item[1]] : [item[1]];
+  });
   let allFeatures = [];
   const [mainPrds, setMainPrds] = useState(formatted[Object.keys(formatted)[0]] || []);
   mainPrds?.map(item => item?.features?.map(({ featureName }) => featureName)).forEach(item => allFeatures.push(...item))
@@ -99,7 +99,7 @@ export default function Compare({ products: p }) {
                   className='px-4 border-l border-gray-300'
                   key={prd?.slug}
                 >
-                  <ProductRates comments={prd?.comments} />
+                  <ProductRates comments={prd?.comments || []} />
                 </td>
               ))}
             </tr>

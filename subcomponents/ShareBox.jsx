@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { BiCopy, BiX } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const url = process.env.NEXT_PUBLIC_URL;
 
-export default function ShareBox({ slug, setIsVisible }) {
+export default function ShareBox({ setIsVisible }) {
+  const { slug } = useSelector(state => state.product)
   const shareUrl = `${url}/product/${slug}`;
 
   return (
@@ -14,7 +16,10 @@ export default function ShareBox({ slug, setIsVisible }) {
       >
         <BiX />
       </button>
-      <li className='flex justify-center items-center space-x-4 cursor-pointer my-2 group hover:text-blue-500 w-max'>
+      <li
+        onClick={() => navigator.clipboard.writeText(shareUrl)}
+        className='flex justify-center items-center space-x-4 cursor-pointer my-2 group hover:text-blue-500 w-max'
+      >
         <BiCopy className="text-green-700 group-hover:text-blue-500 w-[30px] h-[30px] text-[16px]" />
         <span>Nusxa olish</span>
       </li>

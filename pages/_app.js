@@ -1,43 +1,37 @@
 import { Footer, Header } from 'containers';
-import { Provider } from 'react-redux';
-import { store } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { wrapper } from 'redux/store';
 import '@splidejs/react-splide/css';
 import 'react-popper-tooltip/dist/styles.css';
 import 'styles/globals.css';
 import { getAllCategories } from 'data/graphql';
 import { CategoriesBar, CategoriesCarousel, MobileNavbar } from 'components';
-import { addCategories } from 'redux/slices/main';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'firebaseconfig';
 import { changeUserState } from 'redux/slices/user';
 import axios from 'axios';
 import { removeCookies, setCookies } from 'cookies-next';
+import { addCategories } from 'redux/slices/main';
 
-function MyApp({ Component, pageProps, categories }) {
-  store.dispatch(addCategories(categories))
+function MyApp({ Component, pageProps }) {
+  const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, async user => {
       if (user?.email) {
-        setCookies("user_email", auth?.currentUser?.email);
         const userData = await axios.get(`/api/auth?email=${user.email}`)
-        store.dispatch(changeUserState(userData.data.userData));
+        setCookies("user_id", userData.data.userData?.id);
+        dispatch(changeUserState(userData.data.userData));
       }
       else {
-        store.dispatch(changeUserState(null));
-        removeCookies("user_email");
+        dispatch(changeUserState(null));
+        removeCookies("user_id");
       }
     });
-  }, []);
-
-  if (auth?.currentUser?.email)
-    setCookies("user_email", auth?.currentUser?.email);
-  else
-    removeCookies("user_email");
+  }, [dispatch]);
 
   return (
-    <Provider store={store}>
       <main className='overflow-x-hidden'>
         {Component.getLayout ? Component.getLayout(
           <>
@@ -56,18 +50,12 @@ function MyApp({ Component, pageProps, categories }) {
           </>
         )}
       </main>
-    </Provider>
   );
 }
 
-
-
-MyApp.getInitialProps = async () => {
+MyApp.getInitialProps = wrapper.getInitialAppProps((store) => async () => {
   const categories = await getAllCategories();
+  store.dispatch(addCategories(categories));
+});
 
-  return {
-    categories
-  }
-}
-
-export default MyApp;
+export default wrapper.withRedux(MyApp);

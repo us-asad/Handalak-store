@@ -505,16 +505,16 @@ export const checkCupon = async code => {
   return result;
 }
 
-export const getUserOrders = async email => {
+export const getUserOrders = async id => {
   const query = gql`
-    query GetUserOrders($email: String!) {
-      userData(where: { email: $email }) {
+    query GetUserOrders($id: ID!) {
+      userData(where: { id: $id }) {
         orders
       }
     }
   `;
 
-  const result = await request(graphqlApi, query, { email });
+  const result = await request(graphqlApi, query, { id });
   return result?.userData?.orders;
 }
 

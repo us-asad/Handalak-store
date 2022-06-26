@@ -14,6 +14,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { FiCopy } from 'react-icons/fi';
 import { BsChevronRight } from 'react-icons/bs';
 import { ProductDetails } from 'containers';
+import { useSelector } from 'react-redux';
 
 const splideOptions = {
   rewind: true,
@@ -25,15 +26,12 @@ const splideOptions = {
 export default function MobileProductPage({
   mainImgs,
   setMainImgs,
-  product,
-  price,
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const {
     getTooltipProps,
     setTooltipRef,
     setTriggerRef,
-    visible,
   } = usePopperTooltip({
     trigger: 'hover',
     placement: 'top',
@@ -41,7 +39,7 @@ export default function MobileProductPage({
     visible: isVisible
   });
   const router = useRouter();
-  const { name, discount, image, monthlyPay, price: totlaPrice, description, comments, slug, category, delivery, subtitle, manufacturer, seller, supplier, features, varieties, warrantyPeriod } = product;
+  const { name, discount, price, slug, category, delivery, subtitle, manufacturer, warrantyPeriod } = useSelector(state => state.product);
 
   return (
     <div>
@@ -76,7 +74,7 @@ export default function MobileProductPage({
             <SplideSlide key={img.url}>
               <div className='grid place-content-center'>
                 <Image
-                  src={img?.url}
+                  src={img?.url || "/loading.gif"}
                   alt={name}
                   width={340}
                   height={340}
@@ -110,12 +108,12 @@ export default function MobileProductPage({
               {...getTooltipProps({ className: 'tooltip-container' })}
               className='absolute z-[11] -top-[9px] left-[28px]'
             >
-              <ShareBox slug={slug} setIsVisible={setIsVisible} />
+              <ShareBox setIsVisible={setIsVisible} />
             </div>
           )}
         </div>
         <h1 className='font-bold text-2xl text-black'>{name}</h1>
-        <ProductVarieties varieties={varieties} name={name} setMainImgs={setMainImgs} image={image} />
+        <ProductVarieties setMainImgs={setMainImgs} />
         <div className='flex flex-col-reverse sm:flex-row sm:items-center font-bold'>
           <p className='text-black text-4xl sm:mr-4'>{getFormattedPrice(getDiscountedPrice(price, discount))} so&lsquo;m</p>
           {discount
@@ -179,12 +177,12 @@ export default function MobileProductPage({
           </Link>
         </div>
       </div>
-      <ProductDetails prdSlug={slug} {...product} />
+      <ProductDetails />
       <div className='fixed w-full z-20 left-0 right-0 bg-white pb-2 pt-4 bottom-[70px]'>
         <div className='custom-container mx-auto grid grid-cols-2 gap-4'>
           <button
             className='w-full bg-red text-sm font-bold leading-5 text-white focus:outline-none rounded-lg py-1.5 px-2 text-center'
-          >Savatga o&apos;tish</button>
+          >Savatga q&apos;shish</button>
           <button
             className='w-full bg-green-500 text-white focus:outline-none rounded-lg py-1.5 px-2 text-sm font-bold leading-5 text-center'
           >Muddatli to&apos;lov</button>
@@ -193,4 +191,3 @@ export default function MobileProductPage({
     </div>
   )
 }
-// IoMdCheckmarkCircleOutline

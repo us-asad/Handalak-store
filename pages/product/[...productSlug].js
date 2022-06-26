@@ -2,9 +2,12 @@ import { DesktopProductPage, MobileProductPage } from 'containers';
 import { getProductDetails } from 'data/graphql';
 import { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip';
+import { useSelector } from 'react-redux';
+import { addProduct } from 'redux/slices/product';
+import { wrapper } from 'redux/store';
 
-export default function ProductPage({ product }) {
-  const { discount, image, price: totlaPrice } = product;
+export default function ProductPage() {
+  const { image } = useSelector(state => state.product);
   const [mainImgs, setMainImgs] = useState(image)
   const [isVisible, setIsVisible] = useState(false);
 
@@ -12,7 +15,6 @@ export default function ProductPage({ product }) {
     getTooltipProps,
     setTooltipRef,
     setTriggerRef,
-    visible,
   } = usePopperTooltip({
     trigger: 'hover',
     placement: 'top',
@@ -25,7 +27,6 @@ export default function ProductPage({ product }) {
     setMainImgs,
     isVisible,
     setIsVisible,
-    product,
     getTooltipProps,
     setTooltipRef,
     setTriggerRef
@@ -43,7 +44,7 @@ export default function ProductPage({ product }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const product = await getProductDetails(context.params.productSlug[0]);
 
   if (!product?.slug)
@@ -51,8 +52,5 @@ export async function getServerSideProps(context) {
       notFound: true
     };
 
-  return {
-    props: { product }
-  };
-}
-
+  store.dispatch(addProduct(product));
+});

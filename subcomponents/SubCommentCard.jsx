@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { UpIcon } from './Icons';
 
-export default function SubCommentCard({ createdAt, text, replies, id, userName, comments, setComments, prdId }) {
+export default function SubCommentCard({ createdAt, text, replies, id, userName }) {
   const [showReplies, setShowReplies] = useState(false);
   const [openRlyModal, setOpenRlyModal] = useState(false);
 
@@ -46,16 +46,13 @@ export default function SubCommentCard({ createdAt, text, replies, id, userName,
               </button>
             ) : <></>}
           </div>
-          {showReplies && replies?.map((reply, i) => <SubCommentCard prdId={prdId} key={i} {...reply} comments={comments} setComments={setComments} />)}
+          {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} />)}
         </div>
       </div>
       <ReplyModal
         openModal={openModal}
-        setComments={setComments}
         openRlyModal={openRlyModal}
         id={id}
-        prdId={prdId}
-        comments={comments}
       />
     </div>
   )

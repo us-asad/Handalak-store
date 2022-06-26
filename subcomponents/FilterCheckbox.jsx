@@ -16,19 +16,15 @@ export default function FilterCheckbox({ name, indexKey }) {
             ...router.query,
             brands: router.query?.brands ? `${router.query?.brands},${name}` : name
           };
-
           changeRoute(query)
         } else if (!checked) {
-          const brands = router.query.brands;
-          const brandsQry = brands?.startsWith(name) && !brands?.includes(",")
-            ? brands?.replace(name, "")
-            : brands?.endsWith(name)
-              ? brands?.replace(`,${name}`, "")
-              : brands?.replace(`${name},`, "");
+          let brands = router.query.brands?.split(",");
+          brands.splice(brands.indexOf(name), 1);
+          brands = brands.join(",");
           const query = { ...router.query }
-          if (brandsQry) query.brands = brandsQry;
-          else delete query.brands;
 
+          if (brands) query.brands = brands;
+          else delete query.brands;
           changeRoute(query)
         }
       } else {

@@ -2,12 +2,14 @@ import { nanoid } from '@reduxjs/toolkit';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { BiX } from 'react-icons/bi'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setComments } from 'redux/slices/product';
 
-export default function Repl({ openRlyModal, openModal, id, setComments, prdId }) {
-  const [result, setResult] = useState({ ok: null, message: "ads" });
+export default function ReplyModal({ openRlyModal, openModal, id }) {
+  const [result, setResult] = useState({ ok: null, message: "" });
   const [replyTxt, setReplyTxt] = useState("")
-  const { user } = useSelector(state => state.user);
+  const { user: { user }, product: { id: prdId } } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   const submitComment = async () => {
     const reply = {
@@ -22,7 +24,7 @@ export default function Repl({ openRlyModal, openModal, id, setComments, prdId }
       const updatedComments = await axios.put("/api/reply", { reply, prdId, commentId: id});
       
       if (updatedComments.data) {
-        setComments(updatedComments.data)
+        dispatch(setComments(updatedComments.data));
         setResult({ ok: true, message: "Izohga muvaffaqiyatli javob qoldirildi qoldirildi" });
         setTimeout(() => {
           openModal(false);

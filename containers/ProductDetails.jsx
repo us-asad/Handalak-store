@@ -7,9 +7,10 @@ import { AiOutlineStar } from "react-icons/ai";
 import { MenuIcon } from "subcomponents/Icons";
 import { HiOutlineDocumentText } from 'react-icons/hi';
 import { PrdComments, PrdDescription, PrdInfo } from 'components';
+import { useSelector } from 'react-redux';
 
-export default function ProductDetails(props) {
-  const { name, description, image, price: totlaPrice, comments, slug, features, id } = props;
+export default function ProductDetails() {
+  const { name, description, image, comments, slug, features, id } = useSelector(state => state.product);
   const router = useRouter();
 
   return (
@@ -17,7 +18,7 @@ export default function ProductDetails(props) {
       <div className='mb-4 rounded-md shadow-2 overflow-x-auto min-w-[300px] lg:w-2/6 lg:mb-0 lg:mr-4 lg:overflow-hidden xl:w-1/4'>
         <div className='overflow-hidden py-4 hidden lg:flex justify-center items-center'>
           <Image
-            src={image[0].url}
+            src={(image[0] && image[0].url) || "/loading.gif"}
             alt={name}
             width={120}
             height={120}
@@ -56,7 +57,7 @@ export default function ProductDetails(props) {
           ))}
         </ul>
       </div>
-      <div className='lg:max-w-[75%] relative rounded-md shadow-2 p-4'>
+      <div className='w-full relative rounded-md shadow-2 p-4'>
         <h3 className='text-[18px] font-bold md:font-medium md:text-[30px] text-black mb-6'>
           {name} haqida&nbsp;
           {{

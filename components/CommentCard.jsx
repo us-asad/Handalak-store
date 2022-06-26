@@ -2,16 +2,14 @@ import { ReplyModal } from 'components';
 import { hideBodyOverflow } from 'data/functions';
 import Image from 'next/image'
 import { useState } from 'react';
-import { AiFillDislike, AiTwotoneLike } from 'react-icons/ai'
 import { useSelector } from 'react-redux';
 import { ProductRates, SubCommentCard } from 'subcomponents'
 import { UpIcon } from 'subcomponents/Icons'
 
-export default function CommentCard({ comment, comments, setComments, prdId }) {
+export default function CommentCard({ rating, createdAt, text, replies, id, userName }) {
   const [showReplies, setShowReplies] = useState(false);
   const [openRlyModal, setOpenRlyModal] = useState(false);
-  const { user } = useSelector(state => state.user);
-  const { rating, createdAt, text, likeCount, dislikeCount, replies, id } = comment;
+  const { user: { user }, product: { comments, id: prdId } } = useSelector(state => state);
 
   const openModal = state => {
     setOpenRlyModal(state);
@@ -31,7 +29,7 @@ export default function CommentCard({ comment, comments, setComments, prdId }) {
       </div>
       <div className='w-full'>
         <div>
-          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>{comment?.userName}</p>
+          <p className='w-max font-medium text-sm text-black leading-6 line-clamp-1 border-b border-black border-dashed'>{userName}</p>
           <div className='mt-2 flex space-x-2 items-center'>
             <ProductRates rates={rating} small />
             <span className='text-sm leading-4 text-gray-500'>{createdAt}</span>
@@ -59,15 +57,12 @@ export default function CommentCard({ comment, comments, setComments, prdId }) {
             ) : <></>}
           </div>
         </div>
-        {showReplies && replies?.map((reply, i) => <SubCommentCard prdId={prdId} key={i} {...reply} comments={comments} openModal={openModal} setComments={setComments} />)}
+        {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} openModal={openModal} />)}
       </div>
       <ReplyModal
-        setComments={setComments}
         openModal={openModal}
         openRlyModal={openRlyModal}
         id={id}
-        prdId={prdId}
-        comments={comments}
       />
     </div>
   );

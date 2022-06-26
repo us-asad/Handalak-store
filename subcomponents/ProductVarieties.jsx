@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
-export default function ProductVarieties(props) {
-  const { name, image, varieties, setMainImgs } = props;
+export default function ProductVarieties({ setMainImgs }) {
+  const { name, image, varieties } = useSelector(state => state.product);
   const formatted = {};
   const initialVariety = {};
   varieties.forEach(variety => {

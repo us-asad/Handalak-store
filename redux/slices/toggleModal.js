@@ -5,11 +5,13 @@ const initialState = {
   loginModal: false,
   categoriesBar: false,
   callModal: false,
-  cabinetDropDown: false
+  cabinetDropDown: false,
+  commentModal: false,
+  replyModal: false
 };
 
 const toggleModalSlice = createSlice({
-  name: "open-modal",
+  name: "toggle-modal",
   initialState,
   reducers: {
     toggleModal: (state, { payload }) => {
