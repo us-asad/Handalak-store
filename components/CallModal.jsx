@@ -1,23 +1,34 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleModal } from 'redux/slices/toggleModal';
+import { CloseBtn } from 'subcomponents';
 
-export default function CallModal({ setShowModal }) {
-  const [result, setResult] = useState({ ok: null, message: ""});
+const emailjsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const emailjsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const emailjsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+export default function CallModal() {
+  const [result, setResult] = useState({ ok: null, message: "" });
   const [loading, setLoading] = useState(false);
   const formRef = useRef(null);
-console.log(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY)
+  const { callModal } = useSelector(state => state.toggleModal);
+  const dispatch = useDispatch();
+
   const sendEmail = e => {
     e.preventDefault();
 
     if (!loading) {
       setLoading(true)
-      emailjs.sendForm(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, formRef.current, process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY)
-        .then(result => {
-          console.log(result)
+      emailjs.sendForm(emailjsServiceId, emailjsTemplateId, formRef.current, emailjsPublicKey)
+        .then(() => {
           setResult({ ok: true, message: "So'rov muvaffaqiyatli qabul qilindi" });
           setLoading(false);
+          setTimeout(() => {
+            dispatch(toggleModal(["callModal", false]));
+            setResult({ ok: null, message: '' })
+          }, 2000)
         }, err => {
-          console.error(err)
           setResult({ ok: false, message: err.text || "Unknown error, please try again later :(" });
           setLoading(false);
         });
@@ -25,8 +36,12 @@ console.log(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY)
   }
 
   return (
-    <div>
+    <div className={callModal ? "block" : "hidden"}>
       <div className='px-8 py-16 fixed z-[91] max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto bg-white'>
+        <CloseBtn
+          modal="callModal"
+          className="absolute top-4 right-3"
+        />
         <form
           className='grid grid-cols-1 gap-y-4 text-black '
           ref={formRef}
@@ -74,12 +89,12 @@ console.log(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY)
             disabled={loading}
             className='focus:outline-none cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 rounded-full font-bold text-base uppercase text-white p-3 bg-red'
           >
-            Qo&apos;ng&apos;iroq qilishni so&apos;rash
+            {loading ? "Yuborilmoqda..." : "Qo'ng'iroq qilishni so'rash"}
           </button>
         </form>
       </div>
       <div
-        onClick={() => setShowModal(false)}
+        onClick={() => dispatch(toggleModal(["callModal", false]))}
         className='fixed z-[90] top-0 left-0 w-full h-full bg-grad opacity-50'
       />
     </div>

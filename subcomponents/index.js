@@ -19,3 +19,4 @@ export { default as SubCategories } from "./SubCategories";
 export { default as ProductRates } from "./ProductRates";
 export { default as SubCommentCard } from "./SubCommentCard";
 export { default as SelectRates } from "./SelectRates";
+export { default as CloseBtn } from "./CloseBtn";

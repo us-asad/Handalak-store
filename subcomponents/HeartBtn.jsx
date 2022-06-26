@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux'
-import { addSavedPrd, removeSavedPrd } from 'redux/productSlice';
+import { addSavedPrd, removeSavedPrd } from 'redux/slices/storeProduct';
 
 export default function HeartBtn({ id }) {
   const [bgRed, setBgRed] = useState(false);
   const dispatch = useDispatch();
-  const { savedPrds } = useSelector(state => state.product);
+  const { savedPrds } = useSelector(state => state.storeProduct);
 
   const handleClick = () => {
     if (bgRed)

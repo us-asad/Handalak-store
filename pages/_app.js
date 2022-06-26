@@ -1,19 +1,18 @@
 import { Footer, Header } from 'containers';
 import { Provider } from 'react-redux';
 import { store } from 'redux/store';
-import 'react-multi-carousel/lib/styles.css';
 import '@splidejs/react-splide/css';
 import 'react-popper-tooltip/dist/styles.css';
 import 'styles/globals.css';
 import { getAllCategories } from 'data/graphql';
 import { CategoriesBar, CategoriesCarousel, MobileNavbar } from 'components';
-import { addCategories } from 'redux/mainSlice';
+import { addCategories } from 'redux/slices/main';
 import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'firebaseconfig';
-import { changeUserState } from 'redux/userSlice';
+import { changeUserState } from 'redux/slices/user';
 import axios from 'axios';
-import { getCookies, removeCookies, setCookies } from 'cookies-next';
+import { removeCookies, setCookies } from 'cookies-next';
 
 function MyApp({ Component, pageProps, categories }) {
   store.dispatch(addCategories(categories))

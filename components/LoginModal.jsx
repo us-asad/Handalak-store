@@ -1,14 +1,19 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser, resetPassword, signInUser } from "redux/userSlice";
+import { toggleModal } from "redux/slices/toggleModal";
+import { registerUser, resetPassword, signInUser } from "redux/slices/user";
+import { CloseBtn } from "subcomponents";
 
 const inputClassNames = "w-full px-3 py-4 text-base border-2 border-gray-700 outline-none rounded-full text-black"
 
-export default function LoginModal({ toggleLoginModal }) {
+export default function LoginModal() {
   const [login, setLogin] = useState(true);
   const formRef = useRef(null);
   const dispatch = useDispatch();
-  const { error, message, user, loading } = useSelector(state => state.user);
+  const {
+    user: { error, message, loading, user },
+    toggleModal: { loginModal, cabinetDropDown }
+  } = useSelector(state => state);
 
   const handleAuth = async e => {
     e.preventDefault();
@@ -18,14 +23,20 @@ export default function LoginModal({ toggleLoginModal }) {
       dispatch(signInUser({ email, password }));
     else
       dispatch(registerUser({ name: formRef.current.elements.name.value, password, email }));
-
-      if (!error && !loading)
-      toggleLoginModal(false);
   }
 
+  useEffect(() => {
+    if (!error && !loading && user)
+      dispatch(toggleModal(["loginModal", false]))
+  }, [error, loading, user, dispatch]);
+
   return (
-    <>
+    <div className={loginModal ? "block" : "hidden"}>
       <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[51] py-16 px-12 space-y-4'>
+        <CloseBtn
+          className="absolute top-3 right-5"
+          modal="loginModal"
+        />
         <h4 className='text-3xl leading-9 text-black'>
           {login
             ? "Kirish"
@@ -98,9 +109,9 @@ export default function LoginModal({ toggleLoginModal }) {
         </form>
       </div>
       <div
-        onClick={() => toggleLoginModal(false)}
+        onClick={() => dispatch(toggleModal(["loginModal"]))}
         className='fixed top-0 left-0 w-full h-full z-[50] bg-grad opacity-50'
       />
-    </>
+    </div>
   );
 }

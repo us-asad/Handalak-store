@@ -7,9 +7,11 @@ import { ChartIcon } from 'subcomponents/Icons';
 import { FaRegHeart } from 'react-icons/fa';
 import CategoryBtn from 'subcomponents/CategoryBtn';
 import { CallModal } from "components";
+import { useDispatch } from 'react-redux';
+import { toggleModal } from 'redux/slices/toggleModal';
 
 export default function HeaderTop() {
-  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -61,7 +63,7 @@ export default function HeaderTop() {
                 </a>
               </li>
               <li
-                onClick={() => setShowModal(true)}
+                onClick={() => dispatch(toggleModal(["callModal", true]))}
                 className='lg:p-2 lg:border-2 border-solid rounded-lg w-max cursor-pointer'
               >
                 <BsTelephone className='w-6 h-6 lg:hidden' />
@@ -70,7 +72,7 @@ export default function HeaderTop() {
             </ul>
           </div>
         </div>
-        {showModal && <CallModal setShowModal={setShowModal} />}
+        <CallModal />
       </div>
       <div className='md:hidden flex justify-between items-center pt-5 pb-3 bg-white px-5'>
         <div className="flex items-center">

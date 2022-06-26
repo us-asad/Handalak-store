@@ -35,21 +35,6 @@ export const mainSlideImages = [
   }
 ];
 
-export const getFormattedPrice = p => {
-  if (!p) return "";
-
-  const price = typeof p === "number" ? p.toString() : p;
-
-  const reversed = price.split("").reverse();
-  const priceArray = [];
-  
-  for (let i = 0; i < reversed.length;) {
-    priceArray.push(`${reversed.splice(i, 3).reverse().join("")} `);
-  }
-
-  return priceArray.reverse().join("").trim();
-}
-
 export const info_navitems = [
   {
     name: "Biz haqimizda",
@@ -221,10 +206,3 @@ export const mobile_navitems = [
   }
 ]
 
-export const hideBodyOverflow = state => {
-  document.body.style.overflow = state ? "hidden" : "auto"
-}
-
-export const getRating = comments => Math.floor(comments?.reduce(({rating: prevValue}, {rating: currValue}) => prevValue + currValue, 0)) / comments.length;
-
-export const getDiscountedPrice = (price, discount) => (discount ? price - (price * (discount / 100)) : price).toFixed(0);

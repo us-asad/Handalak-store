@@ -1,3 +1,4 @@
+import { nanoid } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
@@ -16,31 +17,27 @@ export default function Comment({ openCmtModal, toggleModal, id, image, name, se
     if (!comment)
       return setResult({ ok: false, message: "Iltimos fikringizni yozing." });
 
-    comments.unshift({
+    const newComment = {
       text: comment,
       rating: rates,
       userId: user?.id || "",
       replies: [],
       createdAt: new Date().toLocaleString(),
-      likeCount: 0,
-      dislikeCount: 0
-    })
+      like: [],
+      dislike: [],
+      id: nanoid()
+    }
 
     try {
-
-
-      const updatedComments = await axios.post("/api/comment", { comments, id });
-console.log(updatedComments)
+      const updatedComments = await axios.put("/api/comment", { comment: newComment, id });
+      
       if (updatedComments.data) {
         setComments(updatedComments.data)
         setResult({ ok: true, message: "Izoh muvaffaqiyatli qoldirildi" });
-        console.log(updatedComments)
         setTimeout(() => {
-          console.log("line 39 working")
           toggleModal(false);
           setResult({ ok: null, message: "" });
-          console.log("line 42 working")
-        }, 3000);
+        }, 2000);
       }
     } catch (ex) {
       setResult({ ok: false, message: ex.response.data.message || "Nomalum xato aniqlandi, Iltimos kerinroq qayta urinib ko'ring :`(" });

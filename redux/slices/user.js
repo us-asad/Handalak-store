@@ -62,7 +62,10 @@ const userSlice = createSlice({
       state.error = "";
       state.loading = false;
     },
-    [registerUser.pending]: state => { state.loading = true },
+    [registerUser.pending]: state => {
+      state.loading = true
+      state.error = "";
+    },
     [registerUser.rejected]: (state, action) => {
       state.error = action.error.message;
       state.loading = false;
@@ -72,7 +75,10 @@ const userSlice = createSlice({
       state.error = "";
       state.loading = false;
     },
-    [signInUser.pending]: state => { state.loading = true },
+    [signInUser.pending]: state => {
+      state.loading = true
+      state.error = ""
+    },
     [signInUser.rejected]: (state, action) => {
       state.error = action.error.message;
       state.loading = false;

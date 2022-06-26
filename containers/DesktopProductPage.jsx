@@ -1,7 +1,7 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { Comment, ProductEventBtns } from 'components';
+import { ProductEventBtns } from 'components';
 import { ProductDetails } from 'containers';
-import { getDiscountedPrice, getFormattedPrice } from 'data';
+import { getDiscountedPrice, getFormattedPrice } from 'data/functions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
@@ -14,7 +14,6 @@ export default function DesktopProductPage({
   mainImgs,
   setMainImgs,
   product,
-  price,
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const {
@@ -30,8 +29,8 @@ export default function DesktopProductPage({
   });
   const splideRef = useRef(null);
   const router = useRouter();
-  const { name, discount, image, monthlyPay, price: totlaPrice, description, comments, slug, category, delivery, subtitle, manufacturer, seller, supplier, features, varieties, warrantyPeriod } = product;
-
+  const { name, discount, image, monthlyPay, price, comments, slug, category, id, delivery, subtitle, manufacturer, seller, supplier, varieties, warrantyPeriod } = product;
+  console.log(price, "Price")
   const handleClick = i => {
     splideRef.current.go(i)
   }
@@ -67,7 +66,7 @@ export default function DesktopProductPage({
       <div className='grid grid-flow-col auto-cols-max gap-4'>
         <ProductRates comments={comments} />
         <p className='text-gray-800 text-base font-medium'>{comments?.length} sharh{comments?.length > 1 ? "lar" : ""}</p>
-        <CompareFullBtn />
+        <CompareFullBtn id={id} />
         <button
           ref={setTriggerRef}
           onMouseEnter={() => setIsVisible(true)}
@@ -123,7 +122,7 @@ export default function DesktopProductPage({
               </Splide>
             </div>
           </div>
-        </div>
+        </div>  
         <div className='lg:col-span-4 md:col-span-12'>
           <div className='flex items-center'>
             <p className='text-gray-800 text-[30px] font-bold mr-2.5'>{getFormattedPrice(getDiscountedPrice(price, discount))} so&lsquo;m</p>
@@ -157,9 +156,11 @@ export default function DesktopProductPage({
               <li>
                 <p className='text-gray-400 text-base font-medium'>Yetkazib berish:</p>
                 <div className='flex items-center'>
-                  <div className='w-8 h-8 flex items-center justify-center rounded-lg bg-black mr-3'>
-                    <DeliveryTruck />
-                  </div>
+                  {delivery === "fast" && (
+                    <div className='w-8 h-8 flex items-center justify-center rounded-lg bg-black mr-3'>
+                      <DeliveryTruck />
+                    </div>
+                  )}
                   <p className={`${delivery === "fast" ? "text-base" : "text-xl"} text-black font-medium leading-5`}>
                     {delivery === "fast" ? "Tezkor yetkazib berish" : "Manzilga qarab 4 soatdan 2 ish kunigacha yetkazib beriladi"}
                   </p>
@@ -177,7 +178,7 @@ export default function DesktopProductPage({
           </div>
         </div>
         <div className='md:col-span-12 lg:col-start-6 lg:col-end-13'>
-          <ProductEventBtns short />
+          <ProductEventBtns short id={id} />
         </div>
       </div>
       <ProductDetails {...product} />

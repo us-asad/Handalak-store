@@ -8,27 +8,24 @@ import { useEffect, useState } from 'react';
 import { LoginModal } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { HiLogout } from 'react-icons/hi';
-import { signOutAccount } from 'redux/userSlice';
-import { hideBodyOverflow, toggleBodyOverflow } from 'data';
+import { signOutAccount } from 'redux/slices/user';
+import { toggleModal } from 'redux/slices/toggleModal';
 
 const maxScrollSize = 300;
 const smallIconClassName = "text-xs font-medium py-1 px-1.5 rounded-lg absolute -top-[11px] right-[12px] bg-black text-white";
 
 export default function HeaderBottom() {
   const [scrollY, setScrollY] = useState(0);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showDropDown, setShowDropDown] = useState(false);
   const dispatch = useDispatch();
-  const { user: { user, loading }, product: { savedPrds, comparedPrds, basket } } = useSelector(state => state);
-
-  const toggleLoginModal = state => {
-    setShowLoginModal(state);
-    hideBodyOverflow(state);
-  }
+  const {
+    user: { user, loading },
+    storeProduct: { savedPrds, comparedPrds, basket },
+    toggleModal: { cabinetDropDown }
+  } = useSelector(state => state);
 
   const handleSignOut = () => {
+    dispatch(toggleModal(["cabinetDropDown", false]))
     dispatch(signOutAccount());
-    setShowDropDown(false);
   }
 
   useEffect(() => {
@@ -47,28 +44,31 @@ export default function HeaderBottom() {
             <SearchForm changeStyles={scrollY > maxScrollSize} />
           </div>
           <div className={`h-full w-max flex gap-4 items-center ${scrollY > maxScrollSize ? "text-black" : "text-white"}`}>
-            <div
-              onClick={() => {
-                if (user?.email) setShowDropDown(true);
-                else toggleLoginModal(true)
-              }}
-              className='flex flex-col items-center font-medium text-base focus:outline-none relative cursor-pointer'
-            >
-              <UserIcon color={scrollY > maxScrollSize ? "black" : ""} />
-              <span className='hidden lg:block mt-2'>{
-                loading ? "Yuklanmoqda" : user ? "Kabinet" : "Kirish"
-              }</span>
-              {!loading && user && showDropDown && (
+            <div className="relative">
+              <button
+                onClick={() => dispatch(toggleModal([user?.email ? "cabinetDropDown" : "loginModal", true, false]))}
+                disabled={loading}
+                className='flex flex-col items-center font-medium text-base focus:outline-none cursor-pointer'
+              >
+                <UserIcon color={scrollY > maxScrollSize ? "black" : ""} />
+                <span className='hidden lg:block mt-2'>{
+                  loading ? "Yuklanmoqda" : user ? "Kabinet" : "Kirish"
+                }</span>
+              </button>
+              {cabinetDropDown && (
                 <>
                   <div className='shadow-1 px-6 py-4 rounded-lg absolute top-full right-0 bg-white text-black z-50 w-max grid grid-cols-1 gap-y-2 cursor-auto'>
                     <div className='mb-4 text-left'>
                       <p>Assalomu aleykum,</p>
-                      <b>{user.name}</b>
+                      <b>{user?.name}</b>
                     </div>
                     <ul className='grid grid-cols-1 gap-y-4 text-gray-800 font-medium text-sm lg:text-[17px]'>
                       <li>
                         <Link href="/cabinet">
-                          <a className='flex items-center space-x-2'>
+                          <a
+                            onClick={() => toggleModal(["cabinetDropDown", false])}
+                            className='flex items-center space-x-2'
+                          >
                             <UserIcon className="w-6" color="#1f2937" />
                             <span>Shaxsiy kabinet</span>
                           </a>
@@ -86,7 +86,7 @@ export default function HeaderBottom() {
                         <button
                           onClick={handleSignOut}
                           className='flex items-center space-x-2 text-red cursor-pointer'
-                         >
+                        >
                           <HiLogout className="w-6 text-[20px]" />
                           <span>Saytdan chiqish</span>
                         </button>
@@ -97,8 +97,8 @@ export default function HeaderBottom() {
               )}
             </div>
             <div
-              onClick={() => setShowDropDown(false)}
-              className={`fixed top-0 left-0 w-full h-full z-[49] bg-transparent cursor-auto ${!loading && user && showDropDown ? "block" : "hidden"}`}
+              onClick={() => dispatch(toggleModal(["cabinetDropDown", false]))}
+              className={`fixed top-0 left-0 w-full h-full z-[49] bg-transparent cursor-auto ${cabinetDropDown ? "block" : "hidden"}`}
             />
             <Link href="/compare">
               <a className='lg:flex flex-col items-center font-medium text-base relative ml-8 hidden'>
@@ -128,7 +128,7 @@ export default function HeaderBottom() {
         <SearchForm changeStyles={scrollY > maxScrollSize} />
         <LanguageSelect />
       </div>
-      {showLoginModal && !loading && !user && <LoginModal toggleLoginModal={toggleLoginModal} />}
+      <LoginModal />
     </>
   )
 }

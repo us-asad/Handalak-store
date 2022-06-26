@@ -1,6 +1,86 @@
-import { gql, request } from "graphql-request";
+import { gql, request, GraphQLClient } from "graphql-request";
 
 const graphqlApi = process.env.NEXT_PUBLIC_GRAPHQL_API;
+const graphqlToken = process.env.NEXT_PUBLIC_GRAPHQL_TOKEN;
+
+export const client = new GraphQLClient(graphqlApi, {
+  headers: {
+    Authorization: `Bearer ${graphqlToken}`,
+  },
+});
+
+export const UpdateAndPublishProductComments = gql`
+  mutation UpdatePrdComments($comments: Json!, $id: ID!) {
+    updateProduct(where: { id: $id }, data: { comments: $comments }) { comments }
+    publishProduct(where: { id: $id }) { id }
+  }
+`;
+
+export const GetUserPurchasedPrds = gql`
+  query GetUserPurchasedPrds($userId: ID!) {
+    userData(where: { id: $userId }) {
+      purchasedProducts
+    }
+  }
+`;
+
+export const GetProductComments = gql`
+  query GetProductComments($id: ID!) {
+    product(where: { id: $id }) {
+      comments
+    }
+  }
+`;
+
+export const GetUserByEmail = gql`
+  query GetUserByEmail($email: String!) {
+    userData(where: { email: $email }) {
+      id
+      name
+      email
+      purchasedProducts
+    }
+  }
+`;
+
+export const CreateNextUserByEmail = gql`
+  mutation CreateNextUserByEmail($email: String!, $name: String!) {
+    createUserData(data: { email: $email, name: $name }) {
+      id
+      name
+      email
+      purchasedProducts
+    }
+    publishUserData(where: { email: $email }) {
+      id
+    }
+  }
+`;
+
+export const UpdateUserOrdersAndCouponQty = gql`
+  mutation UpdateUserData($purchasedProducts: Json!, $email: String!, $orders: Json!, $code: String!, $codeQty: Int!) {
+    updateUserData(data: {purchasedProducts: $purchasedProducts, orders: $orders}, where: {email: $email}) { id }
+    publishUserData(where: {email: $email}) { id }
+    updateCupon(where: { code: $code }, data: { count: $codeQty }) { id }
+    publishCupon(where: { code: $code }) { id }
+  }
+`;
+
+export const UpdateProductQty = gql`
+  mutation UpdateProductQty($id: ID!, $qty: Int!) {
+    updateProduct(where: { id: $id }, data: { quantity: $qty }) { id }
+    publishProduct(where: { id: $id }) { id }
+  }
+`;
+
+export const GetUserPurchasedProductsQry = gql`
+  query GetPurchasedProducts($email: String!) {
+    userData(where: { email: $email }) {
+      purchasedProducts,
+      orders
+    }
+  }
+`;
 
 export const getAllCategories = async () => {
   const query = gql`
@@ -362,8 +442,8 @@ export const getProductDetails = async slug => {
   const prd = result?.product;
 
   for (let i = 0; i < prd?.comments?.length; i++) {
-    const user = await request(graphqlApi, userQry, { id: prd.comments[i].userId });
-    prd.comments[i].userName = user.userData.name;
+    const user = await request(graphqlApi, userQry, { id: prd?.comments[i].userId });
+    prd.comments[i].userName = user?.userData?.name || null;
   }
 
   return result?.product;

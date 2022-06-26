@@ -1,4 +1,4 @@
-import { getDiscountedPrice, getFormattedPrice } from 'data'
+import { getDiscountedPrice, getFormattedPrice } from 'data/functions'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -6,8 +6,8 @@ import { AiOutlineMinus } from 'react-icons/ai'
 import { BiX } from 'react-icons/bi'
 import { HiOutlinePlusCircle } from 'react-icons/hi'
 import { useDispatch } from 'react-redux'
-import { changeQty, removeItem } from 'redux/basketSlice'
-import { removeBasketPrd } from 'redux/productSlice'
+import { changeQty, removeItem } from 'redux/slices/basket'
+import { removeBasketPrd } from 'redux/slices/storeProduct'
 
 export default function CartProduct({ name, purchaseQty, price, discount, id, slug, image }) {
   const dispatch = useDispatch();

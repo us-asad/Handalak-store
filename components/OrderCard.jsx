@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
-import { getFormattedPrice } from 'data';
+import { getFormattedPrice } from 'data/functions';
 
 export default function OrderCard({ id, amount_subtotal, amount_total, coupon, customer_email, customer_name, date, products, address, email }) {
   const [openImgs, setOpenImgs] = useState(false);

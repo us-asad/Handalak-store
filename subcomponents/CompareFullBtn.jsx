@@ -1,16 +1,18 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { FiCopy } from 'react-icons/fi'
 import { useDispatch, useSelector } from 'react-redux';
-import { addComparedPrd, removeComparedPrd } from 'redux/productSlice';
+import { addComparedPrd } from 'redux/slices/storeProduct';
 
 export default function CampareFullBtn({ id }) {
   const [textRed, setTextRed] = useState(false);
   const dispatch = useDispatch();
-  const { comparedPrds } = useSelector(state => state.product);
+  const { comparedPrds } = useSelector(state => state.storeProduct);
+  const router = useRouter();
 
   const handleClick = () => {
     if (textRed)
-      dispatch(removeComparedPrd(id));
+      router.push("/compare")
     else
       dispatch(addComparedPrd(id));
   };

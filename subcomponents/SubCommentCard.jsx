@@ -1,9 +1,17 @@
+import { ReplyModal } from 'components';
+import { hideBodyOverflow } from 'data/functions';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { UpIcon } from './Icons';
 
-export default function SubCommentCard({ createdAt, text, replies, userName }) {
-  const [showReplies, setShowReplies] = useState(false); 
+export default function SubCommentCard({ createdAt, text, replies, id, userName, comments, setComments, prdId }) {
+  const [showReplies, setShowReplies] = useState(false);
+  const [openRlyModal, setOpenRlyModal] = useState(false);
+
+  const openModal = state => {
+    setOpenRlyModal(state);
+    hideBodyOverflow(state);
+  }
 
   return (
     <div className='grid grid-cols-1 gap-y-4 -ml-7 md:ml-0'>
@@ -22,7 +30,10 @@ export default function SubCommentCard({ createdAt, text, replies, userName }) {
           <p className='text-sm leading-4 text-gray-500 mt-2'>{createdAt}</p>
           <p className='text-black text-base leading-5 line-clamp-6 py-4'>{text}</p>
           <div className='flex items-center space-x-4'>
-            <button className='focus:outline-none bg-transparent text-gray-500 text-xs font-semibold border-b border-black border-dashed uppercase'>
+            <button
+              onClick={() => openModal(true)}
+              className='focus:outline-none bg-transparent text-gray-500 text-xs font-semibold border-b border-black border-dashed uppercase'
+            >
               Javob Yozish
             </button>
             {replies?.length ? (
@@ -35,9 +46,17 @@ export default function SubCommentCard({ createdAt, text, replies, userName }) {
               </button>
             ) : <></>}
           </div>
-          {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} />)}
+          {showReplies && replies?.map((reply, i) => <SubCommentCard prdId={prdId} key={i} {...reply} comments={comments} setComments={setComments} />)}
         </div>
       </div>
+      <ReplyModal
+        openModal={openModal}
+        setComments={setComments}
+        openRlyModal={openRlyModal}
+        id={id}
+        prdId={prdId}
+        comments={comments}
+      />
     </div>
   )
 }

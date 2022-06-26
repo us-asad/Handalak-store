@@ -1,24 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { BiX } from "react-icons/bi";
-import { changeMainCategory, toggleShowCategoriesBar } from 'redux/mainSlice';
+import { changeMainCategory, toggleShowCategoriesBar } from 'redux/slices/main';
 import Link from 'next/link';
 import { DetailItem } from 'subcomponents';
-import { toggleBodyOverflow } from 'data';
+import { hideBodyOverflow } from 'data/functions';
 
 export default function CategoriesBar() {
   const { showCategoriesBar, categories, mainCategory } = useSelector(state => state.main);
   const dispatch = useDispatch();
 
-  const toggleCategoriesBar = () => {
-    dispatch(toggleShowCategoriesBar());
-    toggleBodyOverflow();
+  const hideCategoriesBar = () => {
+    dispatch(toggleShowCategoriesBar(false));
+    hideBodyOverflow(false);
   }
 
   return (
     <>
       <div className={`hidden md:block h-screen w-[92vw] fixed top-0 z-[999] bg-white text-black ${showCategoriesBar ? "left-0 custom-transition" : "-left-full"}`}>
         <span
-          onClick={toggleCategoriesBar}
+          onClick={hideCategoriesBar}
           className='absolute top-2 -right-9 bg-red text-white cursor-pointer z-30 text-[30px] rounded-full'
         >
           <BiX />
@@ -66,7 +66,7 @@ export default function CategoriesBar() {
         </div>
       </div>
       <div
-        onClick={toggleCategoriesBar}
+        onClick={hideCategoriesBar}
         className={`fixed top-0 left-0 w-full hidden h-full z-20 bg-[#000000a7] ${showCategoriesBar ? "md:block" : "hidden"}`}
       />
       <div className={`block md:hidden fixed top-0 left-0 w-full h-screen overflow-y-auto p-4 z-30 bg-white ${showCategoriesBar ? "left-0" : "-left-full"}`}>
@@ -74,7 +74,7 @@ export default function CategoriesBar() {
           <div className='flex items-center justify-between mb-4'>
             <h3 className='text-2xl font-bold'>Kategoriyalar</h3>
             <button
-              onClick={toggleCategoriesBar}
+              onClick={hideCategoriesBar}
               className='text-red text-[35px]'
             >
               <BiX />

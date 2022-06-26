@@ -1,4 +1,4 @@
-import { getRating } from 'data'
+import { getRating } from 'data/functions'
 import React from 'react'
 import { BsFillStarFill } from 'react-icons/bs'
 

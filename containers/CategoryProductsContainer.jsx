@@ -1,6 +1,6 @@
 import { MobileProductCard, ProductCard } from 'components'
 import { FilterContainer, MobileFilterContainer } from 'containers'
-import { getDiscountedPrice, sortList } from 'data';
+import { getDiscountedPrice, sortList } from 'data/functions';
 import { useRouter } from 'next/router'
 import { FilterIcon, SortIcon, UpIcon } from 'subcomponents/Icons';
 import { ImArrowLeft2 } from "react-icons/im";

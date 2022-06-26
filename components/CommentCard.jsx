@@ -1,12 +1,22 @@
+import { ReplyModal } from 'components';
+import { hideBodyOverflow } from 'data/functions';
 import Image from 'next/image'
 import { useState } from 'react';
 import { AiFillDislike, AiTwotoneLike } from 'react-icons/ai'
+import { useSelector } from 'react-redux';
 import { ProductRates, SubCommentCard } from 'subcomponents'
 import { UpIcon } from 'subcomponents/Icons'
 
-export default function CommentCard({ comment }) {
+export default function CommentCard({ comment, comments, setComments, prdId }) {
   const [showReplies, setShowReplies] = useState(false);
-  const { rating, createdAt, text, likeCount, dislikeCount, replies } = comment;
+  const [openRlyModal, setOpenRlyModal] = useState(false);
+  const { user } = useSelector(state => state.user);
+  const { rating, createdAt, text, likeCount, dislikeCount, replies, id } = comment;
+
+  const openModal = state => {
+    setOpenRlyModal(state);
+    hideBodyOverflow(state)
+  }
 
   return (
     <div className="flex items-start pt-4">
@@ -30,9 +40,14 @@ export default function CommentCard({ comment }) {
         <p className='text-black text-base leading-5 py-4'>{text}</p>
         <div className='flex items-center justify-between space-x-4'>
           <div className='flex items-center space-x-4'>
-            <button className='focus:outline-none bg-transparent text-gray-500 text-xs font-semibold border-b border-black border-dashed uppercase'>
-              Javob Yozish
-            </button>
+            {user && (
+              <button
+                onClick={() => openModal(true)}
+                className='focus:outline-none bg-transparent text-gray-500 text-xs font-semibold border-b border-black border-dashed uppercase'
+              >
+                Javob Yozish
+              </button>
+            )}
             {replies?.length ? (
               <button
                 onClick={() => setShowReplies(prev => !prev)}
@@ -43,19 +58,17 @@ export default function CommentCard({ comment }) {
               </button>
             ) : <></>}
           </div>
-          <div className='flex items-center space-x-2 text'>
-            <button className='border-0 focus:outline-none flex items-center mr-5'>
-              <AiTwotoneLike className='text-[22px] text-gray-300' />
-              <span className='text-sm font-medium ml-2'>{likeCount}</span>
-            </button>
-            <button className='border-0 focus:outline-none flex items-center mr-5'>
-              <AiFillDislike className='text-[22px] text-gray-300' />
-              <span className='text-sm font-medium ml-2'>{dislikeCount}</span>
-            </button>
-          </div>
         </div>
-        {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} />)}
+        {showReplies && replies?.map((reply, i) => <SubCommentCard prdId={prdId} key={i} {...reply} comments={comments} openModal={openModal} setComments={setComments} />)}
       </div>
+      <ReplyModal
+        setComments={setComments}
+        openModal={openModal}
+        openRlyModal={openRlyModal}
+        id={id}
+        prdId={prdId}
+        comments={comments}
+      />
     </div>
   );
 }

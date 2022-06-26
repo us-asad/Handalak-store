@@ -20,8 +20,6 @@ export default function ProductPage({ product }) {
     visible: isVisible
   });
 
-  const price = totlaPrice - (totlaPrice * (discount / 100));
-
   const propsOfChildren = {
     mainImgs,
     setMainImgs,
@@ -29,7 +27,6 @@ export default function ProductPage({ product }) {
     setIsVisible,
     product,
     getTooltipProps,
-    price,
     setTooltipRef,
     setTriggerRef
   }

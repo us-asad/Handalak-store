@@ -1,6 +1,5 @@
-import React from 'react'
-import { ContainerBlockText } from 'subcomponents'
-import HoveredBox from 'subcomponents/HoveredBox'
+import { ContainerBlockText } from 'subcomponents';
+import HoveredBox from 'subcomponents/HoveredBox';
 
 export default function BrandsContainer({ brands }) {
   return (

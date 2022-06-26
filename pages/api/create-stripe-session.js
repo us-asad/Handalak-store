@@ -1,5 +1,4 @@
-import axios from "axios";
-import { getDiscountedPrice } from "data";
+import { getDiscountedPrice } from "data/functions";
 import { convertCurrency } from "data/api";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -43,8 +42,8 @@ export default async function handler(req, res) {
     },
     line_items: transformedItems,
     mode: "payment",
-    success_url: `${process.env.HOST}/cabinet/orders?clearcookie=1`,
-    cancel_url: `${process.env.HOST}/cart`,
+    success_url: `${process.env.NEXT_PUBLIC_URL}/cabinet/orders?clearcookie=1`,
+    cancel_url: `${process.env.NEXT_PUBLIC_URL}/cart`,
     discounts,
     metadata: {
       email,

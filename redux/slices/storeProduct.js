@@ -20,12 +20,12 @@ const handleLocalStorage = (payload, name, type) => {
     const i = items.indexOf(payload);
     items.splice(i, i > -1 ? 1 : 0 );
   }
-
+console.log(items)
   setCookies(name, items.filter(Boolean));
   return items;
 }
 
-const productSlice = createSlice({
+const storeProductSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
@@ -50,7 +50,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { addSavedPrd, removeSavedPrd, addComparedPrd, removeComparedPrd, addBasketPrd, removeBasketPrd } = productSlice.actions;
+export const { addSavedPrd, removeSavedPrd, addComparedPrd, removeComparedPrd, addBasketPrd, removeBasketPrd } = storeProductSlice.actions;
 
-export default productSlice.reducer;
+export default storeProductSlice.reducer;
 

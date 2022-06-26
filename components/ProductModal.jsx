@@ -1,5 +1,5 @@
 import { SplideSlide } from '@splidejs/react-splide';
-import { getFormattedPrice } from 'data';
+import { getFormattedPrice } from 'data/functions';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'

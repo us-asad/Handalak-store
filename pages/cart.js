@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { checkCookies, getCookie } from 'cookies-next';
-import { getDiscountedPrice, getFormattedPrice } from 'data';
+import { getDiscountedPrice, getFormattedPrice } from 'data/functions';
 import { getProductsById } from 'data/graphql';
 import React, { useRef, useState } from 'react'
 import { useEffect } from 'react';
 import { FiCopy } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItems } from 'redux/basketSlice';
+import { addItems } from 'redux/slices/basket';
 import CartProduct from 'subcomponents/CartProduct';
 import { Spinner } from 'subcomponents/Icons';
 import { loadStripe } from "@stripe/stripe-js";
@@ -46,7 +46,6 @@ export default function Cart({ products }) {
     } else {
       setCuponResult(getCuponValue("", false, `${cupon?.code} kodi -${cupon?.percentOff}% tuhfa qildi!`, cupon));
     }
-    console.log(result);
   }
 
   const createCheckOutSession = async () => {

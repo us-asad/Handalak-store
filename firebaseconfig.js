@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCk0uReWXQI6SDXVrIIuUGJm7L1FuVFkoA",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "olcha-uz.firebaseapp.com",
   projectId: "olcha-uz",
   storageBucket: "olcha-uz.appspot.com",
-  messagingSenderId: "436630559578",
-  appId: "1:436630559578:web:5e7d320e06827635fa7163"
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

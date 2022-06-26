@@ -1,6 +1,6 @@
 import { SplideSlide } from '@splidejs/react-splide';
 import { SplideSlider } from 'components';
-import { getDiscountedPrice, getFormattedPrice } from 'data';
+import { getDiscountedPrice, getFormattedPrice } from 'data/functions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router'

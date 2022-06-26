@@ -1,14 +1,16 @@
-import main from './mainSlice';
-import user from "./userSlice";
-import product from "./productSlice";
-import basket from "./basketSlice";
+import main from 'redux/slices/main';
+import user from "redux/slices/user";
+import storeProduct from "redux/slices/storeProduct";
+import basket from "redux/slices/basket";
+import toggleModal from "redux/slices/toggleModal";
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
     main,
     user,
-    product,
-    basket
+    storeProduct,
+    basket,
+    toggleModal,
   },
 });

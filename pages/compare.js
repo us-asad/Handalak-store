@@ -1,12 +1,12 @@
 import { checkCookies, getCookie } from 'cookies-next';
-import { getDiscountedPrice, getFormattedPrice } from 'data';
+import { getDiscountedPrice, getFormattedPrice } from 'data/functions';
 import { getProductsById } from 'data/graphql';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiX } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { removeComparedPrd } from 'redux/productSlice';
+import { removeComparedPrd } from 'redux/slices/storeProduct';
 import { ProductRates } from 'subcomponents';
 
 export default function Compare({ products: p }) {

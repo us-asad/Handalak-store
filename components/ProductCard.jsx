@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { HeartBtn, ShareBtn, CompareBtn } from 'subcomponents';
 import { DeliveryTruck } from 'subcomponents/Icons';
-import { getFormattedPrice, hideBodyOverflow } from 'data';
+import { getFormattedPrice, hideBodyOverflow } from 'data/functions';
 import ProductModal from './ProductModal';
 import { ShareBox } from 'subcomponents';
 
@@ -85,9 +85,11 @@ export default function ProductCard(props) {
                 <span>{getFormattedPrice(price)}</span> so&lsquo;m
               </p>
             </div>
-            <div className='h-7 text-sm leading-5'>
-              <span className='bg-red text-white font-bold px-2 py-0.5 rounded-full'>{monthlyPay && `${getFormattedPrice(monthlyPay?.monthlyPrice)} so'mdan/oyiga`}</span>
-            </div>
+            {monthlyPay && (
+              <div className='h-7 text-sm leading-5'>
+                <span className='bg-red text-white font-bold px-2 py-0.5 rounded-full'>{`${getFormattedPrice(monthlyPay?.monthlyPrice)} so'mdan/oyiga`}</span>
+              </div>
+            )}
             <p className='h-12 text-[13px] md:text-[17px] text-gray-800 font-sans font-light leading-5 my-2.5 line-clamp-2'>{name}</p>
             <div className='flex items-center justify-between mt-2 leading-5'>
               <button
