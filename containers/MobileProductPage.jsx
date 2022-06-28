@@ -194,7 +194,7 @@ export default function MobileProductPage({
           <button
             onClick={() => dispatch(changeStoredProductState(["basket", id]))}
             className='w-full bg-red text-sm font-bold leading-5 text-white focus:outline-none rounded-lg py-1.5 px-2 text-center'
-          >Savatga {basket.includes(id) ? "qo'shish" : "o'tish"}</button>
+          >{basket.includes(id) ? "Savatdan o'chirish" : "Savatga qo'shish"}</button>
         </div>
       </div>
     </div>

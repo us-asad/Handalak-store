@@ -54,7 +54,7 @@ export default function CartProduct({ name, purchaseQty, price, discount, id, sl
         </button>
       </div>
       <hr className='bg-gray-300 hidden md:block' />
-      <div className='md:hidden flex px-5 rounded-2xl pb-6 pt-8'>
+      <div className='md:hidden flex px-5 rounded-2xl pb-6 pt-8 relative'>
         <button
           onClick={removeFromBasket}
           className='cursor-pointer absolute top-2 right-1'
@@ -73,7 +73,7 @@ export default function CartProduct({ name, purchaseQty, price, discount, id, sl
           <li className='flex justify-between items-start mb-2.5 text-sm font-bold text-black'>{name}</li>
           <li className='grid grid-cols-1 gap-y-3'>
             <p className='place-self-start text-base font-bold'>{getFormattedPrice(getDiscountedPrice(price, discount))} so&apos;m</p>
-            <div className='flex flex-row h-8 w-3/5 rounded-lg relative bg-gray-100 mt-1 items-center space-x-12 text-bold'>
+            <div className='flex flex-row h-8 w-3/5 rounded-lg relative mt-1 items-center space-x-12 text-bold'>
               <button
                 onClick={() => dispatch(changeQty({ id }))}
                 className='focus:outline-none cursor-pointer outline-none text-3xl font-medium text-red'

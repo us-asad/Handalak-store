@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from 'redux/slices/toggleModal';
-import { registerUser, signInUser } from 'redux/slices/user';
+import { registerUser, resetPassword, signInUser } from 'redux/slices/user';
 
 const inputClassNames = "w-full px-3 py-4 text-base border-2 border-gray-700 outline-none rounded-full text-black";
 

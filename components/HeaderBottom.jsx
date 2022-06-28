@@ -124,7 +124,7 @@ export default function HeaderBottom() {
           </div>
         </div>
       </div>
-      <div className='flex md:hidden items-center justify-between py-1 px-8 space-x-5'>
+      <div className='flex md:hidden items-center justify-between py-1 px-8 space-x-5 relative'>
         <SearchForm changeStyles={scrollY > maxScrollSize} />
         <LanguageSelect />
       </div>

@@ -19,6 +19,8 @@ import { useRouter } from 'next/router';
 import { Loader } from 'subcomponents';
 import { hideBodyOverflow } from 'data/functions';
 import Head from 'next/head';
+import ScrollToTop from 'react-scroll-to-top';
+import { main_color } from 'data';
 
 const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
   ssr: false
@@ -61,7 +63,7 @@ function MyApp({ Component, pageProps }) {
   }, [router]);
 
   return (
-    <main className='overflow-x-hidden'>
+    <main className='overflow-x-hidden selection:bg-red selection:text-white'>
       <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
@@ -98,6 +100,17 @@ function MyApp({ Component, pageProps }) {
       )}
       <ProductModal />
       <ReplyModal />
+      <ScrollToTop
+        smooth
+        color={main_color}
+        style={{
+          borderRadius: "50%",
+          left: "40px",
+          display: "grid",
+          placeContent: "center",
+          border: `2px solid ${main_color}`
+        }}
+      />
       {loading && <Loader />}
     </main>
   );

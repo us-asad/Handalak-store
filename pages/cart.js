@@ -8,14 +8,10 @@ import { useSelector } from 'react-redux';
 import { addItems } from 'redux/slices/storedProducts';
 import CartProduct from 'subcomponents/CartProduct';
 import { Spinner } from 'subcomponents/Icons';
-import { loadStripe } from "@stripe/stripe-js";
 import { EmptyCart } from 'components';
 import { wrapper } from 'redux/store';
 import { createCheckOutSession } from 'data/api';
 import { SEO } from 'subcomponents';
-
-const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-const stripePromise = loadStripe(publishableKey);
 
 const getCuponValue = (error, loading, success, cupon) => ({ error, loading, success, cupon });
 
@@ -26,7 +22,9 @@ export default function Cart() {
   const totalAmount = getDiscountedPrice(amount, cupon?.percentOff);
   const cuponRef = useRef(null);
 
-  const checkCupon = async () => {
+  const checkCupon = async e => {
+    e.preventDefault();
+
     const code = cuponRef.current.value;
     if (!code)
       return setCuponResult(getCuponValue("Iltimos cupon codeini kiriting!", false, "", null));
@@ -60,23 +58,20 @@ export default function Cart() {
               </div>
               <div className='w-full mt-20 mb-10 xl:mb-0 lg:col-span-2'>
                 <div className='py-8 px-6 rounded-3xl bg-white border border-solid border-gray-300 h-full'>
-                  <div className='relative rounded-full border-2 border-solid border-gray-800 shadow-1'>
+                  <form onSubmit={checkCupon} className='relative rounded-full border-2 border-solid border-gray-800 shadow-1'>
                     <input
                       type="text"
                       ref={cuponRef}
-                      placeholder='Promo - kodni kiriting'
-                      className='lg:py-4 lg:px-7 py-3 px-5 outline-none bg-transparent text-base font-semibold'
+                      placeholder="handalak - get 70% off"
+                      className='lg:py-4 lg:px-7 py-3 px-5 outline-none bg-transparent text-base font-semibold w-full'
                     />
-                    <button
-                      onClick={checkCupon}
-                      className='bg-red text-[26px] text-white py-3 px-6 cursor-pointer rounded-r-full absolute right-0 top-0 h-full flex items-center justify-center'
-                    >
+                    <button className='bg-red text-[26px] text-white py-3 px-6 cursor-pointer rounded-r-full absolute right-0 top-0 h-full flex items-center justify-center'>
                       {loading
                         ? <Spinner className="animate-spin -ml-1 mr-3 h-5 w-5" />
                         : <FiCopy />
                       }
                     </button>
-                  </div>
+                  </form>
                   {(!loading && error || success) && <p className={`pl-8 mt-2 ${error ? "text-red" : "text-green-500"}`}>{error || success}</p>}
                   <ul className='mt-7 mb-5 w-full text-gray-800 md:text-base text-sm font-semibold'>
                     <li className='flex justify-between items-center mb-2'>

@@ -12,7 +12,7 @@ export default function BrandsContainer({ brands }) {
               height="max-content"
               imgClassName="min-w-[45px] min-h-[45px] max-w-full"
               imageUrl={brand?.logo?.url}
-              destination={`/brand/${brand?.slug}`}
+              destination={`/manufacturer/${brand?.slug}`}
               name={brand?.name}
             />
           </li>
