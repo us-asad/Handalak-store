@@ -5,12 +5,14 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { addItems } from 'redux/slices/storedProducts';
 import { wrapper } from 'redux/store';
+import { SEO } from 'subcomponents';
 
 export default function Favorite() {
   const { savedProducts } = useSelector(state => state.storedProducts);
 
   return (
     <div className='custom-container mx-auto mt-3 mb-9'>
+      <SEO title="Favorite products" />
       {savedProducts?.length
         ? (
           <>

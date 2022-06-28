@@ -4,6 +4,8 @@ import slideImg3 from "public/main-slider/3.jpeg";
 import slideImg4 from "public/main-slider/4.jpeg";
 import slideImg5 from "public/main-slider/5.jpeg";
 
+export const main_color = "#fda75e";
+
 export const languages = [
   {
     name: "O'zb",
@@ -96,53 +98,8 @@ export const about_navitems = [
     destination: "/"
   },
   {
-    name: "Info@olcha.uz",
+    name: "info@handalak.com",
     destination: "/"
-  }
-]
-
-export const payment_systems = [
-  {
-    img: {
-      src: "/payment/apelsin.png",
-      alt: "Apelsin Olcha"
-    },
-    url: "https://apelsin.uz"
-  },
-  {
-    img: {
-      src: "/payment/uzcard.png",
-      alt: "Uzcard"
-    },
-    url: "https://uzcard.uz"
-  },
-  {
-    img: {
-      src: "/payment/payme.png",
-      alt: "Payme"
-    },
-    url: "https://payme.uz"
-  },
-  {
-    img: {
-      src: "/payment/click.png",
-      alt: "Click"
-    },
-    url: "https://click.uz"
-  },
-  {
-    img: {
-      src: "/payment/humo.jpeg",
-      alt: "Humo"
-    },
-    url: "https://humocard.uz"
-  },
-  {
-    img: {
-      src: "/payment/paynet.png",
-      alt: "Paynet"
-    },
-    url: "https://app.paynet.uz"
   }
 ]
 

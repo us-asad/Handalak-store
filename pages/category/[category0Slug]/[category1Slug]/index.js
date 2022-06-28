@@ -3,6 +3,7 @@ import { getPorductsOfCatgory1 } from 'data/graphql';
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { SEO } from 'subcomponents';
 
 export default function Category1({ products, categories2 }) {
   const arrangedPrds = categories2?.filter(item => item.products.length).map(item => item.products) || [];
@@ -21,6 +22,7 @@ export default function Category1({ products, categories2 }) {
 
   return (
     <div className='custom-container mx-auto'>
+      <SEO title={category?.name} />
       <CategoryProductsContainer subCategories={categories2} categoryName={category?.name} products={allProducts} />
     </div>
   )

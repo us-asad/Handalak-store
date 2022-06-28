@@ -1,3 +1,4 @@
+import { main_color } from "data";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 export const MenuIcon = props => (
@@ -30,7 +31,7 @@ export const CustomArrowIcon = ({ isRightArrow, className }) => (
 export const ShareIcon = () => (
   <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      fill="#F91155"
+      fill={main_color}
       d="M14.8 6.4l-5-5.1c-.2-.2-.4-.3-.7-.3-.2 0-.5.1-.7.3l-.1.1c-.3.4-.2 1 .1 1.3L11.6 6H9.1C4.6 6 1 9.6 1 14.1c0 .5.4.9.9.9s.9-.4.9-.9v-.2c.1-3.4 2.8-6 6.2-6h2.6l-3.2 3.3c-.4.4-.4 1 0 1.4.2.2.4.3.7.3.3 0 .5-.1.7-.3l5-5.1c.3-.3.3-.8 0-1.1z"
     />
   </svg>

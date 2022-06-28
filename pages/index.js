@@ -2,6 +2,7 @@ import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsCon
 import { Footer, Header } from "containers";
 import { getBrands, getNews, getProducts, getPromosDiscounts } from "data/graphql";
 import dynamic from "next/dynamic";
+import { SEO } from "subcomponents";
 
 const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
   ssr: false
@@ -10,6 +11,7 @@ const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
 export default function Home({ promosDiscounts, products, brands, news }) {
   return (
     <div className="custom-container mx-auto mt-5">
+      <SEO />
       <div className="flex flex-col-reverse md:flex-col">
         <CategoriesCarousel />
         <MainCarousel />

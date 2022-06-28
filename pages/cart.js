@@ -12,6 +12,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { EmptyCart } from 'components';
 import { wrapper } from 'redux/store';
 import { createCheckOutSession } from 'data/api';
+import { SEO } from 'subcomponents';
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = loadStripe(publishableKey);
@@ -45,6 +46,7 @@ export default function Cart() {
 
   return (
     <div className='bg-gray-500 md:bg-white'>
+      <SEO title="Basket" />
       <div className='custom-container mx-auto'>
         {basket?.length
           ? (

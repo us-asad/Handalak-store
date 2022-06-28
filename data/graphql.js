@@ -640,6 +640,7 @@ export const getSearchedProducts = async searchQuery => {
         comments
         discount
         createdAt
+        id
         manufacturer {
           name
         }

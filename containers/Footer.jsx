@@ -5,6 +5,7 @@ import { BsFacebook } from 'react-icons/bs';
 import { AiOutlineInstagram } from 'react-icons/ai';
 import { FaTelegram } from 'react-icons/fa';
 import { about_navitems, info_navitems, payment_systems } from 'data';
+import { Logo } from 'subcomponents';
 
 export default function Footer() {
   return (
@@ -17,10 +18,10 @@ export default function Footer() {
                 <Link href="/">
                   <a>
                     <Image
-                      src="/logo-red.png"
-                      alt="Olcha"
-                      width="156"
-                      height="29"
+                      src="/logo.png"
+                      alt="Handalak"
+                      width="129"
+                      height="82"
                     />
                   </a>
                 </Link>
@@ -65,42 +66,30 @@ export default function Footer() {
               </ul>
             </div>
             <div className='flex flex-col lg:flex-row md:space-y-3 lg:space-y-0 lg:space-x-3'>
-              <a
-                href="https://apps.apple.com/uz/app/olcha/id1551492785"
-                rel="noreferrer"
-                target="_blank"
-              >
+              <div>
                 <Image
                   src="/download/apple-store.png"
-                  alt="Apple App Olcha"
+                  alt="Apple App Handalak"
                   width="129"
                   height="38"
                 />
-              </a>
-              <a
-                href="https://play.google.com/store/apps/developer?id=Olcha+LLC"
-                rel="noreferrer"
-                target="_blank"
-              >
+              </div>
+              <div>
                 <Image
                   src="/download/play-store.png"
-                  alt="Google App Olcha"
+                  alt="Google App Handalak"
                   width="129"
                   height="38"
                 />
-              </a>
-              <a
-                href="https://appgallery.huawei.com/app/C105125705"
-                rel="noreferrer"
-                target="_blank"
-              >
+              </div>
+              <div>
                 <Image
                   src="/download/huawei.svg"
-                  alt="Huawei App Olcha"
+                  alt="Huawei App Handalak"
                   width="129"
                   height="38"
                 />
-              </a>
+              </div>
             </div>
           </div>
           <div className='flex justify-between w-full lg:col-span-2'>
@@ -130,26 +119,24 @@ export default function Footer() {
                 </ul>
               </div>
             </div>
-            <ul className='grid grid-cols-3 gap-x-6 gap-y-4 h-full'>
-              {payment_systems.map(item => (
-                <li key={item.url} className='px-4 h-16 rounded-md flex justify-center items-center bg-white'>
-                  <a href={item.url}>
-                    <Image
-                      src={item.img.src}
-                      alt={item.img.src}
-                      width={80}
-                      height={56}
-                      objectFit="contain"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <a
+              href="https://stripe.com"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <Image
+                src="/logo-stripe.png"
+                alt="Stripe"
+                width={400}
+                height={206}
+                objectFit="contain"
+              />
+            </a>
           </div>
         </div>
         <div className='border-t border-solid py-8 text-base font-medium border-black text-gray-400'>
           <div className='mx-auto flex justify-between items-center flex-col md:flex-row custom-container'>
-            <p className='md:mb-2 lg:mb-0'> © 2017-2022. OOO &ldquo;Olcha store&ldquo;</p>
+            <p className='md:mb-2 lg:mb-0'> © 2017-2022. OOO &ldquo;Handalak store&ldquo;</p>
             <ul className='flex items-center capitalize-first'>
               <li className='flex justify-around items-center'>
                 <Link href="/">
@@ -167,53 +154,46 @@ export default function Footer() {
       </div>
       <div className='block md:hidden bg-gray-100 px-4 py-8 font-bold text-gray-900 text-base'>
         <div className='container mx-auto'>
-          <Image
-            src="/logo-red.png"
-            alt="Olcha Uz"
-            width={156}
-            height={29}
-          />
+          <Link href="/">
+            <a>
+              <Image
+                src="/logo.png"
+                alt="Handalak
+                Handalak"
+                width="129"
+                height="82"
+              />
+            </a>
+          </Link>
           <p className='text-sm mt-4'>Qo&lsquo;llab-quvvatlash telefon raqami</p>
           <a href="tel:" className='block'>
             +998 (71) 202 20 21
           </a>
           <div className='flex flex-col mt-4'>
-            <a
-              href="https://apps.apple.com/uz/app/olcha/id1551492785"
-              rel="noreferrer"
-              target="_blank"
-            >
+            <div>
               <Image
                 src="/download/apple-store.png"
-                alt="Apple App Olcha"
+                alt="Apple App Handalak"
                 width="178"
                 height="52"
               />
-            </a>
-            <a
-              href="https://play.google.com/store/apps/developer?id=Olcha+LLC"
-              rel="noreferrer"
-              target="_blank"
-            >
+            </div>
+            <div>
               <Image
                 src="/download/play-store.png"
-                alt="Google App Olcha"
+                alt="Google App Handalak"
                 width="178"
                 height="52"
               />
-            </a>
-            <a
-              href="https://appgallery.huawei.com/app/C105125705"
-              rel="noreferrer"
-              target="_blank"
-            >
+            </div>
+            <div>
               <Image
                 src="/download/huawei.svg"
-                alt="Huawei App Olcha"
+                alt="Huawei App Handalak"
                 width="178"
                 height="52"
               />
-            </a>
+            </div>
           </div>
           <ul className='mt-8'>
             {[...info_navitems, ...about_navitems].map((item, i) => (

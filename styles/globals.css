@@ -149,7 +149,7 @@ details > summary {
 
 .splide__pagination__page.is-active {
   transform: scale(1.4);
-  background: red;
+  background: #fda75e;
 }
 
 .splide__pagination li {
@@ -198,7 +198,7 @@ details > summary {
   }
 
   .bg-grad {
-    background: linear-gradient(90deg, #e96443, #904e95);
+    background: linear-gradient(90deg, #fda75e, #dd9150);
   }
 
   .descr h1 {

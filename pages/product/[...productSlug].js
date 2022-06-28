@@ -6,13 +6,14 @@ import { usePopperTooltip } from 'react-popper-tooltip';
 import { useSelector } from 'react-redux';
 import { addProduct } from 'redux/slices/product';
 import { wrapper } from 'redux/store';
+import { SEO } from 'subcomponents';
 
 const MobileProductPage = dynamic(() => import("containers/MobileProductPage"), {
   ssr: false,
 });
 
 export default function ProductPage() {
-  const { image } = useSelector(state => state.product);
+  const { image, name } = useSelector(state => state.product);
   const [mainImgs, setMainImgs] = useState(image)
   const [isVisible, setIsVisible] = useState(false);
 
@@ -39,6 +40,7 @@ export default function ProductPage() {
 
   return (
     <div className='custom-container mx-auto mb-28'>
+      <SEO title={name} />
       <div className='hidden md:block'>
         <DesktopProductPage {...propsOfChildren} />
       </div>

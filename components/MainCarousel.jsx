@@ -14,7 +14,7 @@ export default function MainCarousel() {
               <a className='relative'>
                 <Image
                   src={item.image}
-                  alt={`Olcha Slider Image ${i}`}
+                  alt={`Handalak Slider Image ${i}`}
                   width={item.width}
                   height={item.height}
                   className="rounded-xl"

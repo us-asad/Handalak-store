@@ -2,6 +2,7 @@ import { EmptyCart, OrderCard } from 'components';
 import { getCookie, removeCookies } from 'cookies-next'
 import { getOrdersWithPrdImages, getUserOrders } from 'data/graphql';
 import React from 'react'
+import { SEO } from 'subcomponents';
 
 export default function Orders({ email, orders }) {
   if (!email) return (
@@ -14,6 +15,7 @@ export default function Orders({ email, orders }) {
 
   return (
     <div className='custom-container mx-auto min-h-[80vh] space-y-4'>
+      <SEO title="Orders" />
       {orders.map((odr, i) => <OrderCard key={i} {...odr} />)}
     </div >
   );

@@ -8,6 +8,7 @@ import CategoryBtn from 'subcomponents/CategoryBtn';
 import { CallModal } from "components";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from 'redux/slices/toggleModal';
+import { main_color } from "data";
 
 export default function HeaderTop() {
   const { comparedPrds, savedPrds } = useSelector(state => state.storeProduct);
@@ -77,17 +78,17 @@ export default function HeaderTop() {
       <div className='md:hidden flex justify-between items-center pt-5 pb-3 bg-white px-5'>
         <div className="flex items-center">
           <CategoryBtn />
-          <Logo src="/logo-red.png" />
+          <Logo src="/logo.png" />
         </div>
         <div className='flex items-center'>
           <Link href="/">
             <a className='font-medium text-base text-white'>
-              <FiPercent className='text-[22px]' color="red" />
+              <FiPercent className='text-[22px]' color={main_color} />
             </a>
           </Link>
           <Link href="/cabinet/favorite">
             <a className='font-medium text-base relative mx-5 text-white'>
-              <FaRegHeart className='text-[22px]' color="red" />
+              <FaRegHeart className='text-[22px]' color={main_color} />
               {savedPrds?.length
                 ? <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>{savedPrds.length}</span>
                 : null
@@ -96,7 +97,7 @@ export default function HeaderTop() {
           </Link>
           <Link href="/compare">
             <a className='font-medium text-base relative text-white'>
-              <ChartIcon className='text-[22px]' color="red" />
+              <ChartIcon className='text-[22px]' color={main_color} />
               {comparedPrds?.length
                 ? <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>{comparedPrds.length}</span>
                 : null

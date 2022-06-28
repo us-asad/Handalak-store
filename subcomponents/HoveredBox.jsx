@@ -13,7 +13,7 @@ export default function HoveredBox({ name, imageUrl, destination, height, imgCla
           <div className={`relative mb-1 transform transition duration-500 ease-in-out ${smallScale ? "group-hover:scale-110" : "group-hover:scale-150"} ${imgClassName}`}>
             <Image
               src={imageUrl}
-              alt={`${name} Olcha`}
+              alt={`${name} Handalak`}
               layout="fill"
               objectFit="contain"
             />

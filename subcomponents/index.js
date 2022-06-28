@@ -21,3 +21,4 @@ export { default as SelectRates } from "./SelectRates";
 export { default as CloseBtn } from "./CloseBtn";
 export { default as ModalContainer } from "./ModalContainer";
 export { default as Loader } from "./Loader";
+export { default as SEO } from "./SEO";

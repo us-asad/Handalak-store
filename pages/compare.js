@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItems, removeItem } from 'redux/slices/storedProducts';
 import { changeStoredProductState, removeComparedPrd } from 'redux/slices/storeProduct';
 import { wrapper } from 'redux/store';
-import { ProductRates } from 'subcomponents';
+import { ProductRates, SEO } from 'subcomponents';
 
 export default function Compare() {
   const { comparedProducts } = useSelector(state => state.storedProducts);
@@ -42,6 +42,7 @@ export default function Compare() {
 
   return (
     <div className='custom-container mx-auto my-5'>
+      <SEO title="mahulotlarni taqqosla!" />
       <div className='w-full flex flex-col md:flex-row md:items-center space-y-8 md:space-y-0 justify-between'>
         <h1 className='font-bold md:text-[42px] text-xl'>Taqqoslash ro&apos;yxati</h1>
         <select

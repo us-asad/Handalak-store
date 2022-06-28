@@ -2,6 +2,7 @@ import { CategoriesContainer, ColumnCategoriesContainer } from 'containers';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { SEO } from 'subcomponents';
 
 export default function Category0() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function Category0() {
   
   return (
     <div className='custom-container mx-auto'>
+      <SEO title={category0?.name} />
       <div className='hidden md:block'>
         <CategoriesContainer title={category0?.name} categories={category0?.categories1} starterSlug={`category/${category0?.slug}`} />
       </div>

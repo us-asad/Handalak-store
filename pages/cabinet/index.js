@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signOutAccount } from 'redux/slices/user';
+import { SEO } from 'subcomponents';
 
 export default function Cabinet() {
   const { user, loading } = useSelector(state => state.user);
@@ -18,6 +19,7 @@ export default function Cabinet() {
 
   return (
     <div className='custom-container mx-auto space-y-4 mt-3 mb-10'>
+      <SEO title="Cabinet" />
       <h1 className='md:text-4xl text-2xl'>Assalomu aleykum <b>{user?.name}</b></h1>
       <h3 className='md:text-xl text-md'>Emailingiz: <b>{user?.email}</b></h3>
       <div className='flex md:space-x-4 flex-col md:flex-row space-y-4 md:space-y-0 text-center pt-5 items-center justify-center md:justify-start'>

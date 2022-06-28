@@ -7,7 +7,7 @@ export default function Description() {
   return (
     <div className='mb-8 pb-12 relative'>
       <div className={`descr font-raleway overflow-hidden ${!showFully && "h-80"}`}>
-        <h1>Olcha onlayn do&#39;koni -&nbsp;&nbsp;xarid qilish uchun&nbsp;qulay&nbsp;gipermarket</h1>
+        <h1>Handalak onlayn do&#39;koni -&nbsp;&nbsp;xarid qilish uchun&nbsp;qulay&nbsp;gipermarket</h1>
         <p>Har qanday insoning hayoti va qulay sharoitlarini zamonaviy texnologiyalarsiz tasavvur qilib bo&#39;lmaydi. Ish va shaxsiy savollar - smartfonda, sevimli filmlar, seriallar va teleko&#39;rsatuvlar - televizor, tozalash, yig&rsquo;ishtirish &ndash; changyutgich, pishirish, tayyorlash - pechka, pech va ko&#39;plab kichikroq, ammo undan kam bo&#39;lmagan foydali qurilmalar va mahsulotlar. Bundan tashqari, texnologiyalar rivojlanmoqda va shuning uchun jihozlar muntazam yangilanishlarni talab qiladi, men yangi modellarni sinab, tekshirib ko&#39;rishni xohlayman lekin mavjud qurilmalar va texnikalarning kuchi yetarli emas. Shu nuqtai nazardan, maishiy texnika sotib olish uchun xavfsiz va qulay joy, online-do&rsquo;kon bo&#39;lishi foydalidir. Agar siz hali o&#39;zingiz uchun mahsulot - tovar topa olmagan bo&#39;lsangiz, biz sizni web-saytimizda bir necha daqiqa qolishga taklif qilamiz. Sizni ishontirib aytamizki, vaqtingizni behuda sarf qilmaganligingizga ishonch hosil qilasiz.</p>
         <h2>O&#39;zbekistonda texnikalarni qayerdan sotib olish mumkin?</h2>
         <p>&nbsp;</p>
@@ -31,7 +31,7 @@ export default function Description() {
         </ul>
         <h2>Onlayn xarid - tez, qulay va xavfsiz</h2>
         <p>&nbsp;</p>
-        <p>Olcha.uz 2017-yildan beri bozorda faoliyat yuritayotgan kompaniya bo&lsquo;lsa-da, bu boradagi xodimlarning tajribasi 16 yilga yetadi. Biz har xil brendlar va yaxshi narx segmentlari bilan ishlaymiz va har bir mijozga o&#39;z byudjetiga, hisobiga mos variantni taklif qilishimiz mumkin. Onlayn xarid qilish qulayligi xaridning moliyaviy foydasi bilan birga keladi. Bir necha marta bosish orqali pulni tejang va ishonchli mahsulotlarni sotib oling. Biz maslahat berishdan xursand bo&#39;lamiz.</p>
+        <p>Handalak 2022-yildan beri bozorda faoliyat yuritayotgan kompaniya bo&lsquo;lsa-da, bu boradagi xodimlarning tajribasi 16 yilga yetadi. Biz har xil brendlar va yaxshi narx segmentlari bilan ishlaymiz va har bir mijozga o&#39;z byudjetiga, hisobiga mos variantni taklif qilishimiz mumkin. Onlayn xarid qilish qulayligi xaridning moliyaviy foydasi bilan birga keladi. Bir necha marta bosish orqali pulni tejang va ishonchli mahsulotlarni sotib oling. Biz maslahat berishdan xursand bo&#39;lamiz.</p>
       </div>
       <button
         onClick={() => setShowFully(prev => !prev)}

@@ -32,7 +32,7 @@ export default function ShareBox({ setIsVisible }) {
         >
           <Image
             src="/social/facebook.svg"
-            alt="Olcha Facebook"
+            alt="Handalak Facebook"
             width={30}
             height={30}
           />
@@ -48,7 +48,7 @@ export default function ShareBox({ setIsVisible }) {
         >
           <Image
             src="/social/insta.svg"
-            alt="Olcha Instagram"
+            alt="Handalak Instagram"
             width={30}
             height={30}
           />
@@ -64,7 +64,7 @@ export default function ShareBox({ setIsVisible }) {
         >
           <Image
             src="/social/tg.svg"
-            alt="Olcha Telegram"
+            alt="Handalak Telegram"
             width={30}
             height={30}
           />

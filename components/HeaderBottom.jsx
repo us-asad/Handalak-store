@@ -38,7 +38,7 @@ export default function HeaderBottom() {
     <>
       <div className={`${scrollY > maxScrollSize && "fixed fixed-header bg-white z-40 top-0 w-full shadow-md"}`}>
         <div className={`w-full md:flex hidden justify-between items-center py-4 font-raleway transition-transform duration-300 custom-container mx-auto`}>
-          <Logo src={scrollY > maxScrollSize ? "/logo-red.png" : "/logo.png"} />
+          <Logo src="/logo.png" />
           <div className='flex items-center w-full ml-0 mr-4  md:ml-8 md:mr-8'>
             <CategoryBtn changeStyles={scrollY > maxScrollSize} />
             <SearchForm changeStyles={scrollY > maxScrollSize} />
