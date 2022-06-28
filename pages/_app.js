@@ -19,8 +19,6 @@ import { useRouter } from 'next/router';
 import { Loader } from 'subcomponents';
 import { hideBodyOverflow } from 'data/functions';
 import Head from 'next/head';
-import ScrollToTop from 'react-scroll-to-top';
-import { main_color } from 'data';
 
 const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
   ssr: false
@@ -100,17 +98,6 @@ function MyApp({ Component, pageProps }) {
       )}
       <ProductModal />
       <ReplyModal />
-      <ScrollToTop
-        smooth
-        color={main_color}
-        style={{
-          borderRadius: "50%",
-          left: "40px",
-          display: "grid",
-          placeContent: "center",
-          border: `2px solid ${main_color}`
-        }}
-      />
       {loading && <Loader />}
     </main>
   );
