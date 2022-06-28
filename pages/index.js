@@ -11,7 +11,7 @@ const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
 export default function Home({ promosDiscounts, products, brands, news }) {
   return (
     <div className="custom-container mx-auto mt-5">
-      <SEO />
+      <SEO title="Xush kelibsiz!" />
       <div className="flex flex-col-reverse md:flex-col">
         <CategoriesCarousel />
         <MainCarousel />
