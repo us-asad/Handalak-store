@@ -1,31 +1,25 @@
-import React, { useState } from 'react'
-import { useEffect } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux'
-import { addSavedPrd, removeSavedPrd } from 'redux/slices/storeProduct';
+import { addItems, removeItem } from 'redux/slices/storedProducts';
+import { changeStoredProductState } from 'redux/slices/storeProduct';
 
 export default function HeartBtn({ id }) {
-  const [bgRed, setBgRed] = useState(false);
   const dispatch = useDispatch();
   const { savedPrds } = useSelector(state => state.storeProduct);
 
   const handleClick = () => {
-    if (bgRed)
-      dispatch(removeSavedPrd(id));
-    else
-      dispatch(addSavedPrd(id));
-  };
+    dispatch(changeStoredProductState(["savedPrds", id]));
 
-  useEffect(() => {
-    setBgRed(savedPrds.includes(id));
-  }, [savedPrds]);
+    if (savedPrds.includes(id))
+      dispatch(removeItem(["savedProducts", id]));
+  };
 
   return (
     <button
       onClick={handleClick}
       className='outline-none bg-white rounded-full border-0'
     >
-      {bgRed
+      {savedPrds.includes(id)
         ? <AiFillHeart className='w-[22px] h-[22px] text-red' />
         : <AiOutlineHeart className='w-[22px] h-[22px] text-red' />
       }

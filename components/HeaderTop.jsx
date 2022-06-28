@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { FiPercent } from "react-icons/fi";
 import { BsTelephone } from "react-icons/bs";
 import Link from 'next/link';
@@ -7,10 +6,11 @@ import { ChartIcon } from 'subcomponents/Icons';
 import { FaRegHeart } from 'react-icons/fa';
 import CategoryBtn from 'subcomponents/CategoryBtn';
 import { CallModal } from "components";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from 'redux/slices/toggleModal';
 
 export default function HeaderTop() {
+  const { comparedPrds, savedPrds } = useSelector(state => state.storeProduct);
   const dispatch = useDispatch();
 
   return (
@@ -85,16 +85,22 @@ export default function HeaderTop() {
               <FiPercent className='text-[22px]' color="red" />
             </a>
           </Link>
-          <Link href="/">
+          <Link href="/cabinet/favorite">
             <a className='font-medium text-base relative mx-5 text-white'>
               <FaRegHeart className='text-[22px]' color="red" />
-              <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>1</span>
+              {savedPrds?.length
+                ? <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>{savedPrds.length}</span>
+                : null
+              }
             </a>
           </Link>
-          <Link href="/">
+          <Link href="/compare">
             <a className='font-medium text-base relative text-white'>
               <ChartIcon className='text-[22px]' color="red" />
-              <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>1</span>
+              {comparedPrds?.length
+                ? <span className='text-white text-xs font-medium py-0.5 px-1 rounded-lg absolute -top-[11px] -right-[10px] bg-red'>{comparedPrds.length}</span>
+                : null
+              }
             </a>
           </Link>
         </div>

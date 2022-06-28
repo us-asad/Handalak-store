@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from 'redux/slices/toggleModal';
 
 export default function PrdComments() {
-  const { user: { user }, product: { comments, slug } } = useSelector(state => state);
+  const { user: { user }, product: { comments, id } } = useSelector(state => state);
   const dispatch = useDispatch();
 
   return (
@@ -70,7 +70,7 @@ export default function PrdComments() {
                 </li>
               ))}
             </ul>
-            <Link href={`/review/${slug}`}>
+            <Link href={`/reviews/${id}`}>
               <a className='mt-4 flex items-center justify-center py-2 px-4 w-full rounded-lg bg-gray-100 border-0 focus:outline-none'>
                 <span className='text-base font-medium leading-5 text-black mr-2'>Barcha sharhlarni ko&apos;rish</span>
                 <BsChevronRight className='text-[10px]' />

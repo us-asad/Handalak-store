@@ -5,14 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { BiX } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
-import { removeComparedPrd } from 'redux/slices/storeProduct';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItems, removeItem } from 'redux/slices/storedProducts';
+import { changeStoredProductState, removeComparedPrd } from 'redux/slices/storeProduct';
+import { wrapper } from 'redux/store';
 import { ProductRates } from 'subcomponents';
 
-export default function Compare({ products: p }) {
-  const [products, setProducts] = useState(p);
+export default function Compare() {
+  const { comparedProducts } = useSelector(state => state.storedProducts);
+
   const dispatch = useDispatch();
-  const allprdCtgs = products?.map(prd => [prd.category.name, prd]);
+  const allprdCtgs = comparedProducts?.map(prd => [prd.category.name, prd]);
   const formatted = {};
   allprdCtgs?.forEach(item => {
     formatted[item[0]] = formatted[item[0]] ? [...formatted[item[0]], item[1]] : [item[1]];
@@ -23,29 +26,28 @@ export default function Compare({ products: p }) {
   allFeatures = [...new Set(allFeatures)];
 
   const removePrd = id => {
-    setProducts(prev => {
-      return prev.filter(prd => prd.id !== id)
-    });
-    dispatch(removeComparedPrd(id));
+    dispatch(removeItem(["comparedProducts", id]));
+    dispatch(changeStoredProductState(["comparedPrds", id]));
   }
 
   useEffect(() => {
-    if (mainPrds?.length === 1) {
-      setMainPrds(formatted[Object.keys(formatted)[0]] || []);
-    } else {
-      setMainPrds(formatted[mainPrds[0]?.category?.name])
+    if (comparedProducts?.length) {
+      if (mainPrds?.length === 1) {
+        setMainPrds(formatted[Object.keys(formatted)[0]] || []);
+      } else {
+        setMainPrds(formatted[mainPrds[0]?.category?.name])
+      }
     }
-  }, [products]);
+  }, [comparedProducts]);
 
   return (
-    <div className='custom-container mx-auto'>
-      <div className='w-full flex items-center justify-between'>
-        <h1 className='font-bold text-[42px]'>Taqqoslash ro&apos;yxati</h1>
+    <div className='custom-container mx-auto my-5'>
+      <div className='w-full flex flex-col md:flex-row md:items-center space-y-8 md:space-y-0 justify-between'>
+        <h1 className='font-bold md:text-[42px] text-xl'>Taqqoslash ro&apos;yxati</h1>
         <select
           onChange={e => setMainPrds(formatted[e.target.value])}
-          className={`w-max appearance-none border-2 border-solid text-black border-gray-800 rounded-full mt-2 col-span-2 flex bg-white items-center px-4 py-3 outline-none ${!Object.keys(formatted).length && "hidden"}`}
+          className={`w-max appearance-none border-2 border-solid text-black border-gray-800 rounded-full mt-2 col-span-2 flex bg-white items-center md:px-4 px-2 md:py-3 py-1 outline-none ${!Object.keys(formatted).length && "hidden"}`}
         >
-          default
           {Object.keys(formatted).map(key => (
             <option
               key={key}
@@ -55,7 +57,7 @@ export default function Compare({ products: p }) {
         </select>
       </div>
       <div className='overflow-x-auto mt-4 mb-16'>
-        <table className={`table mb-4 border border-gray-300 w-full min-w-max ${!products.length && "hidden"}`} >
+        <table className={`table mb-4 border border-gray-300 w-full min-w-max ${!comparedProducts?.length && "hidden"}`} >
           <thead>
             <tr>
               <th className='min-w-[200px] w-[20vw]'></th>
@@ -123,14 +125,9 @@ export default function Compare({ products: p }) {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({req, res}) => {
   const cookieOptions = { req, res };
   const prdIds = checkCookies("comparedPrds", cookieOptions) ? JSON.parse(getCookie("comparedPrds", cookieOptions)) : [];
   const products = await getProductsById(prdIds);
-
-  return {
-    props: {
-      products
-    }
-  }
-}
+  store.dispatch(addItems(["comparedProducts", products]));
+})

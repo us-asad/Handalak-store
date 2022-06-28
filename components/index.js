@@ -24,3 +24,5 @@ export { default as EmptyCart } from "./EmptyCart";
 export { default as OrderCard } from "./OrderCard";
 export { default as Comment } from "./Comment";
 export { default as ReplyModal } from "./ReplyModal";
+export { default as PreOrderModal } from "./PreOrderModal";
+export { default as Auth } from "./Auth";

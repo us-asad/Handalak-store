@@ -1,10 +1,15 @@
-import { DesktopProductPage, MobileProductPage } from 'containers';
+import { DesktopProductPage } from 'containers';
 import { getProductDetails } from 'data/graphql';
+import dynamic from 'next/dynamic';
 import { useState } from 'react'
 import { usePopperTooltip } from 'react-popper-tooltip';
 import { useSelector } from 'react-redux';
 import { addProduct } from 'redux/slices/product';
 import { wrapper } from 'redux/store';
+
+const MobileProductPage = dynamic(() => import("containers/MobileProductPage"), {
+  ssr: false,
+});
 
 export default function ProductPage() {
   const { image } = useSelector(state => state.product);

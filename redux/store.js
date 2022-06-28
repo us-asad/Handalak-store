@@ -1,7 +1,7 @@
 import main from 'redux/slices/main';
 import user from "redux/slices/user";
 import storeProduct from "redux/slices/storeProduct";
-import basket from "redux/slices/basket";
+import storedProducts from "redux/slices/storedProducts";
 import product from "redux/slices/product";
 import toggleModal from "redux/slices/toggleModal";
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
@@ -11,7 +11,7 @@ const combinedReducers = combineReducers({
   main,
   user,
   storeProduct,
-  basket,
+  storedProducts,
   toggleModal,
   product
 });
@@ -24,7 +24,12 @@ const masterReducer = (state, action) => {
         categories: action.payload.main.categories,
         mainCategory: action.payload.main.categories[0],
       },
-      product: action.payload?.product?.id ? action.payload?.product : state.product
+      product: action.payload?.product?.id ? action.payload?.product : state.product,
+      storedProducts: {
+        basket: action.payload?.storedProducts?.basket,
+        comparedProducts: action.payload?.storedProducts?.comparedProducts,
+        savedProducts: action.payload?.storedProducts?.savedProducts,
+      }
     }
 
     return nextState;

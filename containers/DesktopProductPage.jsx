@@ -28,7 +28,7 @@ export default function DesktopProductPage({
   });
   const splideRef = useRef(null);
   const router = useRouter();
-  const { name, discount, monthlyPay, price, comments, category, id, delivery, subtitle, manufacturer, seller, supplier, warrantyPeriod } = useSelector(state => state.product);
+  const { product: { name, discount, monthlyPay, price, comments, category, id, delivery, subtitle, manufacturer, seller, supplier, warrantyPeriod }, product } = useSelector(state => state);
 
   const handleClick = i => {
     splideRef.current.go(i)
@@ -177,7 +177,7 @@ export default function DesktopProductPage({
           </div>
         </div>
         <div className='md:col-span-12 lg:col-start-6 lg:col-end-13'>
-          <ProductEventBtns short />
+          <ProductEventBtns short product={product} />
         </div>
       </div>
       <ProductDetails />

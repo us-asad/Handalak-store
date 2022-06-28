@@ -25,9 +25,8 @@
 
 body {
   overflow-x: hidden;
-  font-family: Arial, Helvetica Neue,Helvetica,sans-serif
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 }
-
 
 * {
   font-family: "Raleway", sans-serif;
@@ -50,14 +49,14 @@ body {
 }
 
 /* Chrome, Safari, Edge, Opera */
-input[type = number]::-webkit-outer-spin-button,
-input[type = number]::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type = number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -73,6 +72,20 @@ details > summary {
   font-family: "Raleway", Arial, sans-serif;
 }
 
+@keyframes loader {
+  0%,
+  80%,
+  to {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+.animate-loader {
+  animation: loader 1.4s ease-in-out infinite both;
+}
 
 .custom-shadow {
   box-shadow: 0 0 15px 5px rgb(0 0 0 / 20%);
@@ -139,6 +152,14 @@ details > summary {
   background: red;
 }
 
+.splide__pagination li {
+  display: none;
+}
+
+.splide__pagination li[role="presentation"] {
+  display: block
+}
+
 .descr h1 {
   color: #111;
   font-size: 1.25rem;
@@ -149,11 +170,12 @@ details > summary {
 
 .descr p {
   color: #818181;
-    font-size: 1rem;
-    font-weight: 500;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.descr h2, .descr h3 {
+.descr h2,
+.descr h3 {
   color: #000;
   font-size: 1.2rem;
   margin-top: 1.25rem;
@@ -183,17 +205,17 @@ details > summary {
     font-size: 2.25rem;
     line-height: 2.25rem;
   }
-  
+
   .descr p {
     font-weight: 400;
     line-height: 22px;
   }
-  
+
   .descr h2,
   .descr h3 {
     font-size: 1.875rem;
   }
-  
+
   .descr li {
     margin: 20px 0;
     color: #000;
@@ -211,5 +233,13 @@ details > summary {
   .custom-container {
     min-width: 1400px;
     max-width: 1400px;
+  }
+}
+
+@media (max-width: 768px) {
+  #__replain_widget {
+    bottom: 75px !important;
+    right: 10px !important;
+    max-height: calc(100% - 75px);
   }
 }

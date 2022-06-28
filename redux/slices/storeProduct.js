@@ -11,17 +11,17 @@ const initialState = {
   basket: basket || [],
 };
 
-const handleLocalStorage = (payload, name, type) => {
-  const items = checkCookies(name) ? JSON.parse(getCookie(name)) : [];
+const storeProduct = payload => {
+  const items = checkCookies(payload[0]) ? JSON.parse(getCookie(payload[0])) : [];
 
-  if (type === "add")
-    items.push(payload);
+  if (!items.includes(payload[1]))
+    items.push(payload[1]);
   else {
-    const i = items.indexOf(payload);
+    const i = items.indexOf(payload[1]);
     items.splice(i, i > -1 ? 1 : 0 );
   }
 
-  setCookies(name, items.filter(Boolean));
+  setCookies(payload[0], items.filter(Boolean));
   return items;
 }
 
@@ -29,28 +29,13 @@ const storeProductSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    addSavedPrd: (state, { payload }) => {
-      state.savedPrds = handleLocalStorage(payload, "savedPrds", "add");
-    },
-    removeSavedPrd: (state, { payload }) => {
-      state.savedPrds = handleLocalStorage(payload, "savedPrds");
-    },
-    addComparedPrd: (state, { payload }) => {
-      state.comparedPrds = handleLocalStorage(payload, "comparedPrds", "add");
-    },
-    removeComparedPrd: (state, { payload }) => {
-      state.comparedPrds = handleLocalStorage(payload, "comparedPrds");
-    },
-    addBasketPrd: (state, { payload }) => {
-      state.basket = handleLocalStorage(payload, "basket", "add");
-    },
-    removeBasketPrd: (state, { payload }) => {
-      state.basket = handleLocalStorage(payload, "basket");
+    changeStoredProductState: (state, { payload }) => {
+      state[payload[0]] = storeProduct(payload)
     }
   },
 });
 
-export const { addSavedPrd, removeSavedPrd, addComparedPrd, removeComparedPrd, addBasketPrd, removeBasketPrd } = storeProductSlice.actions;
+export const { changeStoredProductState } = storeProductSlice.actions;
 
 export default storeProductSlice.reducer;
 

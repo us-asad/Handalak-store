@@ -7,7 +7,15 @@ const initialState = {
   callModal: false,
   cabinetDropDown: false,
   commentModal: false,
-  replyModal: false
+  replyModal: false,
+  product: {
+    state: false,
+    data: {}
+  },
+  reply: {
+    state: false,
+    data: {}
+  }
 };
 
 const toggleModalSlice = createSlice({
@@ -17,11 +25,16 @@ const toggleModalSlice = createSlice({
     toggleModal: (state, { payload }) => {
       state[payload[0]] = payload[1];
       hideBodyOverflow(payload[1]);
+    },
+    toggleDynamicModal: (state, { payload }) => {
+      state[payload[0]].state = payload[1];
+      state[payload[0]].data = payload[2] || {};
+      hideBodyOverflow(payload[1]);
     }
   }
 });
 
-export const { toggleModal } = toggleModalSlice.actions;
+export const { toggleModal, toggleDynamicModal } = toggleModalSlice.actions;
 
 export default toggleModalSlice.reducer;
 

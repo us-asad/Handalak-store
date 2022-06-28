@@ -60,8 +60,8 @@ export default function CategoryProductsContainer({ categoryName, products, subC
         }
       }
 
-      if (filters?.min_price && filters?.min_price > discountedPrice) result = false;
-      if (filters?.max_price && filters?.max_price < discountedPrice) result = false;
+      if (+filters?.min_price && +filters?.min_price > +discountedPrice) result = false;
+      if (+filters?.max_price && +filters?.max_price < +discountedPrice) result = false;
 
       if (filters?.brands?.length && !filters?.brands?.includes(prd.manufacturer.name)) result = false;
 

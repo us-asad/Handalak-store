@@ -1,6 +1,6 @@
 import { buffer } from "micro";
 import { convertCurrency } from "data/api";
-import { client, GetUserPurchasedProductsQry, UpdateProductQty, UpdateUserOrdersAndCouponQty } from "data/graphql";
+import { client, GetUserPurchasedProductsQry, UpdateProductQty, UpdateUserOrders, UpdateCouponQty } from "data/graphql";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
       const amount_subtotal = await convertCurrency("USD", "UZS", session.amount_subtotal);
       const amount_total = await convertCurrency("USD", "UZS", session.amount_total);
-      
+
       const sessionData = {
         email: session.metadata.email,
         id: session.id,
@@ -46,12 +46,17 @@ export default async function handler(req, res) {
         await client.request(UpdateProductQty, { id: prd.id, qty: prd.quantity - prd.purchaseQty });
       }
 
-      await client.request(UpdateUserOrdersAndCouponQty, {
+      if (coupon?.code && coupon?.count > 0) {
+        await client.request(UpdateCouponQty, {
+          code: coupon?.code,
+          codeQty: coupon?.count - 1
+        })
+      }
+
+      await client.request(UpdateUserOrders, {
         email: session.metadata.email,
         orders: orders ? [sessionData, ...orders] : [sessionData],
-        purchasedProducts: purchasedProducts ? [...new Set([...purchasedProducts, ...prds.map(({ id }) => id)])] : prds.map(({ id }) => id),
-        code: coupon.code || "0",
-        codeQty: coupon.count - 1
+        purchasedProducts: purchasedProducts ? [...new Set([...purchasedProducts, ...prds.map(({ id }) => id)])] : prds.map(({ id }) => id)
       });
     }
   }

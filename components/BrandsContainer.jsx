@@ -9,7 +9,7 @@ export default function BrandsContainer({ brands }) {
         {brands?.map(brand => (
           <li key={brand?.slug}>
             <HoveredBox
-              height="92px"
+              height="max-content"
               imgClassName="min-w-[45px] min-h-[45px] max-w-full"
               imageUrl={brand?.logo?.url}
               destination={`/brand/${brand?.slug}`}

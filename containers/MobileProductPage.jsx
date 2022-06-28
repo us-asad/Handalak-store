@@ -14,7 +14,9 @@ import { FaRegHeart } from 'react-icons/fa';
 import { FiCopy } from 'react-icons/fi';
 import { BsChevronRight } from 'react-icons/bs';
 import { ProductDetails } from 'containers';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCheckOutSession } from 'data/api';
+import { changeStoredProductState } from 'redux/slices/storeProduct';
 
 const splideOptions = {
   rewind: true,
@@ -39,7 +41,13 @@ export default function MobileProductPage({
     visible: isVisible
   });
   const router = useRouter();
-  const { name, discount, price, slug, category, delivery, subtitle, manufacturer, warrantyPeriod } = useSelector(state => state.product);
+  const {
+    product: { name, discount, price, slug, category, delivery, subtitle, manufacturer, warrantyPeriod, id },
+    product,
+    user: { user },
+    storeProduct: { basket }
+  } = useSelector(state => state);
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -118,7 +126,7 @@ export default function MobileProductPage({
           <p className='text-black text-4xl sm:mr-4'>{getFormattedPrice(getDiscountedPrice(price, discount))} so&lsquo;m</p>
           {discount
             ? <p className='text-red line-through text-2xl'>{getFormattedPrice(price)} so&lsquo;m</p>
-            : <></>
+            : null
           }
         </div>
         <div className='flex items-center justify-start mb-2'>
@@ -140,6 +148,7 @@ export default function MobileProductPage({
         </div>
         <div className='py-4'>
           <button
+            onClick={() => createCheckOutSession(user, [{ ...product, purchaseQty: 1 }], null, `/product/${slug}`)}
             className='w-full border border-gray-600 text-base font-extrabold leading-5 text-black focus:outline-none rounded-lg py-3 px-4 shadow-1'
           >
             Bir klikda sotib olish
@@ -155,12 +164,14 @@ export default function MobileProductPage({
         <div className='font-semibold'>
           <div className='flex items-center -ml-4'>
             <button
+              onClick={() => dispatch(changeStoredProductState(["savedPrds", id]))}
               className='ml-4 flex items-center justify-center py-2 w-1/2 rounded-lg border-0 focus:outline-none bg-gray-100 text-gray-900'
             >
               <FaRegHeart className='text-red ' />
               <span className='text-base leading-5 ml-2'>Sevimlilarga</span>
             </button>
             <button
+              onClick={() => dispatch(changeStoredProductState(["comparedPrds", id]))}
               className='ml-4 flex items-center justify-center py-2 w-1/2 rounded-lg border-0 focus:outline-none bg-gray-100 text-gray-900'
             >
               <FiCopy className='text-red ' />
@@ -179,13 +190,11 @@ export default function MobileProductPage({
       </div>
       <ProductDetails />
       <div className='fixed w-full z-20 left-0 right-0 bg-white pb-2 pt-4 bottom-[70px]'>
-        <div className='custom-container mx-auto grid grid-cols-2 gap-4'>
+        <div className='custom-container mx-auto'>
           <button
+            onClick={() => dispatch(changeStoredProductState(["basket", id]))}
             className='w-full bg-red text-sm font-bold leading-5 text-white focus:outline-none rounded-lg py-1.5 px-2 text-center'
-          >Savatga q&apos;shish</button>
-          <button
-            className='w-full bg-green-500 text-white focus:outline-none rounded-lg py-1.5 px-2 text-sm font-bold leading-5 text-center'
-          >Muddatli to&apos;lov</button>
+          >Savatga {basket.includes(id) ? "qo'shish" : "o'tish"}</button>
         </div>
       </div>
     </div>

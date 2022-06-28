@@ -34,7 +34,7 @@ export default function SplideSlider({ images, options, children, className }) {
           <ul className="splide__pagination main-slider-splide-pagination -bottom-[21px]">
             {images?.map((_,i) => (
               <li key={i}>
-                <button className="splide__pagination__page" type="button" aria-controls={`splide01-slide0${i}`} aria-label={`Go to slide ${i}`}></button>
+                <button className="splide__pagination__page" type="button" aria-controls={`splide0${i}-slide0${i}`} aria-label={`Go to slide ${i}`}></button>
               </li>  
             ))}
           </ul>

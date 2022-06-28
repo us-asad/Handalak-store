@@ -1,6 +1,11 @@
-import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsContainer, ProductsContainer, PromoDiscountsSection, CategoriesBar, MobileNavbar } from "components";
+import { BrandsContainer, Description, CategoriesCarousel, MainCarousel, NewsContainer, ProductsContainer, PromoDiscountsSection, CategoriesBar } from "components";
 import { Footer, Header } from "containers";
 import { getBrands, getNews, getProducts, getPromosDiscounts } from "data/graphql";
+import dynamic from "next/dynamic";
+
+const MobileNavbar = dynamic(() => import("components/MobileNavbar"), {
+  ssr: false
+})
 
 export default function Home({ promosDiscounts, products, brands, news }) {
   return (

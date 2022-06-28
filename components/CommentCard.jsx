@@ -1,20 +1,14 @@
-import { ReplyModal } from 'components';
-import { hideBodyOverflow } from 'data/functions';
 import Image from 'next/image'
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleDynamicModal } from 'redux/slices/toggleModal';
 import { ProductRates, SubCommentCard } from 'subcomponents'
 import { UpIcon } from 'subcomponents/Icons'
 
-export default function CommentCard({ rating, createdAt, text, replies, id, userName }) {
+export default function CommentCard({ rating, createdAt, text, replies, id, userName, prdId }) {
   const [showReplies, setShowReplies] = useState(false);
-  const [openRlyModal, setOpenRlyModal] = useState(false);
-  const { user: { user }, product: { comments, id: prdId } } = useSelector(state => state);
-
-  const openModal = state => {
-    setOpenRlyModal(state);
-    hideBodyOverflow(state)
-  }
+  const { user } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   return (
     <div className="flex items-start pt-4">
@@ -40,7 +34,7 @@ export default function CommentCard({ rating, createdAt, text, replies, id, user
           <div className='flex items-center space-x-4'>
             {user && (
               <button
-                onClick={() => openModal(true)}
+                onClick={() => dispatch(toggleDynamicModal(["reply", true, { commentId: id, prdId }]))}
                 className='focus:outline-none bg-transparent text-gray-500 text-xs font-semibold border-b border-black border-dashed uppercase'
               >
                 Javob Yozish
@@ -57,13 +51,8 @@ export default function CommentCard({ rating, createdAt, text, replies, id, user
             ) : <></>}
           </div>
         </div>
-        {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} openModal={openModal} />)}
+        {showReplies && replies?.map((reply, i) => <SubCommentCard key={i} {...reply} prdId={prdId} />)}
       </div>
-      <ReplyModal
-        openModal={openModal}
-        openRlyModal={openRlyModal}
-        id={id}
-      />
     </div>
   );
 }

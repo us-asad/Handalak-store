@@ -107,7 +107,7 @@ export default function HeaderBottom() {
                 {comparedPrds?.length ? <span className={smallIconClassName}>{comparedPrds?.length}</span> : null}
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/cabinet/favorite">
               <a className='lg:flex flex-col items-center font-medium text-base relative mx-8 hidden'>
                 <FaRegHeart className='text-[22px]' />
                 <span className='mt-2'>Sevimlilar</span>

@@ -4,22 +4,21 @@ import { convertCurrency } from "data/api";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  const { items, email, cupon } = req.body;
+  const { items, email, coupon } = req.body;
   const discounts = [];
   
-  if (cupon?.count) {
-    const coupon = await stripe.coupons.create({
-      percent_off: cupon.percentOff,
+  if (coupon?.count) {
+    const stripeCoupon = await stripe.coupons.create({
+      percent_off: coupon.percentOff,
       duration: 'once',
     });
 
-    discounts.push({ coupon: coupon.id });
+    discounts.push({ coupon: stripeCoupon.id });
   }
 
   for (let i = 0; i < items.length; i++) {
     items[i].price = await convertCurrency("UZS", "USD", +getDiscountedPrice(items[i].price, items[i].discount));
   }
-
 
   const transformedItems = items.map(item => ({
     description: item.subtitle,
@@ -47,7 +46,7 @@ export default async function handler(req, res) {
     discounts,
     metadata: {
       email,
-      coupon: JSON.stringify(cupon),
+      coupon: JSON.stringify(coupon),
       items: JSON.stringify(items.map(({id, purchaseQty, quantity}) => ({id, purchaseQty, quantity })))
     }
   });

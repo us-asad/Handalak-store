@@ -49,7 +49,7 @@ export default function Comment() {
 
   return (
     <div className={commentModal ? "block" : "hidden"}>
-      <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[51] py-16 px-12 '>
+      <div className='fixed max-h-screen min-w-[30vw] translate-x-[-50%] translate-y-[-50%] top-1/2 left-1/2 overflow-y-auto flex flex-col bg-white h-max z-[51] py-16 px-12 w-full md:w-auto'>
         <button
           onClick={() => dispatch(toggleModal(["commentModal", false]))}
           className='absolute top-5 right-4 text-[30px]'
