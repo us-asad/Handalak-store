@@ -233,41 +233,6 @@ export const getNews = async () => {
   return result?.moreNews;
 }
 
-export const getAllNews = async () => {
-  const query = gql`
-    query GetAllNews() {
-      moreNews {
-        title
-        slug
-        excerpt
-      }
-    }
-  `;
-
-  const result = await request(graphqlApi, query);
-  return result.moreNews;
-}
-
-export const getBlog = async slug => {
-  const query = gql`
-    query GetBlog($slug: String!) {
-      news(where: { slug: $slug }) {
-        title
-        createdAt
-        text {
-          html
-        }
-        image {
-          url
-        }
-      }
-    }
-  `;
-
-  const result = await request(graphqlApi, query, { slug });
-  return result.news;
-}
-
 export const getPorductsOfCatgory1 = async categorySlug => {
   const query = gql`
     query GetProductsOfCategory($categorySlug: String!) {
